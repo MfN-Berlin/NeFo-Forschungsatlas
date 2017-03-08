@@ -1,5 +1,5 @@
 name = Forschungsatlas Category Translation
-description = Makes Forschungsatlas-Forschungsatlas categories available for translation.
+description = Makes NeFo-Forschungsatlas categories available for translation.
 dependencies[] = forschungsatlas
 dependencies[] = i18n_string
 package = NEFO
