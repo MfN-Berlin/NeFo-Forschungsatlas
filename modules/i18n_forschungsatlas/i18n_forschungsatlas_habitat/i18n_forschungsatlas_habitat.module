@@ -1,0 +1,80 @@
+<?php
+
+//module_load_include('inc', 'forschungsatlas', 'includes/forschungsatlas.admin.institutions');
+//module_load_include('inc', 'forschungsatlas', 'includes/forschungsatlas.search');
+
+/**
+ * @file
+ * Internationalization (i18n) submodule: Multilingual Forschungsatlas categories
+ */
+
+/**
+ * Implements hook_menu().
+ *
+ * Add translate tab to categories config.
+ */
+function i18n_forschungsatlas_habitat_menu() {
+  $items[FORSCHUNGSATLAS_CONFIG_PATH .'/categories/habitats/%forschungsatlas_habitat/translate'] = array(
+    'title' => 'Translate',
+    'access callback' => 'i18n_forschungsatlas_habitat_translate_tab_access',
+    'page callback' => 'i18n_string_object_translate_page',
+    'page arguments' => array('forschungsatlas_habitat', 5),
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 10,
+  );
+  $items[FORSCHUNGSATLAS_CONFIG_PATH .'/categories/habitats/%forschungsatlas_habitat/translate/%language'] = array(
+    'title' => 'Translate',
+    'access callback' => 'i18n_forschungsatlas_habitat_translate_tab_access',
+    'page callback' => 'i18n_string_object_translate_page',
+    'page arguments' => array('forschungsatlas_habitat', 5, 7),
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+/**
+ * Menu access callback function.
+ */
+function i18n_forschungsatlas_habitat_translate_tab_access() {
+  return user_access('administer nefo configuration');
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function i18n_forschungsatlas_habitat_form_forschungsatlas_admin_habitat_delete_confirm_alter(&$form, &$form_state) {
+  $form['#submit'][] = 'i18n_forschungsatlas_habitat_form_forschungsatlas_admin_habitat_delete_confirm_submit';
+}
+
+/**
+ * Remove strings for deleted categories.
+ */
+function i18n_forschungsatlas_habitat_form_forschungsatlas_admin_habitat_delete_confirm_submit(&$form, $form_state) {
+  $hid = $form['hid']['#value']['hid'];
+  i18n_string_remove("forschungsatlas_habitat:habitat:$hid:name");
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function i18n_forschungsatlas_habitat_form_forschungsatlas_admin_habitat_form_alter(&$form, &$form_state) {
+    $form['actions']['translate'] = array(
+    '#type' => 'submit',
+    '#name'   => 'save_translate',
+    '#value' => t('Save and translate'),
+  );
+  $form['#submit'][] = 'i18n_forschungsatlas_habitat_form_forschungsatlas_admin_habitat_form_submit';
+}
+
+/**
+ * Remove strings for edited/added habitats.
+ */
+function i18n_forschungsatlas_habitat_form_forschungsatlas_admin_habitat_form_submit($form, &$form_state) {
+  $habitat = $form_state['values'];
+  i18n_string_update(array('forschungsatlas_habitat', 'habitat', $habitat['hid'], 'name'), $habitat['name']);
+  if ($form_state['triggering_element']['#name'] == 'save_translate') {
+    $form_state['redirect'] = FORSCHUNGSATLAS_CONFIG_PATH .'/categories/habitats/' . $habitat['hid'] . '/translate';
+  }
+}
+

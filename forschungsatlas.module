@@ -1,0 +1,1438 @@
+<?php
+/**
+ * @file
+ * Code for the NeFo Forschungsatlas core module.
+ */
+
+/**
+ * Nefo default settings.
+ */
+define('FORSCHUNGSATLAS_CRON_EXECUTION_TIME', 0);
+define('FORSCHUNGSATLAS_HTTP_STATUS_CODE_OK', 200);
+define('FORSCHUNGSATLAS_HTTP_STATUS_CODE_MOVE_PERMANENTLY', 301);
+define('FORSCHUNGSATLAS_HTTP_TIMEOUT', 20);
+define('FORSCHUNGSATLAS_DELIMITER_NEWLINE', "\x1F\x4E\x45\x46\x4F\x4E\x4C\x1F");
+define('FORSCHUNGSATLAS_DELIMITER_ID', "\x1F\x4e\x45\x46\x4f\x49\x44\x1F");
+define('FORSCHUNGSATLAS_NOT_PUBLISHED', 0);
+define('FORSCHUNGSATLAS_PUBLISHED', 1);
+define('FORSCHUNGSATLAS_PAGER', 20);
+define('FORSCHUNGSATLAS_CONFIG_PATH', 'admin/config/forschungsatlas');
+define('FORSCHUNGSATLAS_PUBLIC_PATH', 'forschung/forschungsakteure/forschungsatlas');
+define('FORSCHUNGSATLAS_PUBLIC_PATH_OFFSET', 2);
+define('FORSCHUNGSATLAS_SEPARATOR', '&raquo;');
+define('FORSCHUNGSATLAS_DEFAULT_SITE_EMAIL', "info@biodiversity.de");
+define('FORSCHUNGSATLAS_MAP_HEIGHT', '600px');
+define('FORSCHUNGSATLAS_MAP_ZOOM', 6);
+
+/**
+ * Implements hook_permission().
+ */
+function forschungsatlas_permission() {
+  return array(
+    'access nefo institutions' => array(
+      'title' => t('View published institutions.'),
+    ),
+    'administer nefo institutions' => array(
+      'title' => t('Administer institutions'),
+      'description' => t('Allow users to create, update and delete institutions.'),
+    ),
+    'administer nefo configuration' => array(
+      'title' => t('Administer NeFo configuration'),
+      'description' => t('Allow users to change NeFo module configuration.'),
+      'restrict access' => TRUE,
+    ),
+  );
+}
+
+/**
+ * Determines whether the current user may perform the operation on the institution.
+ *
+ * @param $op
+ *   The operation to be performed on the institution. Possible values are:
+ *   - "view"
+ * @param $institution
+ *   The institution on which the operation is to be performed.
+ * @param $account
+ *   Optional, a user object representing the user for whom the operation is to
+ *   be performed. Determines access for a user other than the current user.
+ *
+ * @return
+ *   TRUE if the operation may be performed, FALSE otherwise.
+ */
+function forschungsatlas_access($op, $institution, $account = NULL) {
+  if (!$institution || !in_array($op, array('view'), TRUE)) {
+    // If there was no institution to check against, or the $op was not one of the
+    // supported ones, we return access denied.
+    return FALSE;
+  }
+  // If no user object is supplied, the access check is for the current user.
+  if (empty($account)) {
+    $account = $GLOBALS['user'];
+  }
+  if (user_access('administer nefo institutions') || user_access('administer nefo configuration')) {
+    return TRUE;
+  }
+  $published = intval($institution['status']);
+  if (user_access('access nefo institutions', $account) && $published == FORSCHUNGSATLAS_PUBLISHED) {
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
+
+/**
+ * Implements hook_menu().
+ */
+function forschungsatlas_menu() {
+  $items = array();
+
+  /**
+   * Public
+   */
+  $items[FORSCHUNGSATLAS_PUBLIC_PATH] = array(
+    'title' => t('Research Map'),
+    'description' => t('Research Map'),
+    'page callback' => 'forschungsatlas_map_site_builder',
+    //'page callback' => 'forschungsatlas_map_form_builder',
+    'access callback' => TRUE,
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'includes/forschungsatlas.map.inc',
+    'weight' => 20,
+  );
+  $items[FORSCHUNGSATLAS_PUBLIC_PATH . '/institutions/%forschungsatlas_institution'] = array(
+    'title' => t('Institution'),
+    'description' => t('Show the institution.'),
+    'page callback' => 'forschungsatlas_institution_show',
+    'page arguments' => array((FORSCHUNGSATLAS_PUBLIC_PATH_OFFSET + 2)),
+    'access callback' => 'forschungsatlas_access',
+    'access arguments' => array('view', (FORSCHUNGSATLAS_PUBLIC_PATH_OFFSET + 2)),
+    'file' => 'includes/forschungsatlas.institution.inc',
+    'weight' => 21,
+  );
+  $items[FORSCHUNGSATLAS_PUBLIC_PATH . '/institutions/%forschungsatlas_institution/view'] = array(
+    'title' => t('View'),
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'weight' => 22,
+  );
+  $items[FORSCHUNGSATLAS_PUBLIC_PATH . '/institutions/%forschungsatlas_institution/edit'] = array(
+    'title' => t('Edit'),
+    'description' => t('Edit institution.'),
+    'page callback' => 'forschungsatlas_admin_institution_edit',
+    'page arguments' => array((FORSCHUNGSATLAS_PUBLIC_PATH_OFFSET + 2)),
+    'access arguments' => array('administer nefo configuration'),
+    'file' => 'includes/forschungsatlas.admin.institutions.inc',
+    'type' => MENU_LOCAL_TASK,
+    'context' => MENU_CONTEXT_PAGE | MENU_CONTEXT_INLINE,
+    'weight' => 23,
+  );
+  $items[FORSCHUNGSATLAS_PUBLIC_PATH . '/institutions/%forschungsatlas_institution/delete'] = array(
+    'title' => t('Delete'),
+    'description' => t('Delete institution.'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('forschungsatlas_admin_institution_delete_confirm', (FORSCHUNGSATLAS_PUBLIC_PATH_OFFSET + 2)),
+    'access arguments' => array('administer nefo configuration'),
+    'file' => 'includes/forschungsatlas.admin.institutions.inc',
+    'type' => MENU_LOCAL_TASK,
+    'context' => MENU_CONTEXT_PAGE | MENU_CONTEXT_INLINE,
+    'weight' => 24,
+  );
+
+  /**
+   * Administration
+   */
+  $items['admin/config/forschungsatlas'] = array(
+  	'title' => 'NeFo Forschungsatlas',
+  	'description' => t('Settings for the NeFo Forschungsatlas.'),
+  	'position' => 'right',
+  	'page callback' => 'system_admin_menu_block_page',
+  	'access arguments' => array('administer nefo configuration'),
+    'file' => 'system.admin.inc',
+    'file path' => drupal_get_path('module', 'system'),
+  );
+  /**
+   * Administration: Institutions
+   */
+  $items['admin/config/forschungsatlas/institutions'] = array(
+    'title' => t('Institutions'),
+  	'description' => t('Configure intitutions and organization types.'),
+    'page callback' => 'forschungsatlas_admin_institutions',
+    'access arguments' => array('administer nefo configuration'),
+    'file' => 'includes/forschungsatlas.admin.institutions.inc',
+  	'weight' => 100,
+  );
+  $items['admin/config/forschungsatlas/institutions/institution'] = array(
+  	'title' => t('Institution'),
+  	'description' => 'Configure institutions.',
+  	'weight' => 110,
+  	'type' => MENU_DEFAULT_LOCAL_TASK,
+  );
+  $items['admin/config/forschungsatlas/institutions/institution/add'] = array(
+    'title' => t('Add an institution'),
+    'description' => t('Add an institution.'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('forschungsatlas_admin_institution_form'),
+    'access arguments' => array('administer nefo configuration'),
+    'file' => 'includes/forschungsatlas.admin.institutions.inc',
+    'type' => MENU_LOCAL_ACTION,
+  );
+  $items['admin/config/forschungsatlas/institutions/institution/%forschungsatlas_institution/edit'] = array(
+    'title' => t('Edit Institution'),
+    'description' => t('Edit an institution.'),
+    'page callback' => 'forschungsatlas_admin_institution_edit',
+    'page arguments' => array(5),
+    'access arguments' => array('administer nefo configuration'),
+    'file' => 'includes/forschungsatlas.admin.institutions.inc',
+  );
+  $items['admin/config/forschungsatlas/institutions/institution/%forschungsatlas_institution/delete'] = array(
+    'title' => t('Delete'),
+    'description' => t('Delete an institution.'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('forschungsatlas_admin_institution_delete_confirm', 5),
+    'access arguments' => array('administer nefo configuration'),
+    'file' => 'includes/forschungsatlas.admin.institutions.inc',
+  );
+  // Organization type
+  $items['admin/config/forschungsatlas/institutions/organizationtypes'] = array(
+   	'title' => t('Organization Type'),
+   	'description' => t('Configure organization type.'),
+  	'page callback' => 'forschungsatlas_admin_orgtypes',
+  	'access arguments' => array('administer nefo configuration'),
+  	'file' => 'includes/forschungsatlas.admin.orgtype.inc',
+  	'weight' => 130,
+  	'type' => MENU_LOCAL_TASK,
+  );
+  $items['admin/config/forschungsatlas/institutions/organizationtypes/add'] = array(
+    'title' => t('Add an organization type'),
+    'description' => t('Add an organization type.'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('forschungsatlas_admin_orgtype_form'),
+    'access arguments' => array('administer nefo configuration'),
+    'file' => 'includes/forschungsatlas.admin.orgtype.inc',
+    'type' => MENU_LOCAL_ACTION,
+  );
+  $items['admin/config/forschungsatlas/institutions/organizationtypes/%forschungsatlas_orgtype/edit'] = array(
+    'title' => t('Edit an organization type'),
+    'description' => t('Edit an organization type.'),
+    'page callback' => 'forschungsatlas_admin_orgtype_edit',
+    'page arguments' => array(5),
+    'access arguments' => array('administer nefo configuration'),
+    'file' => 'includes/forschungsatlas.admin.orgtype.inc',
+    'type' => MENU_LOCAL_ACTION,
+  );
+  $items['admin/config/forschungsatlas/institutions/organizationtypes/%forschungsatlas_orgtype/delete'] = array(
+    'title' => t('Delete'),
+    'description' => t('Delete an organization type.'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('forschungsatlas_admin_orgtype_delete_confirm', 5),
+    'access arguments' => array('administer nefo configuration'),
+    'file' => 'includes/forschungsatlas.admin.orgtype.inc',
+  );
+  /**
+   * Administration - Categories: 200
+   */
+  $items['admin/config/forschungsatlas/categories'] = array(
+    'title' => t('Categories'),
+  	'description' => t('Configure habitat, interdisciplinary subject, methodology, organism, research network and topic.'),
+    'page callback' => 'forschungsatlas_admin_habitats',
+    'access arguments' => array('administer nefo configuration'),
+    'file' => 'includes/forschungsatlas.admin.habitats.inc',
+  	'weight' => 200,
+  );
+  // Habitats
+  $items['admin/config/forschungsatlas/categories/habitats'] = array(
+  	'title' => t('Habitat'),
+  	'description' => t('Configure habitats.'),
+  	'weight' => 210,
+  	'type' => MENU_DEFAULT_LOCAL_TASK,
+  );
+  $items['admin/config/forschungsatlas/categories/habitats/%forschungsatlas_habitat/edit'] = array(
+    'title' => t('Edit a habitat'),
+    'description' => t('Edit a habitat.'),
+    'page callback' => 'forschungsatlas_admin_habitat_edit',
+    'page arguments' => array(5),
+    'access arguments' => array('administer nefo configuration'),
+    'file' => 'includes/forschungsatlas.admin.habitats.inc',
+    'type' => MENU_LOCAL_ACTION,
+  );
+  $items['admin/config/forschungsatlas/categories/habitats/add'] = array(
+    'title' => t('Add a habitat'),
+    'description' => t('Add a habitat.'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('forschungsatlas_admin_habitat_form'),
+    'access arguments' => array('administer nefo configuration'),
+    'file' => 'includes/forschungsatlas.admin.habitats.inc',
+    'type' => MENU_LOCAL_ACTION,
+  );
+  $items['admin/config/forschungsatlas/categories/habitats/%forschungsatlas_habitat/delete'] = array(
+    'title' => t('Delete'),
+    'description' => t('Delete a habitat.'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('forschungsatlas_admin_habitat_delete_confirm', 5),
+    'access arguments' => array('administer nefo configuration'),
+    'file' => 'includes/forschungsatlas.admin.habitats.inc',
+  );
+  // Interdisciplinary subject
+  $items['admin/config/forschungsatlas/categories/intersubjects'] = array(
+  	'title' => t('Int. Subject'),
+  	'description' => t('Configure interdisciplinary subject.'),
+  	'page callback' => 'forschungsatlas_admin_intersubjects',
+  	'access arguments' => array('administer nefo configuration'),
+  	'file' => 'includes/forschungsatlas.admin.intersubjects.inc',
+  	'weight' => 220,
+  	'type' => MENU_LOCAL_TASK,
+  );
+  $items['admin/config/forschungsatlas/categories/intersubjects/add'] = array(
+    'title' => t('Add an interdisciplinary subject'),
+    'description' => t('Add an interdisciplinary subject.'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('forschungsatlas_admin_intersubject_form'),
+    'access arguments' => array('administer nefo configuration'),
+    'file' => 'includes/forschungsatlas.admin.intersubjects.inc',
+    'type' => MENU_LOCAL_ACTION,
+  );
+  $items['admin/config/forschungsatlas/categories/intersubjects/%forschungsatlas_intersubject/edit'] = array(
+    'title' => t('Edit an interdisciplinary subject'),
+    'description' => t('Edit an interdisciplinary subject.'),
+    'page callback' => 'forschungsatlas_admin_intersubject_edit',
+    'page arguments' => array(5),
+    'access arguments' => array('administer nefo configuration'),
+    'file' => 'includes/forschungsatlas.admin.intersubjects.inc',
+    'type' => MENU_LOCAL_ACTION,
+  );
+  $items['admin/config/forschungsatlas/categories/intersubjects/%forschungsatlas_intersubject/delete'] = array(
+    'title' => t('Delete'),
+    'description' => t('Delete an interdisciplinary subject.'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('forschungsatlas_admin_intersubject_delete_confirm', 5),
+    'access arguments' => array('administer nefo configuration'),
+    'file' => 'includes/forschungsatlas.admin.intersubjects.inc',
+  );
+  // Methodology
+  $items['admin/config/forschungsatlas/categories/methodologies'] = array(
+  	'title' => t('Methodology'),
+  	'description' => t('Configure a methodology.'),
+  	'page callback' => 'forschungsatlas_admin_methodologies',
+  	'access arguments' => array('administer nefo configuration'),
+  	'file' => 'includes/forschungsatlas.admin.methodology.inc',
+  	'weight' => 230,
+  	'type' => MENU_LOCAL_TASK,
+  );
+  $items['admin/config/forschungsatlas/categories/methodologies/add'] = array(
+    'title' => t('Add a methodology'),
+    'description' => t('Add a methodology.'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('forschungsatlas_admin_methodology_form'),
+    'access arguments' => array('administer nefo configuration'),
+    'file' => 'includes/forschungsatlas.admin.methodology.inc',
+    'type' => MENU_LOCAL_ACTION,
+  );
+  $items['admin/config/forschungsatlas/categories/methodologies/%forschungsatlas_methodology/edit'] = array(
+    'title' => t('Edit a methodology'),
+    'description' => t('Edit a methodology.'),
+    'page callback' => 'forschungsatlas_admin_methodology_edit',
+    'page arguments' => array(5),
+    'access arguments' => array('administer nefo configuration'),
+    'file' => 'includes/forschungsatlas.admin.methodology.inc',
+    'type' => MENU_LOCAL_ACTION,
+  );
+  $items['admin/config/forschungsatlas/categories/methodologies/%forschungsatlas_methodology/delete'] = array(
+    'title' => t('Delete'),
+    'description' => t('Delete a methodology.'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('forschungsatlas_admin_methodology_delete_confirm', 5),
+    'access arguments' => array('administer nefo configuration'),
+    'file' => 'includes/forschungsatlas.admin.methodology.inc',
+  );
+  // Organisms
+  $items['admin/config/forschungsatlas/categories/organisms'] = array(
+  	'title' => t('Organism'),
+  	'description' => t('Configure organisms.'),
+  	'page callback' => 'forschungsatlas_admin_organisms',
+ 	  'access arguments' => array('administer nefo configuration'),
+  	'file' => 'includes/forschungsatlas.admin.organism.inc',
+  	'weight' => 240,
+  	'type' => MENU_LOCAL_TASK,
+  );
+  $items['admin/config/forschungsatlas/categories/organisms/add'] = array(
+    'title' => t('Add an organism'),
+    'description' => t('Add an organism.'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('forschungsatlas_admin_organism_form'),
+    'access arguments' => array('administer nefo configuration'),
+    'file' => 'includes/forschungsatlas.admin.organism.inc',
+    'type' => MENU_LOCAL_ACTION,
+  );
+  $items['admin/config/forschungsatlas/categories/organisms/%forschungsatlas_organism/edit'] = array(
+    'title' => t('Edit an organism'),
+    'description' => t('Edit an organism.'),
+    'page callback' => 'forschungsatlas_admin_organism_edit',
+    'page arguments' => array(5),
+    'access arguments' => array('administer nefo configuration'),
+    'file' => 'includes/forschungsatlas.admin.organism.inc',
+    'type' => MENU_LOCAL_ACTION,
+  );
+  $items['admin/config/forschungsatlas/categories/organisms/%forschungsatlas_organism/delete'] = array(
+    'title' => t('Delete'),
+    'description' => t('Delete an organism.'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('forschungsatlas_admin_organism_delete_confirm', 5),
+    'access arguments' => array('administer nefo configuration'),
+    'file' => 'includes/forschungsatlas.admin.organism.inc',
+  );
+  // Research network
+  $items['admin/config/forschungsatlas/categories/networks'] = array(
+  	'title' => t('Res. Network'),
+  	'description' => t('Configure research network.'),
+  	'page callback' => 'forschungsatlas_admin_networks',
+  	'access arguments' => array('administer nefo configuration'),
+  	'file' => 'includes/forschungsatlas.admin.network.inc',
+  	'weight' => 250,
+  	'type' => MENU_LOCAL_TASK,
+  );
+  $items['admin/config/forschungsatlas/categories/networks/add'] = array(
+    'title' => t('Add a research network'),
+    'description' => t('Add a research network.'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('forschungsatlas_admin_network_form'),
+    'access arguments' => array('administer nefo configuration'),
+    'file' => 'includes/forschungsatlas.admin.network.inc',
+    'type' => MENU_LOCAL_ACTION,
+  );
+  $items['admin/config/forschungsatlas/categories/networks/%forschungsatlas_network/edit'] = array(
+    'title' => t('Edit a research network'),
+    'description' => t('Edit a research network.'),
+    'page callback' => 'forschungsatlas_admin_network_edit',
+    'page arguments' => array(5),
+    'access arguments' => array('administer nefo configuration'),
+    'file' => 'includes/forschungsatlas.admin.network.inc',
+    'type' => MENU_LOCAL_ACTION,
+  );
+  $items['admin/config/forschungsatlas/categories/networks/%forschungsatlas_network/delete'] = array(
+    'title' => t('Delete'),
+    'description' => t('Delete a research network.'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('forschungsatlas_admin_network_delete_confirm', 5),
+    'access arguments' => array('administer nefo configuration'),
+    'file' => 'includes/forschungsatlas.admin.network.inc',
+  );
+  // Topics
+  $items['admin/config/forschungsatlas/categories/topics'] = array(
+  	'title' => t('Topic'),
+  	'description' => t('Configure topics.'),
+  	'page callback' => 'forschungsatlas_admin_topics',
+  	'access arguments' => array('administer nefo configuration'),
+  	'file' => 'includes/forschungsatlas.admin.topic.inc',
+  	'weight' => 270,
+  	'type' => MENU_LOCAL_TASK,
+  );
+  $items['admin/config/forschungsatlas/categories/topics/add'] = array(
+    'title' => t('Add a topic'),
+    'description' => t('Add a topic.'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('forschungsatlas_admin_topic_form'),
+    'access arguments' => array('administer nefo configuration'),
+    'file' => 'includes/forschungsatlas.admin.topic.inc',
+    'type' => MENU_LOCAL_ACTION,
+  );
+  $items['admin/config/forschungsatlas/categories/topics/%forschungsatlas_topic/edit'] = array(
+    'title' => t('Edit a topic'),
+    'description' => t('Edit a topic.'),
+    'page callback' => 'forschungsatlas_admin_topic_edit',
+    'page arguments' => array(5),
+    'access arguments' => array('administer nefo configuration'),
+    'file' => 'includes/forschungsatlas.admin.topic.inc',
+    'type' => MENU_LOCAL_ACTION,
+  );
+  $items['admin/config/forschungsatlas/categories/topics/%forschungsatlas_topic/delete'] = array(
+    'title' => t('Delete'),
+    'description' => t('Delete a topic.'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('forschungsatlas_admin_topic_delete_confirm', 5),
+    'access arguments' => array('administer nefo configuration'),
+    'file' => 'includes/forschungsatlas.admin.topic.inc',
+  );
+  /**
+   * Administration - Tools: 900
+   */
+  $items['admin/config/forschungsatlas/tools'] = array(
+  	'title' => 'Tools',
+  	'description' => 'Administrative tools.',
+  	'page callback' => 'forschungsatlas_admin_url',
+  	'access arguments' => array('administer nefo configuration'),
+  	'file' => 'includes/forschungsatlas.admin.tools.inc',
+  	'weight' => 900,
+  );
+  // URL
+  $items['admin/config/forschungsatlas/tools/url'] = array(
+    'title' => 'URL',
+    'description' => 'Find broken links.',
+    'weight' => 910,
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+  );
+  $items['admin/config/forschungsatlas/tools/url/update'] = array(
+    'title' => t('Update list (execution will take a long time)'),
+    'description' => t('Update list of institution with broken links.'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('forschungsatlas_admin_url_rebuild'),
+    'access arguments' => array('administer nefo configuration'),
+    'file' => 'includes/forschungsatlas.admin.tools.inc',
+    'type' => MENU_LOCAL_ACTION,
+  );
+  // WKT
+  $items['admin/config/forschungsatlas/tools/wkt'] = array(
+  	'title' => 'WKT',
+  	'description' => 'Find empty WKT.',
+    'page callback' => 'forschungsatlas_admin_wkt',
+    'access arguments' => array('administer nefo configuration'),
+    'file' => 'includes/forschungsatlas.admin.tools.inc',
+    'weight' => 920,
+    //'type' => MENU_LOCAL_ACTION,
+    'type' => MENU_SUGGESTED_ITEM,
+  );
+  $items['admin/config/forschungsatlas/tools/wkt/update'] = array(
+    'title' => t('Update list'),
+    'description' => t('Update list of institution with empty WKT.'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('forschungsatlas_admin_wkt_rebuild'),
+    'access arguments' => array('administer nefo configuration'),
+    'file' => 'includes/forschungsatlas.admin.tools.inc',
+    //'type' => MENU_LOCAL_ACTION,
+    'type' => MENU_SUGGESTED_ITEM,
+  );
+
+
+  return $items;
+}
+
+
+/**
+ * Implements hook_theme().
+ */
+function forschungsatlas_theme() {
+  return array (
+    'forschungsatlas_display_institution' => array(
+      'template' => 'forschungsatlas-display-institution',
+      'variables' => array('forschungsatlas_institution' => NULL),
+      'file' => 'includes/forschungsatlas.institution.inc',
+    ),
+  );
+}
+
+/**
+ * Implements hook_cron().
+ */
+function forschungsatlas_cron() {
+  if( date('G') == FORSCHUNGSATLAS_CRON_EXECUTION_TIME){
+    $num_rows = forschungsatlas_find_broken_links();
+    watchdog('NEFO', t('NeFo Forschungsatlas cron job has been executed. Found @num_rows broken links.',
+        array('@num_rows' => $num_rows)));
+  }
+}
+
+/**
+ * Implements hook_libraries_info().
+ */
+function forschungsatlas_libraries_info() {
+  $libraries = array();
+  $libraries['leaflet_markercluster'] = array(
+      'title' => 'Leaflet Markercluster',
+      'version' => 0.4,
+      'files' => array(
+        'js' => array(
+          'dist/leaflet.markercluster-src.js',
+        ),
+        'css' => array(
+            "dist/MarkerCluster.css" => array(
+                'type' => 'file',
+                'media' => 'screen',
+            ),
+            "dist/MarkerCluster.Default.css" => array(
+                'type' => 'file',
+                'media' => 'screen',
+            ),
+        ),
+      ),
+  );
+  $libraries['leaflet'] = array(
+    // Only used in administrative UI of Libraries API.
+    'name' => 'Leaflet JavaScript Library',
+    'vendor url' => 'http://leafletjs.com/',
+    'download url' => 'http://cdn.leafletjs.com/downloads/leaflet-0.7.3.zip',
+    // .7: version="0.7"
+    'version arguments' => array(
+      'file' => 'leaflet.js',
+      'pattern' => '/version="([\d+\.]*\d+)"/',
+    ),
+    'files' => array(
+      'js' => array(
+        // This setting is needed in order to properly render market images.
+        'leaflet_root_url' => array(
+          'type' => 'inline',
+          'data' => 'L_ROOT_URL = "' . base_path() . libraries_get_path('leaflet') . '/";',
+          'group' => JS_LIBRARY,
+          'preprocess' => FALSE,
+        ),
+        'leaflet-src.js' => array(
+          'type' => 'file',
+          'group' => JS_LIBRARY,
+          'preprocess' => FALSE,
+        ),
+      ),
+      'css' => array(
+        'leaflet.css' => array(
+          'type' => 'file',
+          'media' => 'all',
+        ),
+        'leaflet.ie.css' => array(
+          'browsers' => array(
+            'IE' => 'lte IE 8',
+            '!IE' => FALSE,
+          ),
+        ),
+      ),
+    ),
+    'integration files' => array(
+      'forschungsatlas' => array(
+        'js' => array('forschungsatlas.drupal.js'),
+      ),
+    ),
+  );
+
+  return $libraries;
+}
+
+
+
+/**
+ * Generic hook_load function
+ * @param  string $table      Name of the table to load the entry from
+ * @param  string $col_name   Name of the column to load
+ * @param  integer $entry_id  The entry-ID
+ *
+ * @return
+ *  An associative array, or FALSE if there is no next row.
+ */
+function forschungsatlas_load($table, $col_name, $entry_id) {
+  if (!is_numeric($entry_id)) {
+    return FALSE;
+  }
+  $result = db_query('SELECT * FROM {'. $table .'} WHERE '. $col_name .' = :entry_id', array(':entry_id' => $entry_id));
+
+  return $result->fetchAssoc();
+}
+
+/**
+ * Load callback for %forschungsatlas_institution placeholder in menu paths.
+ */
+
+function forschungsatlas_institution_load($iid) {
+  $result = db_query('SELECT
+        i.iid AS iid, i.name AS name, i.street AS street, i.postalcode AS postalcode, i.cid AS cid,
+        c.name AS city, i.fsid AS fsid, fs.name AS federalstate, i.url AS url, i.otid AS otid, ot.name AS orgtype,
+        i.description AS description, g.geolocation_geo_type AS geotype, g.geolocation_lat AS latitude, g.geolocation_lon AS longitude,
+        g.geolocation_wkt AS wkt, i.status AS status, i.uid AS uid, i.created AS created, i.changed AS changed
+      FROM {forschungsatlas__institutions} i
+      LEFT JOIN {forschungsatlas__cities} c ON i.cid = c.cid
+      LEFT JOIN {forschungsatlas__federal_states} fs ON i.fsid = fs.fsid
+      LEFT JOIN {forschungsatlas__organization_type} ot ON i.otid = ot.otid
+      LEFT JOIN {forschungsatlas__institution_geolocation} g ON i.iid = g.iid
+      WHERE i.iid = :entry_id', array(':entry_id' => $iid));
+
+  return $result->fetchAssoc();
+}
+
+/**
+ * Load callback for %forschungsatlas_city placeholder in menu paths.
+ */
+function forschungsatlas_city_load($cid) {
+  return forschungsatlas_load('forschungsatlas__cities', 'cid', $cid);
+}
+
+/**
+ * Load callback for %forschungsatlas_habitat placeholder in menu paths.
+ */
+function forschungsatlas_habitat_load($hid) {
+  return forschungsatlas_load('forschungsatlas__habitats', 'hid', $hid);
+}
+
+/**
+ * Load callback for %forschungsatlas_intersubject placeholder in menu paths.
+ */
+function forschungsatlas_intersubject_load($isid) {
+  return forschungsatlas_load('forschungsatlas__interdisciplinary_subject', 'isid', $isid);
+}
+
+/**
+ * Load callback for %forschungsatlas_methodology placeholder in menu paths.
+ */
+function forschungsatlas_methodology_load($mid) {
+  return forschungsatlas_load('forschungsatlas__methodology', 'mid', $mid);
+}
+
+/**
+ * Load callback for %forschungsatlas_organism placeholder in menu paths.
+ */
+function forschungsatlas_organism_load($oid) {
+  return forschungsatlas_load('forschungsatlas__organisms', 'oid', $oid);
+}
+
+/**
+ * Load callback for %forschungsatlas_orgtype placeholder in menu paths.
+ */
+function forschungsatlas_orgtype_load($otid) {
+  return forschungsatlas_load('forschungsatlas__organization_type', 'otid', $otid);
+}
+
+/**
+ * Load callback for %forschungsatlas_network placeholder in menu paths.
+ */
+function forschungsatlas_network_load($rnid) {
+  return forschungsatlas_load('forschungsatlas__research_network', 'rnid', $rnid);
+}
+
+/**
+ * Load callback for %forschungsatlas_topic placeholder in menu paths.
+ */
+function forschungsatlas_topic_load($tid) {
+  return forschungsatlas_load('forschungsatlas__topics', 'tid', $tid);
+}
+
+/**
+ * Get list of federal states
+ *
+ * @return
+ *  An array containing the federal states
+ */
+function forschungsatlas_get_federal_states() {
+  $federal_states = array();
+  $result = db_query('SELECT fsid, name FROM {forschungsatlas__federal_states} ORDER BY name');
+  foreach ($result as $row) {
+    $federal_states[$row->fsid] = $row->name;
+  }
+
+  return $federal_states;
+}
+
+/**
+ * Get federal state values
+ *
+ * @param integer $fsid
+ *  The federal state ID
+ *
+ * @return
+ *  An associative array containing the federal state name and code
+ */
+function forschungsatlas_get_federal_state_values($fsid=0) {
+  $result = db_query('SELECT fscode, name FROM {forschungsatlas__federal_states}
+      WHERE fsid=:fsid LIMIT 1', array(':fsid' => $fsid))
+  ->fetchAssoc();
+
+  return $result;
+}
+
+/**
+ * Get list of federal states
+ *
+ * @param integer $fsid
+ *  The federal state ID
+ *
+ * @return
+ *  An array containing the city names with fscode
+ */
+function forschungsatlas_get_cities($fsid='') {
+  $options = array();
+  if (empty($fsid)) {
+    $result = db_query("SELECT t1.cid AS cid, CONCAT(t1.name, ' (', t2.fscode, ')') AS name
+        FROM {forschungsatlas__cities} t1
+        LEFT JOIN {forschungsatlas__federal_states} t2 ON t1.fsid = t2.fsid
+        ORDER BY name");
+  }
+  else {
+    $result = db_query("SELECT t1.cid AS cid, CONCAT(t1.name, ' (', t2.fscode, ')') AS name
+        FROM {forschungsatlas__cities} t1
+        LEFT JOIN {forschungsatlas__federal_states} t2 ON t1.fsid = t2.fsid
+        WHERE t1.fsid = :fsid
+        ORDER BY name", array(':fsid' => $fsid));
+  }
+  foreach ($result as $row) {
+    $options[$row->cid] = $row->name;
+  }
+
+  return $options;
+}
+
+/**
+ * Get list of organization types
+ *
+ * @return array $organization_type
+ *  An array containing the organization types
+ */
+function forschungsatlas_get_organization_types() {
+  $options = array();
+  $comp_options = array();
+
+  $result = db_query('SELECT otid, name FROM {forschungsatlas__organization_type} ORDER BY name');
+  foreach ($result as $row) {
+    if (module_exists('i18n_string') && module_exists('i18n_nefo')) {
+      $tnname = i18n_string("forschungsatlas_orgtype:orgtype:$row->otid:name", $row->name);
+    }
+    else {
+      $tnname = $row->name;
+    }
+    $comp_options[$tnname] = array('otid' => $row->otid, 'name' => $tnname);
+  }
+  ksort($comp_options);
+
+  foreach ($comp_options as $row) {
+    $options[$row['otid']] = $row['name'];
+  }
+
+  return $options;
+}
+
+/**
+ * Get the city name for a given city-ID.
+ *
+ * @param integer $cid
+ *
+ * @return
+ *  String containing the name
+ */
+function forschungsatlas_get_city_name($cid=0) {
+  return _forschungsatlas_load_name('forschungsatlas__cities', 'cid', $cid);
+}
+
+/**
+ * Get the organization type name for a given organization type ID.
+ *
+ * @param integer $otid
+ *
+ * @return
+ *  String containing the name
+ */
+function forschungsatlas_get_orgtype_name($otid=0) {
+  return _forschungsatlas_load_name('forschungsatlas__organization_type', 'otid', $otid);
+}
+
+/**
+ * Get the research network name for a given research network ID.
+ *
+ * @param integer $rnid
+ *
+ * @return
+ *  String containing the name
+ */
+function forschungsatlas_get_network_name($rnid=0) {
+  return _forschungsatlas_load_name('forschungsatlas__research_network', 'rnid', $rnid);
+}
+
+/**
+ * Get the organism name for a given organism-ID.
+ *
+ * @param integer $oid
+ *
+ * @return
+ *  String containing the name
+ */
+function forschungsatlas_get_organism_name($oid=0) {
+  return _forschungsatlas_load_name('forschungsatlas__organisms', 'oid', $oid);
+}
+
+/**
+ * Get the habitat name for a given habitat-ID.
+ *
+ * @param integer $hid
+ *
+ * @return
+ *  String containing the name
+ */
+function forschungsatlas_get_habitat_name($hid=0) {
+  return _forschungsatlas_load_name('forschungsatlas__habitats', 'hid', $hid);
+}
+
+/**
+ * Get the topic name for a given topic-ID.
+ *
+ * @param integer $tid
+ *
+ * @return
+ *  String containing the name
+ */
+function forschungsatlas_get_topic_name($tid=0) {
+  return _forschungsatlas_load_name('forschungsatlas__topics', 'tid', $tid);
+}
+
+/**
+ * Get the interdisciplinary subject name for a given interdisciplinary subject ID.
+ *
+ * @param integer $isid
+ *
+ * @return
+ *  String containing the name
+ */
+function forschungsatlas_get_intsubject_name($isid=0) {
+  return _forschungsatlas_load_name('forschungsatlas__interdisciplinary_subject', 'isid', $isid);
+}
+
+/**
+ * Get the methodology name for a given methodology-ID.
+ *
+ * @param integer $mid
+ *
+ * @return
+ *  String containing the name
+ */
+function forschungsatlas_get_methodology_name($mid=0) {
+  return _forschungsatlas_load_name('forschungsatlas__methodology', 'mid', $mid);
+}
+
+/**
+ * Load the name of an entry from the given table
+ *
+ * @param string $table
+ *  The name of the table to load the entry from
+* @param  string $colname
+*  The name of the column-ID
+ * @param integer $id
+ *  The ID of the entry
+ *
+ * @return
+ *  String containing the name
+ */
+function _forschungsatlas_load_name($table, $colname, $id) {
+  $result = db_query('SELECT name FROM {'. $table .'}
+      WHERE '. $colname .'=:id LIMIT 1', array(':id' => $id))
+  ->fetchAssoc();
+
+  return !empty($result['name']) ? $result['name'] : '';
+}
+
+
+
+
+
+
+/**
+ * Remove multiple spaces
+ *
+ * @param string $name
+ *
+ * @return
+ *  The cleaned name
+ */
+function forschungsatlas_clean_name($name='') {
+  $name = preg_replace('/\s+/', ' ', $name);
+
+  return trim($name);
+}
+
+/**
+ * Validate PLZ (German postal code)
+ *
+ * @param string $plz
+ *  The postal code
+ *
+ * @return
+ *  TRUE on success, FALSE on failure
+ */
+function forschungsatlas_validate_postalcode($plz='') {
+  if (!preg_match('/^[0-9]{5}$/', $plz)) {
+    return FALSE;
+  }
+
+  return TRUE;
+}
+
+/**
+ * Validate URL
+ *
+ * @param string $url
+ *  The URL
+ *
+ * @return
+ *  TRUE on success, FALSE on failure
+ */
+function forschungsatlas_validate_url($url='') {
+  $url = filter_var($url, FILTER_SANITIZE_URL);
+  if (filter_var($url, FILTER_VALIDATE_URL) === FALSE) {
+    return FALSE;
+  }
+
+  return TRUE;
+}
+
+/**
+ * Find a duplicate name in table
+ *
+ * @param string $tableName
+ * @param string $colIDName
+ * @param string $name
+ * @param integer $colID
+ *
+ * @return
+ *  0 if no duplicate was found or the value of ColIDName
+ */
+function forschungsatlas_find_duplicate_name($tableName, $colIDName, $name, $colID=0) {
+  $name = forschungsatlas_clean_name($name);
+  $result = db_query('SELECT '. $colIDName .' FROM {' . $tableName .'}
+      WHERE name=:name AND '. $colIDName .'!=:colID
+      LIMIT 1', array(':name' => $name, ':colID' => $colID))
+      ->fetchField();
+
+  return intval($result);
+}
+
+/**
+ * WKT Generator
+ *
+ * @param string $street
+ * @param string $postalcode
+ * @param string $city
+ * @param string $federalstate
+ *
+ * @return $geolocation
+ *   An associative array array containing the geolocation values.
+ */
+function forschungsatlas_generate_wkt($street, $postalcode, $city, $federalstate) {
+  $geolocation = array();
+  // Example: $address = 'Invalidenstr. 43, 10115 Berlin, Berlin, DE';
+  $address = $street .', '. $postalcode .' '. $city .', '. $federalstate .', DE';
+  $geocoder_engine = 'google';
+  if ($geocoded_data = geocoder($geocoder_engine, $address)) {
+    $geolocation['geotype'] = 'point';
+    $geolocation['latitude'] = $geocoded_data->getY();
+    $geolocation['longitude'] = $geocoded_data->getX();
+    $geolocation['wkt'] = 'POINT ('. $geocoded_data->getX() .' '. $geocoded_data->getY() .')';
+  }
+
+  return $geolocation;
+}
+
+
+/**
+ * Insert row into mapping table forschungsatlas__institution_geolocation.
+ *
+ * @param $geolocation
+ *   An associative array array containing the geolocation values.
+ */
+function forschungsatlas_write_wkt($geolocation=array()) {
+  db_delete('forschungsatlas__institution_geolocation')
+    ->condition('iid', $geolocation['iid'])
+    ->execute();
+  db_insert('forschungsatlas__institution_geolocation')
+    ->fields(array(
+        'iid' => $geolocation['iid'],
+        'geolocation_geo_type' => $geolocation['geotype'],
+        'geolocation_lat' => $geolocation['latitude'],
+        'geolocation_lon' => $geolocation['longitude'],
+        'geolocation_wkt' => $geolocation['wkt'],
+    ))
+    ->execute();
+}
+
+/**
+ * Delete an institution.
+ *
+ * @param integer $iid
+ *   The institution ID.
+ */
+function forschungsatlas_delete_institution($iid=0) {
+  $transaction = db_transaction();
+  if ($iid) {
+    try {
+      // Delete the institution
+      db_delete('forschungsatlas__institutions')
+        ->condition('iid', $iid)
+        ->execute();
+      // Delete the institution from mapping tables
+      // See forschungsatlas_admin_institution_form_submit()
+      // Special case: forschungsatlas__institution_institution
+      $or = db_or()->condition('iid', $iid)->condition('linkid', $iid);
+      db_delete('forschungsatlas__institution_institution')
+        ->condition($or)->execute();
+      // Othe mapping tables
+      db_delete('forschungsatlas__institution_geolocation')
+        ->condition('iid', $iid)
+        ->execute();
+      db_delete('forschungsatlas__institution_researchnetwork')
+        ->condition('iid', $iid)
+        ->execute();
+      db_delete('forschungsatlas__institution_organism')
+        ->condition('iid', $iid)
+        ->execute();
+      db_delete('forschungsatlas__institution_habitat')
+        ->condition('iid', $iid)
+        ->execute();
+      db_delete('forschungsatlas__institution_topic')
+        ->condition('iid', $iid)
+        ->execute();
+      db_delete('forschungsatlas__institution_intersubject')
+        ->condition('iid', $iid)
+        ->execute();
+      db_delete('forschungsatlas__institution_methodology')
+        ->condition('iid', $iid)
+        ->execute();
+      db_delete('forschungsatlas__tools_broken_links')
+        ->condition('iid', $iid)
+        ->execute();
+      // Performance: Update auxiliar table
+      _forschungsatlas_delete_aux_institution_table($iid);
+    }
+    catch (Exception $e) {
+      $transaction->rollback();
+      watchdog_exception('NEFO', $e);
+      throw $e;
+    }
+  } // if()
+}
+
+
+/**
+ * Save an institution.
+ *
+ * @param $institution
+ *   The $institution object to be saved. If $institution->iid is
+ *   omitted, a new institution will be added.
+ * @param $mapping
+ *  The associated values for the mapping tables
+ */
+function forschungsatlas_save_institution($institution, $mapping) {
+  $transaction = db_transaction();
+
+  try {
+    $is_new = empty($institution->iid);
+    if ($is_new) { // Insert
+      $institution->created = REQUEST_TIME;
+      drupal_write_record('forschungsatlas__institutions', $institution);
+    }
+    else { // Update
+      drupal_write_record('forschungsatlas__institutions', $institution, 'iid');
+    }
+    // Update mapping tables
+    if ($institution->iid) {
+      $iid = $institution->iid;
+      // Update forschungsatlas__institution_geolocation
+      $wkt = forschungsatlas_generate_wkt($institution->street, $institution->postalcode, $mapping->cityname, $mapping->fsname);
+      $wkt['iid'] = $iid;
+      forschungsatlas_write_wkt($wkt);
+      // Update forschungsatlas__institution_institution
+      _forschungsatlas_update_institution_mapping_tables($iid, 'forschungsatlas__institution_institution',
+      'linkid', $mapping->belonging);
+      // Update forschungsatlas__institution_researchnetwork
+      _forschungsatlas_update_mapping_tables($iid, 'forschungsatlas__institution_researchnetwork',
+      'rnid', $mapping->network);
+      // Update forschungsatlas__institution_organism
+      _forschungsatlas_update_mapping_tables($iid, 'forschungsatlas__institution_organism',
+      'oid', $mapping->organisms);
+      // Update forschungsatlas__institution_habitat
+      _forschungsatlas_update_mapping_tables($iid, 'forschungsatlas__institution_habitat',
+      'hid', $mapping->habitats);
+      // Update forschungsatlas__institution_topic
+      _forschungsatlas_update_mapping_tables($iid, 'forschungsatlas__institution_topic',
+      'tid', $mapping->topics);
+      // Update forschungsatlas__institution_intersubject
+      _forschungsatlas_update_mapping_tables($iid, 'forschungsatlas__institution_intersubject',
+      'isid', $mapping->intsubjects);
+      // Update forschungsatlas__institution_methodology
+      _forschungsatlas_update_mapping_tables($iid, 'forschungsatlas__institution_methodology',
+      'mid', $mapping->methodologies);
+      // Update forschungsatlas__tools_broken_links
+      db_delete('forschungsatlas__tools_broken_links')
+      ->condition('iid', $iid)
+      ->execute();
+      // Performance: Update auxiliar table
+      _forschungsatlas_update_aux_institution_table($iid);
+    } // if()
+  }
+  catch (Exception $e) {
+    $transaction->rollback();
+    watchdog_exception('NEFO', $e);
+    throw $e;
+  }
+}
+
+/**
+ * Update mapping tables.
+ *
+ * @param integer $iid
+ *  The institution ID
+ * @param string $mappingTable
+ *  The name of the mapping table
+ * @param string $mappingId
+ *  The name of the mapping column
+ * @param array $values
+ *  The mapped IDs.
+ */
+function _forschungsatlas_update_mapping_tables($iid, $mappingTable, $mappingId, $values) {
+  db_delete($mappingTable)
+  ->condition('iid', $iid)
+  ->execute();
+
+  foreach ($values as $id) {
+    db_insert($mappingTable)
+    ->fields(array(
+    'iid' => $iid,
+    $mappingId => $id,
+    ))
+    ->execute();
+  }
+}
+
+/**
+ * Update mapping tables.
+ *
+ * @param integer $iid
+ *  The institution ID
+ * @param string $mappingTable
+ *  The name of the mapping table
+ * @param string $mappingId
+ *  The name of the mapping column
+ * @param array $values
+ *  The mapped IDs.
+ */
+function _forschungsatlas_update_institution_mapping_tables($iid, $mappingTable, $mappingId, $values) {
+  db_delete($mappingTable)
+  ->condition('iid', $iid)
+  ->execute();
+
+  $delta = 0;
+  foreach ($values as $id) {
+    db_insert($mappingTable)
+    ->fields(array(
+    'iid' => $iid,
+    $mappingId => $id,
+    'delta' => $delta,
+    ))
+    ->execute();
+    $delta++;
+  }
+}
+
+
+
+/**
+ * Build the list of institutions with broken links
+ *
+ * @return integer $num_rows
+ *  Ther number of broken links
+ */
+function forschungsatlas_find_broken_links() {
+  // Delete the existing entries in table forschungsatlas__tools_broken_links
+  db_truncate('forschungsatlas__tools_broken_links')->execute();
+  // Check the URLs
+  $num_rows = 0;
+  $result = db_query('SELECT iid, url FROM {forschungsatlas__institutions} WHERE url IS NOT NULL ORDER BY iid');
+  foreach ($result as $row) {
+    $url = preg_replace('/\s+/', '', $row->url);
+    if (!empty($url) && !forschungsatlas_check_url($url)) {
+        $num_rows++;
+        db_insert('forschungsatlas__tools_broken_links')
+          ->fields(array('iid' => $row->iid))
+          ->execute();
+    } // if()
+  } // foreach()
+
+  return $num_rows;
+}
+
+
+
+/**
+ * Request a remote site and evaluate the HTTP response code
+ *
+ * @param string $url
+ *  The URL
+ *
+ * @return
+ *  TRUE on success, FALSE on failure
+ */
+function forschungsatlas_check_url($url) {
+  $response = drupal_http_request($url, array('timeout' => FORSCHUNGSATLAS_HTTP_TIMEOUT));
+  if (($response->code == FORSCHUNGSATLAS_HTTP_STATUS_CODE_OK) || ($response->code == FORSCHUNGSATLAS_HTTP_STATUS_CODE_MOVE_PERMANENTLY)) {
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
+/**
+ * Build the assembled parent name of an institution as a HTML list
+ *
+ * @param int $iid
+ *  The institution ID
+ * @param string $name
+ *  The institution name
+ * @param string $parentname
+ *  The parent name
+ *
+ * @return  string $assembled_name
+ *  The parent name as a HTML list (<ul>)
+ */
+function forschungsatlas_get_parent_name_list($iid, $name, $parentname=NULL) {
+  $assembled_name = '';
+  $begstr = '';
+  $endstr = '';
+
+  $url = l(
+      $name,
+      FORSCHUNGSATLAS_PUBLIC_PATH . '/institutions/'. $iid,
+      array(
+          'attributes' => array(
+              'class' => 'forschungsatlas-institution-l',
+              'target'=>'blank',
+          )
+      )
+  );
+  if (!empty($parentname)) {
+    $list = explode(FORSCHUNGSATLAS_DELIMITER_NEWLINE, $parentname);
+    $count = 0;
+    foreach ($list AS $value) {
+      list($rname, $riid) = explode(FORSCHUNGSATLAS_DELIMITER_ID, $value);
+      $begstr .= '<ul class="'. ((!$count) ? 'forschungsatlas-parent-ul' : 'forschungsatlas-child-ul') .'">'.
+                 '<li class="'. ((!$count) ? 'forschungsatlas-parent-li' : 'forschungsatlas-child-li') .'">'. check_plain($rname) .'</li>';
+      $endstr .= '</ul>';
+      $count++;
+    } // foreach()
+  } // if()
+  if (!empty($begstr)) {
+    $assembled_name = $begstr . '<ul class="forschungsatlas-child-ul"><li class="forschungsatlas-child-li">'. $url .'</li></ul>'. $endstr;
+  }
+  else {
+    $assembled_name = '<ul class="forschungsatlas-parent-ul"><li class="forschungsatlas-parent-li">'. $url .'</li></ul>';
+  } // if()
+
+  return $assembled_name;
+}
+
+
+/**
+ * Build the assembled parent name of an institution
+ *
+ * @param int $iid
+ *  The institution ID
+ * @param string $name
+ *  The institution name
+ * @param string $parentname
+ *  The parent name
+ *
+ * @return  string $assembled_name
+ *  The assembled parent name
+ */
+function forschungsatlas_get_assembled_parent_name($iid, $name, $parentname=NULL, $fulllinked=FALSE) {
+  $parents = '';
+  $url = l(
+      $name,
+      FORSCHUNGSATLAS_PUBLIC_PATH . '/institutions/'. $iid,
+      array(
+          'attributes' => array(
+              'class' => 'forschungsatlas-institution-l',
+              'target'=>'blank',
+          )
+      )
+  );
+  if (!empty($parentname)) {
+    $list = explode(FORSCHUNGSATLAS_DELIMITER_NEWLINE, $parentname);
+    foreach ($list AS $value) {
+      list($rname, $riid) = explode(FORSCHUNGSATLAS_DELIMITER_ID, $value);
+      if ($fulllinked) {
+        $parents .= l(
+            $rname,
+            FORSCHUNGSATLAS_PUBLIC_PATH . '/institutions/'. $riid,
+            array(
+                'attributes' => array(
+                    'class' => 'forschungsatlas-institution-l',
+                )
+           )
+        );
+      }
+      else {
+        $parents .= check_plain($rname);
+      }
+      $parents .= ' '. FORSCHUNGSATLAS_SEPARATOR .' ';
+    }
+  } // if()
+
+  $assembled_name = (!empty($parents)) ? $parents . $url : $url;
+
+  return $assembled_name;
+}
+
+
+
+/**
+ * Build a selectable options for a form element.
+ *
+ * @param string $tableName
+ *  Table name
+ * @param string $colName
+ *  Column name
+ *
+ * @return
+ *  An array in the form array(id => name).
+ */
+function forschungsatlas_get_selectable_options($tableName, $colName) {
+  $options = array();
+  $result = db_query('SELECT '. $colName .', name FROM {'. $tableName .'}');
+  foreach ($result as $row) {
+    $options[$row->$colName] = $row->name;
+  }
+
+  return $options;
+}
+
+/**
+ * Build an array of mapped IDs to the given institution ID.
+ *
+ * @param integer $iid
+ *  The institution ID
+ * @param string $tableName
+ *  Table name
+ * @param string $colName
+ *  Column name
+ *
+ * @return
+ *  An array containing the associated IDs.
+ */
+function forschungsatlas_get_mapped_ids($iid, $tableName, $colName) {
+  $ids = array();
+  if (!$iid) {
+    return $ids;
+  }
+  $result = db_query('SELECT '. $colName .' FROM {'. $tableName .'}
+      WHERE iid=:iid', array(':iid' => $iid));
+  foreach ($result as $row) {
+    $ids[] = $row->$colName;
+  }
+
+  return $ids;
+}
+
+/**
+ * Performance: Update table forschungsatlas__aux_institutions (a.k.a. materialized views)
+ *
+ * @param integer $iid
+ *  The institution ID
+ */
+function _forschungsatlas_update_aux_institution_table($iid) {
+  _forschungsatlas_delete_aux_institution_table($iid);
+  $query = db_select('forschungsatlas__aux_institutions_view', 'v')
+    ->fields('v')
+    ->condition('iid', $iid);
+  db_insert('forschungsatlas__aux_institutions')
+    ->from($query)
+    ->execute();
+}
+
+/**
+ * Performance: Delete from table forschungsatlas__aux_institutions (a.k.a. materialized views)
+ *
+ * @param integer $iid
+ *  The institution ID
+ */
+function _forschungsatlas_delete_aux_institution_table($iid) {
+  db_delete('forschungsatlas__aux_institutions')
+    ->condition('iid', $iid)
+    ->execute();
+}
+

@@ -1,0 +1,792 @@
+<?php
+/**
+ * @file
+ * forschungsatlas.install
+ */
+
+module_load_include('inc', 'forschungsatlas', 'includes/forschungsatlas.install.rows');
+
+/**
+ * Implementation of hook_schema().
+ */
+function forschungsatlas_schema() {
+ $schema = array();
+
+ // forschungsatlas__federal_states
+  $schema['forschungsatlas__federal_states'] = array(
+    'fields' => array(
+      'fsid' => array(
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'fscode' => array(
+        'type' => 'varchar',
+        'length' => '8',
+        'not null' => TRUE,
+      ),
+      'name' => array(
+        'type' => 'varchar',
+        'length' => '255',
+        'not null' => TRUE,
+      ),
+    ),
+    'primary key' => array('fsid'),
+    'indexes' => array(
+      'fscode_idx' => array('fscode'),
+      'name_idx' => array('name'),
+    ),
+  );
+
+  // forschungsatlas__cities
+  $schema['forschungsatlas__cities'] = array(
+    'fields' => array(
+      'cid' => array(
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'name' => array(
+        'type' => 'varchar',
+        'length' => '255',
+        'not null' => TRUE,
+      ),
+      'fsid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+    ),
+    'primary key' => array('cid'),
+    'indexes' => array(
+      'fsid_idx' => array('fsid'),
+      'name_idx' => array('name'),
+      'cid_fsid_idx' => array('cid', 'fsid'),
+    ),
+  );
+
+  // forschungsatlas__habitats
+  $schema['forschungsatlas__habitats'] = array(
+    'fields' => array(
+      'hid' => array(
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'name' => array(
+        'type' => 'varchar',
+        'length' => '255',
+        'not null' => TRUE,
+      ),
+      'parent' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+    ),
+    'primary key' => array('hid'),
+    'indexes' => array(
+      'name_idx' => array('name'),
+      'parent_idx' => array('parent'),
+    ),
+  );
+
+  // forschungsatlas__institution_geolocation
+  $schema['forschungsatlas__institution_geolocation'] = array(
+    'fields' => array(
+      'iid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'geolocation_geo_type' => array(
+        'type' => 'varchar',
+        'length' => '64',
+        'not null' => FALSE,
+      ),
+      'geolocation_lat' => array(
+        'type' => 'numeric',
+        'not null' => FALSE,
+        'precision' => '18',
+        'scale' => '12',
+      ),
+      'geolocation_lon' => array(
+        'type' => 'numeric',
+        'not null' => FALSE,
+        'precision' => '18',
+        'scale' => '12',
+      ),
+      'geolocation_wkt' => array(
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => FALSE,
+      ),
+    ),
+    'indexes' => array(
+      'geolocation_lat_idx' => array('geolocation_lat'),
+      'geolocation_lon_idx' => array('geolocation_lon'),
+      'institution_idx' => array('iid'),
+    ),
+  );
+
+  // forschungsatlas__institution_habitat
+  $schema['forschungsatlas__institution_habitat'] = array(
+    'fields' => array(
+      'iid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'hid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+    ),
+    'indexes' => array(
+      'habitat_idx' => array('hid'),
+      'institution_idx' => array('iid'),
+    ),
+  );
+
+  // forschungsatlas__institution_institution
+  $schema['forschungsatlas__institution_institution'] = array(
+    'fields' => array(
+      'iid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'linkid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'delta' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),      
+    ),
+    'indexes' => array(
+      'delta_idx' => array('delta'),
+      'iid_delta_idx' => array('iid', 'delta'),
+      'iid_idx' => array('iid'),
+      'iid_linkid_delta_idx' => array('iid', 'linkid', 'delta'),
+      'link_idx' => array('linkid'),
+    ),
+  );
+
+  // forschungsatlas__institution_intersubject
+  $schema['forschungsatlas__institution_intersubject'] = array(
+    'fields' => array(
+      'iid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'isid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+    ),
+    'indexes' => array(
+      'institution_idx' => array('iid'),
+      'intersubject_idx' => array('isid'),
+    ),
+  );
+
+  // forschungsatlas__institution_methodology
+  $schema['forschungsatlas__institution_methodology'] = array(
+    'fields' => array(
+      'iid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'mid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+    ),
+    'indexes' => array(
+      'institution_idx' => array('iid'),
+      'methodology_idx' => array('mid'),
+    ),
+  );
+
+  // forschungsatlas__institution_organism
+  $schema['forschungsatlas__institution_organism'] = array(
+    'fields' => array(
+      'iid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'oid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+    ),
+    'indexes' => array(
+      'institution_idx' => array('iid'),
+      'organism_idx' => array('oid'),
+    ),
+  );
+
+  // forschungsatlas__institution_researchnetwork
+  $schema['forschungsatlas__institution_researchnetwork'] = array(
+    'fields' => array(
+      'iid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'rnid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+    ),
+    'indexes' => array(
+      'institution_idx' => array('iid'),
+      'researchnetwork_idx' => array('rnid'),
+    ),
+  );
+
+  // forschungsatlas__institution_topic
+  $schema['forschungsatlas__institution_topic'] = array(
+    'fields' => array(
+      'iid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'tid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+    ),
+    'indexes' => array(
+      'institution_idx' => array('iid'),
+      'topic_idx' => array('tid'),
+    ),
+  );
+
+  // forschungsatlas__institutions
+  $schema['forschungsatlas__institutions'] = array(
+    'fields' => array(
+      'iid' => array(
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'name' => array(
+        'type' => 'varchar',
+        'length' => '255',
+        'not null' => TRUE,
+      ),
+      'street' => array(
+        'type' => 'varchar',
+        'length' => '255',
+        'not null' => FALSE,
+      ),
+      'postalcode' => array(
+        'type' => 'varchar',
+        'length' => '20',
+        'not null' => FALSE,
+      ),
+      'cid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'fsid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'url' => array(
+        'type' => 'varchar',
+        'length' => '500',
+        'not null' => FALSE,
+      ),
+      'otid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'description' => array(
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => FALSE,
+      ),
+      'uid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'status' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 1,
+      ),
+      'created' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+      'changed' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+    ),
+    'primary key' => array('iid'),
+    'indexes' => array(
+      'changed_idx' => array('changed'),
+      'city_idx' => array('cid'),
+      'created_idx' => array('created'),
+      'federalstate_idx' => array('fsid'),
+      'institution_status_idx' => array('iid', 'status'),
+      'name_idx' => array('name'),
+      'organizationtype_idx' => array('otid'),
+      'status_idx' => array('status'),
+      'userid_idx' => array('uid'),
+    ),
+  );
+
+  // forschungsatlas__interdisciplinary_subject
+  $schema['forschungsatlas__interdisciplinary_subject'] = array(
+    'fields' => array(
+      'isid' => array(
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'name' => array(
+        'type' => 'varchar',
+        'length' => '255',
+        'not null' => TRUE,
+      ),
+      'parent' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+    ),
+    'primary key' => array('isid'),
+    'indexes' => array(
+      'name_idx' => array('name'),
+      'parent_idx' => array('parent'),
+    ),
+  );
+
+  // forschungsatlas__methodology
+  $schema['forschungsatlas__methodology'] = array(
+    'fields' => array(
+      'mid' => array(
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'name' => array(
+        'type' => 'varchar',
+        'length' => '255',
+        'not null' => TRUE,
+      ),
+      'parent' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+    ),
+    'primary key' => array('mid'),
+    'indexes' => array(
+      'name_idx' => array('name'),
+      'parent_idx' => array('parent'),
+    ),
+  );
+
+  // forschungsatlas__organisms
+  $schema['forschungsatlas__organisms'] = array(
+    'fields' => array(
+      'oid' => array(
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'name' => array(
+        'type' => 'varchar',
+        'length' => '255',
+        'not null' => TRUE,
+      ),
+      'parent' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+    ),
+    'primary key' => array('oid'),
+    'indexes' => array(
+      'name_idx' => array('name'),
+      'parent_idx' => array('parent'),
+    ),
+  );
+
+  // forschungsatlas__organization_type
+  $schema['forschungsatlas__organization_type'] = array(
+    'fields' => array(
+      'otid' => array(
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'name' => array(
+        'type' => 'varchar',
+        'length' => '255',
+        'not null' => TRUE,
+      ),
+    ),
+    'primary key' => array('otid'),
+    'indexes' => array(
+      'name_idx' => array('name'),
+    ),
+  );
+
+  // forschungsatlas__research_network
+  $schema['forschungsatlas__research_network'] = array(
+    'fields' => array(
+      'rnid' => array(
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'name' => array(
+        'type' => 'varchar',
+        'length' => '255',
+        'not null' => TRUE,
+      ),
+      'parent' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+    ),
+    'primary key' => array('rnid'),
+    'indexes' => array(
+      'name_idx' => array('name'),
+      'parent_idx' => array('parent'),
+    ),
+  );
+
+  // forschungsatlas__topics
+  $schema['forschungsatlas__topics'] = array(
+    'fields' => array(
+      'tid' => array(
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'name' => array(
+        'type' => 'varchar',
+        'length' => '255',
+        'not null' => TRUE,
+      ),
+      'parent' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+    ),
+    'primary key' => array('tid'),
+    'indexes' => array(
+      'name_idx' => array('name'),
+      'parent_idx' => array('parent'),
+    ),
+  );
+
+  /**
+   * Auxiliar tables
+   */
+  // forschungsatlas__aux_institutions
+  $schema['forschungsatlas__aux_institutions'] = array(
+    'fields' => array(
+          'iid' => array(
+              'type' => 'int',
+              'unsigned' => TRUE,
+              'not null' => TRUE,
+          ),
+          'name' => array(
+              'type' => 'varchar',
+              'length' => '255',
+              'not null' => TRUE,
+          ),
+          'street' => array(
+              'type' => 'varchar',
+              'length' => '255',
+              'not null' => FALSE,
+          ),
+          'postalcode' => array(
+              'type' => 'varchar',
+              'length' => '20',
+              'not null' => FALSE,
+          ),
+          'cid' => array(
+              'type' => 'int',
+              'unsigned' => TRUE,
+              'not null' => TRUE,
+          ),
+          'city' => array(
+              'type' => 'varchar',
+              'length' => '255',
+              'not null' => TRUE,
+          ),
+          'fsid' => array(
+              'type' => 'int',
+              'unsigned' => TRUE,
+              'not null' => TRUE,
+          ),
+          'federalstate' => array(
+              'type' => 'varchar',
+              'length' => '255',
+              'not null' => TRUE,
+          ),
+          'url' => array(
+              'type' => 'varchar',
+              'length' => '500',
+              'not null' => FALSE,
+          ),
+          'otid' => array(
+              'type' => 'int',
+              'unsigned' => TRUE,
+              'not null' => TRUE,
+          ),
+          'orgtype' => array(
+              'type' => 'varchar',
+              'length' => '255',
+              'not null' => TRUE,
+          ),
+          'geotype' => array(
+              'type' => 'varchar',
+              'length' => '64',
+              'not null' => FALSE,
+          ),
+          'latitude' => array(
+              'type' => 'numeric',
+              'not null' => FALSE,
+              'precision' => '18',
+              'scale' => '12',
+          ),
+          'longitude' => array(
+              'type' => 'numeric',
+              'not null' => FALSE,
+              'precision' => '18',
+              'scale' => '12',
+          ),
+          'wkt' => array(
+              'type' => 'text',
+              'size' => 'big',
+              'not null' => FALSE,
+          ),
+          'compositedname' => array(
+              'type' => 'varchar',
+              'length' => '2048',
+              'not null' => TRUE,
+          ),
+          'assembledparentname' => array(
+              'type' => 'varchar',
+              'length' => '2048',
+              'not null' => FALSE,
+          ),
+    ),
+  'indexes' => array(
+          'iid_idx' => array('iid'),
+          'name_idx' => array('name'),
+          'cid_idx' => array('cid'),
+          'city_idx' => array('city'),
+          'fsid_idx' => array('fsid'),
+          'federalstate_idx' => array('federalstate'),
+          'otid_idx' => array('otid'),
+          'orgtype_idx' => array('otid'),
+          'compositedname_idx' => array(array('compositedname', 255)),
+    ),
+  );
+
+
+  /**
+   * Tools
+   */
+  // forschungsatlas__tools_broken_links
+  $schema['forschungsatlas__tools_broken_links'] = array(
+      'fields' => array(
+          'iid' => array(
+              'type' => 'int',
+              'unsigned' => TRUE,
+              'not null' => TRUE,
+          ),
+      ),
+      'indexes' => array(
+        'institution_idx' => array('iid'),
+      ),
+  );
+
+  return $schema;
+}
+
+
+/**
+ * Implementation of hook_install().
+ */
+function forschungsatlas_install() {
+  if (db_table_exists('forschungsatlas__federal_states')) {
+    $rows = _forschungsatlas__federal_states_rows();
+    foreach ($rows as $row) {
+      db_insert('forschungsatlas__federal_states')
+      ->fields(
+      array(
+      'fsid' => $row[0],
+      'fscode' => $row[1],
+      'name' => $row[2],
+      )
+      )->execute();
+    }
+  }
+
+  if (db_table_exists('forschungsatlas__cities')) {
+    $rows = _forschungsatlas__cities_rows();
+    foreach ($rows as $row) {
+      db_insert('forschungsatlas__cities')
+      ->fields(
+      array(
+      'cid' => $row[0],
+      'name' => $row[1],
+      'fsid' => $row[2],
+      )
+      )->execute();
+    }
+  }
+
+  if (db_table_exists('forschungsatlas__habitats')) {
+    $rows = _forschungsatlas__habitats_rows();
+    foreach ($rows as $row) {
+      db_insert('forschungsatlas__habitats')
+      ->fields(
+      array(
+      'hid' => $row[0],
+      'name' => $row[1],
+      'parent' => $row[2],
+      )
+      )->execute();
+    }
+  }
+  
+  if (db_table_exists('forschungsatlas__interdisciplinary_subject')) {
+    $rows = _forschungsatlas__interdisciplinary_subject_rows();
+    foreach ($rows as $row) {
+      db_insert('forschungsatlas__interdisciplinary_subject')
+      ->fields(
+      array(
+      'isid' => $row[0],
+      'name' => $row[1],
+      'parent' => $row[2],
+      )
+      )->execute();
+    }
+  }
+  
+  if (db_table_exists('forschungsatlas__methodology')) {
+    $rows = _forschungsatlas__methodology_rows();
+    foreach ($rows as $row) {
+      db_insert('forschungsatlas__methodology')
+      ->fields(
+      array(
+      'mid' => $row[0],
+      'name' => $row[1],
+      'parent' => $row[2],
+      )
+      )->execute();
+    }
+  }
+
+  if (db_table_exists('forschungsatlas__organisms')) {
+    $rows = _forschungsatlas__organisms_rows();
+    foreach ($rows as $row) {
+      db_insert('forschungsatlas__organisms')
+      ->fields(
+      array(
+      'oid' => $row[0],
+      'name' => $row[1],
+      'parent' => $row[2],
+      )
+      )->execute();
+    }
+  }  
+  
+  if (db_table_exists('forschungsatlas__organization_type')) {
+    $rows = _forschungsatlas__organization_type_rows();
+    foreach ($rows as $row) {
+      db_insert('forschungsatlas__organization_type')
+      ->fields(
+      array(
+      'otid' => $row[0],
+      'name' => $row[1],
+      )
+      )->execute();
+    }
+  }
+  
+  if (db_table_exists('forschungsatlas__research_network')) {
+    $rows = _forschungsatlas__research_network_rows();
+    foreach ($rows as $row) {
+      db_insert('forschungsatlas__research_network')
+      ->fields(
+      array(
+      'rnid' => $row[0],
+      'name' => $row[1],
+      'parent' => $row[2],
+      )
+      )->execute();
+    }
+  }      
+
+  if (db_table_exists('forschungsatlas__topics')) {
+    $rows = _forschungsatlas__topics_rows();
+    foreach ($rows as $row) {
+      db_insert('forschungsatlas__topics')
+      ->fields(
+      array(
+      'tid' => $row[0],
+      'name' => $row[1],
+      'parent' => $row[2],
+      )
+      )->execute();
+    }
+  }
+
+  // What to do after install?
+  drupal_set_message(t('You can now <a href="!forschungsatlas_admin">configure the Forschungsatlas module</a> for your site.',
+    array('!forschungsatlas_admin' => url('admin/config/forschungsatlas'))), 'status');
+}
+
+
+/**
+ * Implementation of hook_uninstall().
+ */
+function forschungsatlas_uninstall() {
+}
+
+
+
+

@@ -1,0 +1,12 @@
+name = Forschungsatlas Translation Methodology
+description = Makes Forschungsatlas Methodology available for translation.
+dependencies[] = i18n_forschungsatlas
+package = NEFO
+core = 7.x
+
+; Added by NeFo Team
+version = "7.x-1.0"
+core = "7.x"
+
+
+

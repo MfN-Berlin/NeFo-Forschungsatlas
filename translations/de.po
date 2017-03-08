@@ -1,0 +1,866 @@
+# $Id$
+#
+# German translation of Drupal (general)
+# Copyright 2015 Antonio Ponte <antonio.ponte@mfn-berlin.de>
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2015-07-10 13:55+0200\n"
+"PO-Revision-Date: 2015-07-10 13:55+0200\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: German <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: nefo-display-institution.tpl.php:42 includes/nefo.admin.institutions.inc:15;157 includes/nefo.search.inc:52
+msgid "Organization Type"
+msgstr "Art der Einrichtung"
+
+#: nefo-display-institution.tpl.php:49 includes/nefo.admin.institutions.inc:110
+msgid "Belongs to"
+msgstr "Gehört zu"
+
+#: nefo-display-institution.tpl.php:60
+msgid "Subordinate institutions of"
+msgstr "Untergeordnete Abteilung(en) mit Biodiversitätskontext von"
+
+#: nefo-display-institution.tpl.php:76 includes/nefo.admin.institutions.inc:181 includes/nefo.admin.network.inc:77 includes/nefo.search.inc:72
+msgid "Research Network"
+msgstr "Forschungsnetzwerk"
+
+#: nefo-display-institution.tpl.php:89 includes/nefo.admin.institutions.inc:189 includes/nefo.search.inc:96
+msgid "Organisms"
+msgstr "Organismen"
+
+#: nefo-display-institution.tpl.php:102 includes/nefo.admin.institutions.inc:197 includes/nefo.search.inc:80
+msgid "Habitats"
+msgstr "Lebensräume"
+
+#: nefo-display-institution.tpl.php:115 includes/nefo.admin.institutions.inc:205 includes/nefo.search.inc:112
+msgid "Research Topics"
+msgstr "Fachgebiete"
+
+#: nefo-display-institution.tpl.php:128 includes/nefo.admin.institutions.inc:213 includes/nefo.search.inc:104
+msgid "Interdisciplinary Subjects"
+msgstr "Querschnitts-/IPBES*-Themen"
+
+#: nefo-display-institution.tpl.php:141 includes/nefo.admin.institutions.inc:221 includes/nefo.search.inc:88
+msgid "Methodologies"
+msgstr "Methodik"
+
+#: nefo-display-institution.tpl.php:159 includes/nefo.admin.institutions.inc:167
+msgid "Comment"
+msgstr "Kommentar"
+
+#: nefo-display-institution.tpl.php:190
+msgid "Link to website"
+msgstr "Link zur Website"
+
+#: nefo.module:28
+msgid "View published institutions."
+msgstr ""
+
+#: nefo.module:31
+msgid "Administer institutions"
+msgstr ""
+
+#: nefo.module:32
+msgid "Allow users to create, update and delete institutions."
+msgstr ""
+
+#: nefo.module:35
+msgid "Administer NeFo configuration"
+msgstr ""
+
+#: nefo.module:36
+msgid "Allow users to change NeFo module configuration."
+msgstr ""
+
+#: nefo.module:89
+msgid "Institution search"
+msgstr "Erweiterte Suche"
+
+#: nefo.module:90
+msgid "Advanced search."
+msgstr "Suche nach Akteuren der Biodiversitätsforschung"
+
+#: nefo.module:99;160 includes/nefo.admin.institutions.inc:98 includes/nefo.admin.tools.inc:20;116 includes/nefo.search.inc:23
+msgid "Institution"
+msgstr "Institution"
+
+#: nefo.module:100
+msgid "Show the institution."
+msgstr ""
+
+#: nefo.module:109
+msgid "View"
+msgstr "Ansicht"
+
+#: nefo.module:114
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: nefo.module:115
+msgid "Edit institution."
+msgstr ""
+
+#: nefo.module:125;183;246;290;326;362;398;434;470 includes/nefo.admin.habitats.inc:196 includes/nefo.admin.institutions.inc:374 includes/nefo.admin.intersubjects.inc:196 includes/nefo.admin.methodology.inc:196 includes/nefo.admin.network.inc:196 includes/nefo.admin.organism.inc:196 includes/nefo.admin.orgtype.inc:173 includes/nefo.admin.topic.inc:196
+msgid "Delete"
+msgstr "Löschen"
+
+#: nefo.module:126
+msgid "Delete institution."
+msgstr ""
+
+#: nefo.module:141
+msgid "Settings for the NeFo module."
+msgstr ""
+
+#: nefo.module:152
+msgid "NeFo Institutions"
+msgstr ""
+
+#: nefo.module:153
+msgid "Configure intitutions."
+msgstr ""
+
+#: nefo.module:166
+msgid "Add an institution"
+msgstr ""
+
+#: nefo.module:167
+msgid "Add an institution."
+msgstr ""
+
+#: nefo.module:175
+msgid "Edit Institution"
+msgstr ""
+
+#: nefo.module:176
+msgid "Edit an institution."
+msgstr ""
+
+#: nefo.module:184
+msgid "Delete an institution."
+msgstr ""
+
+#: nefo.module:192 includes/nefo.admin.cities.inc:85 includes/nefo.admin.institutions.inc:13;131 includes/nefo.admin.tools.inc:23;117 includes/nefo.search.inc:42;128
+msgid "City"
+msgstr "Stadt"
+
+#: nefo.module:193
+msgid "Configure cities."
+msgstr ""
+
+#: nefo.module:201
+msgid "Add a city"
+msgstr ""
+
+#: nefo.module:202
+msgid "Add a city."
+msgstr ""
+
+#: nefo.module:210
+msgid "Edit city"
+msgstr ""
+
+#: nefo.module:211
+msgid "Edit city."
+msgstr ""
+
+#: nefo.module:219
+msgid "Org. Type"
+msgstr ""
+
+#: nefo.module:220
+msgid "Configure organization type."
+msgstr ""
+
+#: nefo.module:228
+msgid "Add an organization type"
+msgstr ""
+
+#: nefo.module:229
+msgid "Add an organization type."
+msgstr ""
+
+#: nefo.module:237
+msgid "Edit an organization type"
+msgstr ""
+
+#: nefo.module:238
+msgid "Edit an organization type."
+msgstr ""
+
+#: nefo.module:247
+msgid "Delete an organization type."
+msgstr ""
+
+#: nefo.module:257
+msgid "NeFo Categories"
+msgstr ""
+
+#: nefo.module:258
+msgid "Configure habitat, interdisciplinary subject, methodology, organism, research network and topic."
+msgstr ""
+
+#: nefo.module:266 includes/nefo.admin.habitats.inc:94
+msgid "Habitat"
+msgstr ""
+
+#: nefo.module:267
+msgid "Configure habitats."
+msgstr ""
+
+#: nefo.module:272
+msgid "Edit a habitat"
+msgstr ""
+
+#: nefo.module:273
+msgid "Edit a habitat."
+msgstr ""
+
+#: nefo.module:281
+msgid "Add a habitat"
+msgstr ""
+
+#: nefo.module:282
+msgid "Add a habitat."
+msgstr ""
+
+#: nefo.module:291
+msgid "Delete a habitat."
+msgstr ""
+
+#: nefo.module:299
+msgid "Int. Subject"
+msgstr ""
+
+#: nefo.module:300
+msgid "Configure interdisciplinary subject."
+msgstr ""
+
+#: nefo.module:308
+msgid "Add an interdisciplinary subject"
+msgstr ""
+
+#: nefo.module:309
+msgid "Add an interdisciplinary subject."
+msgstr ""
+
+#: nefo.module:317
+msgid "Edit an interdisciplinary subject"
+msgstr ""
+
+#: nefo.module:318
+msgid "Edit an interdisciplinary subject."
+msgstr ""
+
+#: nefo.module:327
+msgid "Delete an interdisciplinary subject."
+msgstr ""
+
+#: nefo.module:335 includes/nefo.admin.methodology.inc:77
+msgid "Methodology"
+msgstr "Methodik"
+
+#: nefo.module:336
+msgid "Configure a methodology."
+msgstr ""
+
+#: nefo.module:344
+msgid "Add a methodology"
+msgstr ""
+
+#: nefo.module:345
+msgid "Add a methodology."
+msgstr ""
+
+#: nefo.module:353
+msgid "Edit a methodology"
+msgstr ""
+
+#: nefo.module:354
+msgid "Edit a methodology."
+msgstr ""
+
+#: nefo.module:363
+msgid "Delete a methodology."
+msgstr ""
+
+#: nefo.module:371 includes/nefo.admin.organism.inc:77
+msgid "Organism"
+msgstr ""
+
+#: nefo.module:372
+msgid "Configure organisms."
+msgstr ""
+
+#: nefo.module:380
+msgid "Add an organism"
+msgstr ""
+
+#: nefo.module:381
+msgid "Add an organism."
+msgstr ""
+
+#: nefo.module:389
+msgid "Edit an organism"
+msgstr ""
+
+#: nefo.module:390
+msgid "Edit an organism."
+msgstr ""
+
+#: nefo.module:399
+msgid "Delete an organism."
+msgstr ""
+
+#: nefo.module:407
+msgid "Res. Network"
+msgstr ""
+
+#: nefo.module:408
+msgid "Configure research network."
+msgstr ""
+
+#: nefo.module:416
+msgid "Add a research network"
+msgstr ""
+
+#: nefo.module:417
+msgid "Add a research network."
+msgstr ""
+
+#: nefo.module:425
+msgid "Edit a research network"
+msgstr ""
+
+#: nefo.module:426
+msgid "Edit a research network."
+msgstr ""
+
+#: nefo.module:435
+msgid "Delete a research network."
+msgstr ""
+
+#: nefo.module:443 includes/nefo.admin.topic.inc:77
+msgid "Topic"
+msgstr "Thema"
+
+#: nefo.module:444
+msgid "Configure topics."
+msgstr ""
+
+#: nefo.module:452
+msgid "Add a topic"
+msgstr ""
+
+#: nefo.module:453
+msgid "Add a topic."
+msgstr ""
+
+#: nefo.module:461
+msgid "Edit a topic"
+msgstr ""
+
+#: nefo.module:462
+msgid "Edit a topic."
+msgstr ""
+
+#: nefo.module:471
+msgid "Delete a topic."
+msgstr ""
+
+#: nefo.module:496
+msgid "Update list (execution will take a long time)"
+msgstr ""
+
+#: nefo.module:497
+msgid "Update list of institution with broken links."
+msgstr ""
+
+#: nefo.module:516
+msgid "Update list"
+msgstr ""
+
+#: nefo.module:517
+msgid "Update list of institution with empty WKT."
+msgstr ""
+
+#: nefo.module:550
+msgid "NeFo cron job has been executed. Found @num_rows broken links."
+msgstr ""
+
+#: nefo.module:140 nefo.info:0
+msgid "NeFo"
+msgstr ""
+
+#: nefo.module:161
+msgid "Configure institutions."
+msgstr ""
+
+#: nefo.module:481
+msgid "NeFo Tools"
+msgstr ""
+
+#: nefo.module:482
+msgid "Administrative tools."
+msgstr ""
+
+#: nefo.module:490 includes/nefo.admin.institutions.inc:151 includes/nefo.admin.tools.inc:119 includes/nefo.search.inc:129
+msgid "URL"
+msgstr "URL"
+
+#: nefo.module:491
+msgid "Find broken links."
+msgstr ""
+
+#: nefo.module:506
+msgid "WKT"
+msgstr ""
+
+#: nefo.module:507
+msgid "Find empty WKT."
+msgstr ""
+
+#: nefo.install:1121
+msgid "You can now <a href=\"!nefo_admin\">configure the NeFo module</a> for your site."
+msgstr ""
+
+#: nefo.info:0
+msgid "Provide core components for the NeFo modules"
+msgstr ""
+
+#: nefo.info:0
+msgid "NEFO"
+msgstr "NEFO"
+
+#: includes/nefo.admin.cities.inc:12;89 includes/nefo.admin.habitats.inc:12;98 includes/nefo.admin.institutions.inc:12;102 includes/nefo.admin.intersubjects.inc:12;81 includes/nefo.admin.methodology.inc:12;81 includes/nefo.admin.network.inc:12;81 includes/nefo.admin.organism.inc:12;81 includes/nefo.admin.orgtype.inc:12;81 includes/nefo.admin.topic.inc:12;81 includes/nefo.search.inc:58;127
+msgid "Name"
+msgstr "Name"
+
+#: includes/nefo.admin.cities.inc:13 includes/nefo.admin.institutions.inc:14;141 includes/nefo.admin.tools.inc:24;118 includes/nefo.search.inc:30
+msgid "Federal State"
+msgstr "Bundesland"
+
+#: includes/nefo.admin.cities.inc:14 includes/nefo.admin.habitats.inc:14 includes/nefo.admin.intersubjects.inc:14 includes/nefo.admin.methodology.inc:14 includes/nefo.admin.network.inc:14 includes/nefo.admin.organism.inc:14 includes/nefo.admin.orgtype.inc:13 includes/nefo.admin.tools.inc:25;121 includes/nefo.admin.topic.inc:14
+msgid "Operation"
+msgstr "Aktion"
+
+#: includes/nefo.admin.cities.inc:31 includes/nefo.admin.habitats.inc:30 includes/nefo.admin.institutions.inc:47 includes/nefo.admin.intersubjects.inc:30 includes/nefo.admin.methodology.inc:30 includes/nefo.admin.network.inc:30 includes/nefo.admin.organism.inc:30 includes/nefo.admin.orgtype.inc:28 includes/nefo.admin.tools.inc:45;148 includes/nefo.admin.topic.inc:30
+msgid "edit"
+msgstr "Bearbeiten"
+
+#: includes/nefo.admin.cities.inc:47 includes/nefo.admin.habitats.inc:51 includes/nefo.admin.institutions.inc:71 includes/nefo.admin.intersubjects.inc:51 includes/nefo.admin.methodology.inc:51 includes/nefo.admin.network.inc:51 includes/nefo.admin.organism.inc:51 includes/nefo.admin.orgtype.inc:55 includes/nefo.admin.topic.inc:51
+msgid "No items available."
+msgstr "Keine Voschläge vorhanden."
+
+#: includes/nefo.admin.cities.inc:92
+msgid "Name of the city."
+msgstr ""
+
+#: includes/nefo.admin.cities.inc:97
+msgid "Federal state"
+msgstr ""
+
+#: includes/nefo.admin.cities.inc:100
+msgid "Name of the federal state."
+msgstr ""
+
+#: includes/nefo.admin.cities.inc:110 includes/nefo.admin.habitats.inc:116 includes/nefo.admin.intersubjects.inc:99 includes/nefo.admin.methodology.inc:99 includes/nefo.admin.network.inc:99 includes/nefo.admin.organism.inc:99 includes/nefo.admin.orgtype.inc:92 includes/nefo.admin.topic.inc:99
+msgid "Save"
+msgstr "Speichern"
+
+#: includes/nefo.admin.cities.inc:126 includes/nefo.admin.habitats.inc:133 includes/nefo.admin.institutions.inc:277;284;298 includes/nefo.admin.intersubjects.inc:166 includes/nefo.admin.methodology.inc:166 includes/nefo.admin.network.inc:166 includes/nefo.admin.organism.inc:166 includes/nefo.admin.topic.inc:166
+msgid "The server was unable to process the request due to an internal error."
+msgstr ""
+"Der Server konnte die Anforderung nicht verarbeiten aufgrund eines "
+"internen Fehlers."
+
+#: includes/nefo.admin.cities.inc:131
+msgid "A city with this name already exists."
+msgstr ""
+
+#: includes/nefo.admin.cities.inc:154
+msgid "The city <em>@name</em> has been registered."
+msgstr ""
+
+#: includes/nefo.admin.cities.inc:158
+msgid "The settings for the city <em>@name</em> have been updated."
+msgstr ""
+
+#: includes/nefo.admin.cities.inc:125 includes/nefo.admin.habitats.inc:132 includes/nefo.admin.institutions.inc:276;283;297 includes/nefo.admin.intersubjects.inc:165 includes/nefo.admin.methodology.inc:165 includes/nefo.admin.network.inc:165 includes/nefo.admin.organism.inc:165 includes/nefo.admin.topic.inc:165
+msgid "security"
+msgstr "Sicherheit"
+
+#: includes/nefo.admin.cities.inc:125 includes/nefo.admin.institutions.inc:283
+msgid "Possible SQL injection attempt! An illegal choice has been detected: FSID."
+msgstr ""
+
+#: includes/nefo.admin.habitats.inc:13 includes/nefo.admin.intersubjects.inc:13 includes/nefo.admin.methodology.inc:13 includes/nefo.admin.network.inc:13 includes/nefo.admin.organism.inc:13 includes/nefo.admin.topic.inc:13
+msgid "Parent"
+msgstr "Übergeordnet"
+
+#: includes/nefo.admin.habitats.inc:34 includes/nefo.admin.institutions.inc:52 includes/nefo.admin.intersubjects.inc:34 includes/nefo.admin.methodology.inc:34 includes/nefo.admin.network.inc:34 includes/nefo.admin.organism.inc:34 includes/nefo.admin.orgtype.inc:33;37 includes/nefo.admin.topic.inc:34
+msgid "delete"
+msgstr "Löschen"
+
+#: includes/nefo.admin.habitats.inc:91 includes/nefo.admin.intersubjects.inc:74 includes/nefo.admin.methodology.inc:74 includes/nefo.admin.network.inc:74 includes/nefo.admin.organism.inc:74 includes/nefo.admin.topic.inc:74
+msgid "- None -"
+msgstr "- Keine -"
+
+#: includes/nefo.admin.habitats.inc:105
+msgid "Parent habitat"
+msgstr ""
+
+#: includes/nefo.admin.habitats.inc:138
+msgid "A habitat with this name already exists."
+msgstr ""
+
+#: includes/nefo.admin.habitats.inc:161
+msgid "The habitat <em>@name</em> has been registered."
+msgstr ""
+
+#: includes/nefo.admin.habitats.inc:166
+msgid "The settings for the habitat <em>@name</em> have been updated."
+msgstr ""
+
+#: includes/nefo.admin.habitats.inc:187
+msgid "Are you sure you want to delete this habitat: <em>@name</em>?"
+msgstr ""
+
+#: includes/nefo.admin.habitats.inc:190
+msgid "Delete this parent habitat with all its children: <em>@name</em>?"
+msgstr ""
+
+#: includes/nefo.admin.habitats.inc:195 includes/nefo.admin.institutions.inc:373 includes/nefo.admin.intersubjects.inc:195 includes/nefo.admin.methodology.inc:195 includes/nefo.admin.network.inc:195 includes/nefo.admin.organism.inc:195 includes/nefo.admin.orgtype.inc:172 includes/nefo.admin.topic.inc:195
+msgid "This action cannot be undone."
+msgstr "Diese Aktion kann nicht rückgängig gemacht werden."
+
+#: includes/nefo.admin.habitats.inc:197 includes/nefo.admin.institutions.inc:375 includes/nefo.admin.intersubjects.inc:197 includes/nefo.admin.methodology.inc:197 includes/nefo.admin.network.inc:197 includes/nefo.admin.organism.inc:197 includes/nefo.admin.orgtype.inc:174 includes/nefo.admin.topic.inc:197
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: includes/nefo.admin.habitats.inc:213
+msgid "The habitat <em>@name</em> has been deleted."
+msgstr ""
+
+#: includes/nefo.admin.habitats.inc:132 includes/nefo.admin.intersubjects.inc:165 includes/nefo.admin.methodology.inc:165 includes/nefo.admin.network.inc:165 includes/nefo.admin.organism.inc:165 includes/nefo.admin.topic.inc:165
+msgid "Possible SQL injection attempt! An illegal choice has been detected: PARENT."
+msgstr ""
+
+#: includes/nefo.admin.institutions.inc:16
+msgid "Author"
+msgstr "Autor"
+
+#: includes/nefo.admin.institutions.inc:17
+msgid "Status"
+msgstr "Status"
+
+#: includes/nefo.admin.institutions.inc:18 includes/nefo.admin.tools.inc:120
+msgid "Updated"
+msgstr "Aktualisiert"
+
+#: includes/nefo.admin.institutions.inc:19
+msgid "Operations"
+msgstr "Operationen"
+
+#: includes/nefo.admin.institutions.inc:43
+msgid "published"
+msgstr "Veröffentlicht"
+
+#: includes/nefo.admin.institutions.inc:43
+msgid "not published"
+msgstr "Nicht veröffentlicht"
+
+#: includes/nefo.admin.institutions.inc:117 includes/nefo.admin.tools.inc:21
+msgid "Street"
+msgstr "Straße"
+
+#: includes/nefo.admin.institutions.inc:124 includes/nefo.admin.tools.inc:22
+msgid "Postal Code"
+msgstr "Postleitzahl"
+
+#: includes/nefo.admin.institutions.inc:133;144;159
+msgid "- Please select -"
+msgstr "Bitte wählen"
+
+#: includes/nefo.admin.institutions.inc:176 includes/nefo.search.inc:65
+msgid "Categories"
+msgstr "Kategorien"
+
+#: includes/nefo.admin.institutions.inc:229
+msgid "Publishing options"
+msgstr "Veröffentlichungseinstellungen"
+
+#: includes/nefo.admin.institutions.inc:233
+msgid "Published"
+msgstr "Veröffentlicht"
+
+#: includes/nefo.admin.institutions.inc:243
+msgid "Submit"
+msgstr "Speichern"
+
+#: includes/nefo.admin.institutions.inc:289
+msgid "The postal code must be a 5-digit German zip code."
+msgstr "Postleitzahl muss 5-stellig sein."
+
+#: includes/nefo.admin.institutions.inc:293
+msgid "The URL is not valid."
+msgstr "Die Website URL ist nicht gültig."
+
+#: includes/nefo.admin.institutions.inc:340
+msgid "The institution <em>@name</em> has been created."
+msgstr ""
+
+#: includes/nefo.admin.institutions.inc:345
+msgid "The institution <em>@name</em> has been updated."
+msgstr ""
+
+#: includes/nefo.admin.institutions.inc:355
+msgid "The institution could not be saved."
+msgstr ""
+
+#: includes/nefo.admin.institutions.inc:371
+msgid "Are you sure you want to delete this institution: <em>@name</em>?"
+msgstr ""
+
+#: includes/nefo.admin.institutions.inc:389
+msgid "The institution <em>@name</em> has been deleted."
+msgstr ""
+
+#: includes/nefo.admin.institutions.inc:276
+msgid "Possible SQL injection attempt! An illegal choice has been detected: CID."
+msgstr ""
+
+#: includes/nefo.admin.institutions.inc:297
+msgid "Possible SQL injection attempt! An illegal choice has been detected: OTID."
+msgstr ""
+
+#: includes/nefo.admin.intersubjects.inc:77
+msgid "Interdisciplinary subject"
+msgstr ""
+
+#: includes/nefo.admin.intersubjects.inc:88
+msgid "Parent interdisciplinary subject"
+msgstr ""
+
+#: includes/nefo.admin.intersubjects.inc:141
+msgid "The interdisciplinary subject <em>@name</em> has been registered."
+msgstr ""
+
+#: includes/nefo.admin.intersubjects.inc:146
+msgid "The settings for the interdisciplinary subject <em>@name</em> have been updated."
+msgstr ""
+
+#: includes/nefo.admin.intersubjects.inc:171
+msgid "An interdisciplinary subject with this name already exists."
+msgstr ""
+
+#: includes/nefo.admin.intersubjects.inc:187
+msgid "Are you sure you want to delete this interdisciplinary subject: <em>@name</em>?"
+msgstr ""
+
+#: includes/nefo.admin.intersubjects.inc:190
+msgid "Delete this parent interdisciplinary subject with all its children: <em>@name</em>?"
+msgstr ""
+
+#: includes/nefo.admin.intersubjects.inc:213
+msgid "The interdisciplinary subject <em>@name</em> has been deleted."
+msgstr ""
+
+#: includes/nefo.admin.methodology.inc:88
+msgid "Parent Methodology"
+msgstr ""
+
+#: includes/nefo.admin.methodology.inc:141
+msgid "The methodology <em>@name</em> has been registered."
+msgstr ""
+
+#: includes/nefo.admin.methodology.inc:146
+msgid "The settings for the methodology <em>@name</em> have been updated."
+msgstr ""
+
+#: includes/nefo.admin.methodology.inc:171
+msgid "A methodology with this name already exists."
+msgstr ""
+
+#: includes/nefo.admin.methodology.inc:187
+msgid "Are you sure you want to delete this methodology: <em>@name</em>?"
+msgstr ""
+
+#: includes/nefo.admin.methodology.inc:190
+msgid "Delete this parent methodology with all its children: <em>@name</em>?"
+msgstr ""
+
+#: includes/nefo.admin.methodology.inc:213
+msgid "The methodology <em>@name</em> has been deleted."
+msgstr ""
+
+#: includes/nefo.admin.network.inc:88
+msgid "Parent research network"
+msgstr ""
+
+#: includes/nefo.admin.network.inc:141
+msgid "The research network <em>@name</em> has been registered."
+msgstr ""
+
+#: includes/nefo.admin.network.inc:146
+msgid "The settings for the research network <em>@name</em> have been updated."
+msgstr ""
+
+#: includes/nefo.admin.network.inc:171
+msgid "An research network with this name already exists."
+msgstr ""
+
+#: includes/nefo.admin.network.inc:187
+msgid "Are you sure you want to delete this research network: <em>@name</em>?"
+msgstr ""
+
+#: includes/nefo.admin.network.inc:190
+msgid "Delete this parent research network with all its children: <em>@name</em>?"
+msgstr ""
+
+#: includes/nefo.admin.network.inc:213
+msgid "The research network <em>@name</em> has been deleted."
+msgstr ""
+
+#: includes/nefo.admin.organism.inc:88
+msgid "Parent Organism"
+msgstr ""
+
+#: includes/nefo.admin.organism.inc:141
+msgid "The organism <em>@name</em> has been registered."
+msgstr ""
+
+#: includes/nefo.admin.organism.inc:146
+msgid "The settings for the organism <em>@name</em> have been updated."
+msgstr ""
+
+#: includes/nefo.admin.organism.inc:171
+msgid "An organism with this name already exists."
+msgstr ""
+
+#: includes/nefo.admin.organism.inc:187
+msgid "Are you sure you want to delete this organism: <em>@name</em>?"
+msgstr ""
+
+#: includes/nefo.admin.organism.inc:190
+msgid "Delete this parent organism with all its children: <em>@name</em>?"
+msgstr ""
+
+#: includes/nefo.admin.organism.inc:213
+msgid "The organism <em>@name</em> has been deleted."
+msgstr ""
+
+#: includes/nefo.admin.orgtype.inc:77
+msgid "Organization type"
+msgstr ""
+
+#: includes/nefo.admin.orgtype.inc:133
+msgid "The organization type <em>@name</em> has been registered."
+msgstr ""
+
+#: includes/nefo.admin.orgtype.inc:138
+msgid "The settings for the organization type <em>@name</em> have been updated."
+msgstr ""
+
+#: includes/nefo.admin.orgtype.inc:155
+msgid "An organization type with this name already exists."
+msgstr ""
+
+#: includes/nefo.admin.orgtype.inc:168
+msgid "Are you sure you want to delete this organization type: <em>@name</em>?"
+msgstr ""
+
+#: includes/nefo.admin.orgtype.inc:188
+msgid "The organization type <em>@name</em> has been deleted."
+msgstr ""
+
+#: includes/nefo.admin.tools.inc:17
+msgid "Institutions with missing WKT value"
+msgstr ""
+
+#: includes/nefo.admin.tools.inc:62
+msgid "There are no institutions with empty WKT."
+msgstr ""
+
+#: includes/nefo.admin.tools.inc:90
+msgid "The WKT of <em>@name</em> could not be generated. Please verify the address."
+msgstr ""
+
+#: includes/nefo.admin.tools.inc:94;185
+msgid "The list has been updated."
+msgstr ""
+
+#: includes/nefo.admin.tools.inc:97;188
+msgid "There is nothing to be updated."
+msgstr ""
+
+#: includes/nefo.admin.tools.inc:113
+msgid "Institutions with broken links"
+msgstr ""
+
+#: includes/nefo.admin.tools.inc:165
+msgid "There are no institutions with broken links."
+msgstr ""
+
+#: includes/nefo.admin.tools.inc:167 includes/nefo.search.inc:171
+msgid "1 result"
+msgid_plural "@count results"
+msgstr[0] "1 Ergebnis"
+msgstr[1] "@count Ergebnisse"
+
+#: includes/nefo.admin.topic.inc:88
+msgid "Parent topic"
+msgstr ""
+
+#: includes/nefo.admin.topic.inc:141
+msgid "The topic <em>@name</em> has been registered."
+msgstr ""
+
+#: includes/nefo.admin.topic.inc:146
+msgid "The settings for the topic <em>@name</em> have been updated."
+msgstr ""
+
+#: includes/nefo.admin.topic.inc:171
+msgid "An topic with this name already exists."
+msgstr ""
+
+#: includes/nefo.admin.topic.inc:187
+msgid "Are you sure you want to delete this topic: <em>@name</em>?"
+msgstr ""
+
+#: includes/nefo.admin.topic.inc:190
+msgid "Delete this parent topic with all its children: <em>@name</em>?"
+msgstr ""
+
+#: includes/nefo.admin.topic.inc:213
+msgid "The topic <em>@name</em> has been deleted."
+msgstr ""
+
+#: includes/nefo.search.inc:58
+msgid "text search"
+msgstr "Textsuche"
+
+#: includes/nefo.search.inc:119;198
+msgid "Search"
+msgstr "Suche"
+
+#: includes/nefo.search.inc:122;261
+msgid "Reset"
+msgstr "Zurücksetzen"
+
+#: includes/nefo.search.inc:151
+msgid "Link"
+msgstr "Link"
+
+#: includes/nefo.search.inc:169
+msgid "No content available."
+msgstr "Kein Inhalt verfügbar."
+

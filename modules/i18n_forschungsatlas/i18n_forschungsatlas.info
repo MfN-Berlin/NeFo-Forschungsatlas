@@ -1,0 +1,13 @@
+name = Forschungsatlas Category Translation
+description = Makes Forschungsatlas-Forschungsatlas categories available for translation.
+dependencies[] = forschungsatlas
+dependencies[] = i18n_string
+package = NEFO
+core = 7.x
+
+; Added by NeFo Team
+version = "7.x-1.0"
+core = "7.x"
+
+
+

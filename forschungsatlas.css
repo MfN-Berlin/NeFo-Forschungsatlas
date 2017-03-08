@@ -1,0 +1,117 @@
+/**
+ * @file
+ * Styling for the NeFo Forschungsatlas module.
+ */
+
+#forschungsatlas-display-institution {
+}
+
+#forschungsatlas-institution {
+  background-color: #F8FFF0;
+  border: 1px solid #BE7;
+  padding: 0.5em;
+}
+#forschungsatlas-categories {
+  padding: 0.5em;
+}
+#forschungsatlas-comment {
+  padding: 0.5em;
+}
+
+#forschungsatlas-institution-address {}
+#forschungsatlas-institution-url {
+  padding: 0.5em 0;
+}
+#forschungsatlas-institution-orgtype {
+  padding: 0.5em 0;}
+#forschungsatlas-institution-belonging {
+  padding-top: 0.5em;
+}
+#forschungsatlas-institution-network {
+  padding: 0.5em 0;
+}
+#forschungsatlas-institution-region {
+  padding: 0.5em 0;
+}
+#forschungsatlas-institution-organisms {
+  padding: 0.5em 0;
+}
+#forschungsatlas-institution-habitats {
+  padding: 0.5em 0;
+}
+#forschungsatlas-institution-topics {
+  padding: 0.5em 0;
+}
+#forschungsatlas-institution-intsubjects {
+  padding: 0.5em 0;
+}
+#forschungsatlas-institution-methodologies {
+  padding: 0.5em 0;
+}
+#forschungsatlas-institution-description {
+  padding: 0.5em 0;
+}
+
+#forschungsatlas-table-result-list {
+}
+#forschungsatlas-table-url {
+}
+#forschungsatlas-table-wkt {
+}
+
+.forschungsatlas-institution-h {
+  font-weight: bold;
+}
+.forschungsatlas-institution-c {
+}
+.forschungsatlas-institution-l {
+}
+.forschungsatlas-institution-l-ext {
+}
+.forschungsatlas-institution-ul {
+}
+.forschungsatlas-institution-li {
+}
+.forschungsatlas-parent-ul {
+}
+.forschungsatlas-parent-li {
+}
+.forschungsatlas-child-ul {
+}
+.forschungsatlas-child-li {
+}
+
+.forschungsatlas-subdivision-ul {
+}
+.forschungsatlas-subdivision-li {
+}
+.forschungsatlas-subdivision-l {
+}
+
+/**
+ * Map
+ */
+.cluster, .cluster--inner {
+   box-sizing:border-box;
+   border-radius: 50%;
+ }
+.cluster {
+  position: relative;
+  width: 35px;
+  height: 35px;
+  background: green;
+}
+.cluster--inner {
+  position: absolute;
+  background: #EEE;
+  width: 23px;
+  height: 23px;
+  padding-top: 3px;
+  font-weight: bold;
+  top: 6px;
+  left: 6px;
+  text-align: center;
+}
+
+
+

@@ -1,0 +1,81 @@
+<?php
+
+module_load_include('inc', 'forschungsatlas', 'includes/forschungsatlas.admin.institutions');
+module_load_include('inc', 'forschungsatlas', 'includes/forschungsatlas.search');
+
+/**
+ * @file
+ * Internationalization (i18n) submodule: Multilingual Forschungsatlas categories
+ */
+
+/**
+ * Implements hook_menu().
+ *
+ * Add translate tab to categories config.
+ */
+function i18n_forschungsatlas_methodology_menu() {
+  $items[FORSCHUNGSATLAS_CONFIG_PATH .'/categories/methodologies/%forschungsatlas_methodology/translate'] = array(
+    'title' => 'Translate',
+    'access callback' => 'i18n_forschungsatlas_methodology_translate_tab_access',
+    'page callback' => 'i18n_string_object_translate_page',
+    'page arguments' => array('forschungsatlas_methodology', 5),
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 10,
+  );
+  $items[FORSCHUNGSATLAS_CONFIG_PATH .'/categories/methodologies/%forschungsatlas_methodology/translate/%language'] = array(
+    'title' => 'Translate',
+    'access callback' => 'i18n_forschungsatlas_methodology_translate_tab_access',
+    'page callback' => 'i18n_string_object_translate_page',
+    'page arguments' => array('forschungsatlas_methodology', 5, 7),
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+/**
+ * Menu access callback function.
+ */
+function i18n_forschungsatlas_methodology_translate_tab_access() {
+  return user_access('administer nefo configuration');
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function i18n_forschungsatlas_methodology_form_forschungsatlas_admin_methodology_delete_confirm_alter(&$form, &$form_state) {
+  $form['#submit'][] = 'i18n_forschungsatlas_methodology_form_forschungsatlas_admin_methodology_delete_confirm_submit';
+}
+
+/**
+ * Remove strings for deleted categories.
+ */
+function i18n_forschungsatlas_methodology_form_forschungsatlas_admin_methodology_delete_confirm_submit(&$form, $form_state) {
+  $mid = $form['mid']['#value']['mid'];
+  i18n_string_remove("forschungsatlas_methodology:methodology:$mid:name");
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function i18n_forschungsatlas_methodology_form_forschungsatlas_admin_methodology_form_alter(&$form, &$form_state) {
+    $form['actions']['translate'] = array(
+    '#type' => 'submit',
+    '#name'   => 'save_translate',
+    '#value' => t('Save and translate'),
+  );
+  $form['#submit'][] = 'i18n_forschungsatlas_methodology_form_forschungsatlas_admin_methodology_form_submit';
+}
+
+/**
+ * Remove strings for edited/added methodology.
+ */
+function i18n_forschungsatlas_methodology_form_forschungsatlas_admin_methodology_form_submit($form, &$form_state) {
+  $methodology = $form_state['values'];
+  i18n_string_update(array('forschungsatlas_methodology', 'methodology', $methodology['mid'], 'name'), $methodology['name']);
+  if ($form_state['triggering_element']['#name'] == 'save_translate') {
+    $form_state['redirect'] = FORSCHUNGSATLAS_CONFIG_PATH .'/categories/methodologies/' . $methodology['mid'] . '/translate';
+  }
+}
+
+
