@@ -1,8 +1,5 @@
 <?php
 
-module_load_include('inc', 'forschungsatlas', 'includes/forschungsatlas.admin.institutions');
-module_load_include('inc', 'forschungsatlas', 'includes/forschungsatlas.search');
-
 /**
  * @file
  * Internationalization (i18n) submodule: Multilingual Forschungsatlas categories
