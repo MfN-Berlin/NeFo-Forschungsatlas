@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * nefo.admin.methodology.inc
+ * forschungsatlas.admin.methodology.inc
  */
 
 /**
@@ -145,7 +145,7 @@ function forschungsatlas_admin_methodology_form_submit($form, &$form_state) {
     $result = drupal_write_record($table, $record, 'mid');
     $output = t('The settings for the methodology <em>@name</em> have been updated.', array('@name' => $record->name));
   }
-  watchdog('Nefo', $output);
+  watchdog('NEFO', $output);
   drupal_set_message($output);
   $form_state['redirect'] = FORSCHUNGSATLAS_CONFIG_PATH. '/categories/methodologies';
 }

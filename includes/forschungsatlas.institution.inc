@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * nefo.institution.inc
+ * forschungsatlas.institution.inc
  */
 
 /**
@@ -323,7 +323,7 @@ function _forschungsatlas_build_list_translation($list, $object) {
   $comp_options = array();
 
   foreach ($list as $key => $value) {
-    if (module_exists('i18n_string') && module_exists('i18n_nefo')) {
+    if (module_exists('i18n_string') && module_exists('i18n_forschungsatlas')) {
       $tnname = i18n_string("$object:$key:name", $value);
     }
     else {

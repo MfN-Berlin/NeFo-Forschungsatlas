@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * nefo.admin.habitats.inc
+ * forschungsatlas.admin.habitats.inc
  */
 
 /**
@@ -165,7 +165,7 @@ function forschungsatlas_admin_habitat_form_submit($form, &$form_state) {
     $result = drupal_write_record($table, $record, 'hid');
     $output = t('The settings for the habitat <em>@name</em> have been updated.', array('@name' => $record->name));
   }
-  watchdog('Nefo', $output);
+  watchdog('NEFO', $output);
   drupal_set_message($output);
   $form_state['redirect'] = FORSCHUNGSATLAS_CONFIG_PATH. '/categories/habitats';
 }

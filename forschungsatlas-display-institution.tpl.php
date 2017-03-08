@@ -183,11 +183,11 @@ function _forschungsatlas_build_subordinate_list($list) {
       if (!empty($value)) {
         $value_instiuttion = '';
         $value_url = '';
-        list($iid, $name, $url) = explode(NEFO_DELIMITER_ID, $value);
+        list($iid, $name, $url) = explode(FORSCHUNGSATLAS_DELIMITER_ID, $value);
 
         $value_instiuttion = l(
           $name,
-          NEFO_PUBLIC_PATH . '/'. $iid,
+          FORSCHUNGSATLAS_PUBLIC_PATH . '/institutions/'. $iid,
           array(
             'attributes' => array(
               'class' => 'forschungsatlas-subdivision-l',

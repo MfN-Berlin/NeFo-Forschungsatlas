@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * nefo.admin.orgtype.inc
+ * forschungsatlas.admin.orgtype.inc
  */
 
 /**
@@ -137,7 +137,7 @@ function forschungsatlas_admin_orgtype_form_submit($form, &$form_state) {
     $result = drupal_write_record($table, $record, 'otid');
     $output = t('The settings for the organization type <em>@name</em> have been updated.', array('@name' => $record->name));
   }
-  watchdog('Nefo', $output);
+  watchdog('NEFO', $output);
   drupal_set_message($output);
   $form_state['redirect'] = FORSCHUNGSATLAS_CONFIG_PATH. '/institutions/organizationtypes';
 }

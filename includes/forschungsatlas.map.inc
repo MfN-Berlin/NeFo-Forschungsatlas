@@ -714,7 +714,7 @@ function _forschungsatlas_search_build_composited_options($table, $key, $object)
       FROM {'. $table .'} AS t1 LEFT JOIN {'. $table .'} AS t2 ON t1.parent = t2.'. $key);
 
   foreach ($result as $row) {
-    if (module_exists('i18n_string') && module_exists('i18n_nefo')) {
+    if (module_exists('i18n_string') && module_exists('i18n_forschungsatlas')) {
       $tnname = i18n_string("$object:$row->keyid:name", $row->name);
       $tnparentname = (!empty($row->parentname)) ? i18n_string("$object:$row->parent:name", $row->parentname) : '';
     }

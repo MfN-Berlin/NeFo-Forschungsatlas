@@ -4,7 +4,7 @@
  */
 
 --
---  STEP 01: Create function nefo__actors_getAssembledParentName
+--  STEP 01: Create function forschungsatlas__getAssembledParentName
 --
 DELIMITER $$
 DROP FUNCTION IF EXISTS forschungsatlas__getAssembledParentName $$
@@ -109,7 +109,7 @@ DELIMITER ;
 
 
 --
---  STEP 03: nefo__aux_institutions_view
+--  STEP 03: forschungsatlas__aux_institutions_view
 --
 CREATE OR REPLACE VIEW forschungsatlas__aux_institutions_view AS
     SELECT 

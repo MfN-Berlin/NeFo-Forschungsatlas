@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * nefo.admin.institutions.inc
+ * forschungsatlas.admin.institutions.inc
  */
 
 /**

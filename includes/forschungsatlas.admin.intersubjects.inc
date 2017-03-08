@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * nefo.admin.intersubjects.inc
+ * forschungsatlas.admin.intersubjects.inc
  */
 
 /**
@@ -145,7 +145,7 @@ function forschungsatlas_admin_intersubject_form_submit($form, &$form_state) {
     $result = drupal_write_record($table, $record, 'isid');
     $output = t('The settings for the interdisciplinary subject <em>@name</em> have been updated.', array('@name' => $record->name));
   }
-  watchdog('Nefo', $output);
+  watchdog('NEFO', $output);
   drupal_set_message($output);
   $form_state['redirect'] = FORSCHUNGSATLAS_CONFIG_PATH. '/categories/intersubjects';
 }
