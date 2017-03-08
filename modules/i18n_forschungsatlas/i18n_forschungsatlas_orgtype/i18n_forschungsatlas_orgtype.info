@@ -1,7 +1,7 @@
 name = Forschungsatlas Translation Organization Type
 description = Makes Forschungsatlas Organization Type available for translation.
 dependencies[] = i18n_forschungsatlas
-package = NEFO
+package = NEFO FORSCHUNGSATLAS
 core = 7.x
 
 ; Added by NeFo Team

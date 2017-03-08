@@ -1,7 +1,7 @@
 name = Forschungsatlas Translation Interdisciplinary Subject
 description = Makes Forschungsatlas Interdisciplinary Subject available for translation.
 dependencies[] = i18n_forschungsatlas
-package = NEFO
+package = NEFO FORSCHUNGSATLAS
 core = 7.x
 
 ; Added by NeFo Team

@@ -1,7 +1,7 @@
 name = Forschungsatlas Translation Research Network
 description = Makes Forschungsatlas Research Network available for translation.
 dependencies[] = i18n_forschungsatlas
-package = NEFO
+package = NEFO FORSCHUNGSATLAS
 core = 7.x
 
 ; Added by NeFo Team

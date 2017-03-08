@@ -1,6 +1,6 @@
 name = Forschungsatlas
 description = NeFo Forschungsatlas
-package = NEFO
+package = NEFO FORSCHUNGSATLAS
 configure = admin/config/forschungsatlas
 dependencies[] = chosen
 dependencies[] = geocoder
