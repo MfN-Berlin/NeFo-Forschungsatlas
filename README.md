@@ -5,6 +5,7 @@ NeFo-Forschungsatlas module
 * Drupal 7 [Chosen module](https://www.drupal.org/project/chosen)
 * Drupal 7 [Geocoder module](https://www.drupal.org/project/geocoder)
 * Drupal 7 [Libraries API module](https://www.drupal.org/project/libraries)
+
 ## Leaflet Library
 * Download [Leaflet v0.7.7](http://leafletjs.com/download.html) and put it in your `sites/all/libraries` folder.
 * Download [Leaflet Markercluster v0.1](https://github.com/leaflet/Leaflet.markercluster/downloads) and put it in your `sites/all/libraries` folder.
