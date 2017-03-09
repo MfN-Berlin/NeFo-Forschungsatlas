@@ -48,7 +48,8 @@ function i18n_forschungsatlas_orgtype_form_forschungsatlas_admin_orgtype_delete_
  * Remove strings for deleted categories.
  */
 function i18n_forschungsatlas_orgtype_form_forschungsatlas_admin_orgtype_delete_confirm_submit(&$form, $form_state) {
-  $otid = $form['otid']['#value']['otid'];
+  //$otid = $form['otid']['#value']['otid'];
+  $otid = $form['otid']['#value'];
   i18n_string_remove("forschungsatlas_orgtype:orgtype:$otid:name");
 }
 

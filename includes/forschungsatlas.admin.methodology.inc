@@ -132,11 +132,9 @@ function forschungsatlas_admin_methodology_form_submit($form, &$form_state) {
   $record = new stdClass();
   $record->name = forschungsatlas_clean_name($form_state['values']['name']);
   $record->parent = $form_state['values']['parent'];
-  $record->uid = $user->uid;
-  $record->changed = REQUEST_TIME;
   $mid = intval($form_state['values']['mid']);
   if (!$mid) { // Insert
-    $record->created = REQUEST_TIME;
+    $record->mid = '';
     drupal_write_record($table, $record);
     $output = t('The methodology <em>@name</em> has been registered.', array('@name' => $record->name));
   }
@@ -144,6 +142,10 @@ function forschungsatlas_admin_methodology_form_submit($form, &$form_state) {
     $record->mid = $mid;
     $result = drupal_write_record($table, $record, 'mid');
     $output = t('The settings for the methodology <em>@name</em> have been updated.', array('@name' => $record->name));
+  }
+  if ($record->mid) {
+    $form_state['values']['mid'] = $record->mid;
+    $form_state['mid'] = $record->mid;
   }
   watchdog('NEFO', $output);
   drupal_set_message($output);

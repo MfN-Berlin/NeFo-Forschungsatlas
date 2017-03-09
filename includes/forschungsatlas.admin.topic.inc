@@ -132,11 +132,9 @@ function forschungsatlas_admin_topic_form_submit($form, &$form_state) {
   $record = new stdClass();
   $record->name = forschungsatlas_clean_name($form_state['values']['name']);
   $record->parent = $form_state['values']['parent'];
-  $record->uid = $user->uid;
-  $record->changed = REQUEST_TIME;
   $tid = intval($form_state['values']['tid']);
   if (!$tid) { // Insert
-    $record->created = REQUEST_TIME;
+    $record->tid = '';
     drupal_write_record($table, $record);
     $output = t('The topic <em>@name</em> has been registered.', array('@name' => $record->name));
   }
@@ -144,6 +142,10 @@ function forschungsatlas_admin_topic_form_submit($form, &$form_state) {
     $record->tid = $tid;
     $result = drupal_write_record($table, $record, 'tid');
     $output = t('The settings for the topic <em>@name</em> have been updated.', array('@name' => $record->name));
+  }
+  if ($record->tid) {
+    $form_state['values']['tid'] = $record->tid;
+    $form_state['tid'] = $record->tid;
   }
   watchdog('NEFO', $output);
   drupal_set_message($output);

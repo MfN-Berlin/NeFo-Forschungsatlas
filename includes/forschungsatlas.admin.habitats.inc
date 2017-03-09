@@ -146,17 +146,13 @@ function forschungsatlas_admin_habitat_form_validate($form, &$form_state) {
  * @see forschungsatlas_admin_habitat_form_validate()
  */
 function forschungsatlas_admin_habitat_form_submit($form, &$form_state) {
-  global $user;
-
   $table = 'forschungsatlas__habitats';
   $record = new stdClass();
   $record->name = forschungsatlas_clean_name($form_state['values']['name']);
   $record->parent = $form_state['values']['parent'];
-  $record->uid = $user->uid;
-  $record->changed = REQUEST_TIME;
   $hid = intval($form_state['values']['hid']);
   if (!$hid) { // Insert
-    $record->created = REQUEST_TIME;
+    $record->hid = '';
     drupal_write_record($table, $record);
     $output = t('The habitat <em>@name</em> has been registered.', array('@name' => $record->name));
   }
@@ -164,6 +160,10 @@ function forschungsatlas_admin_habitat_form_submit($form, &$form_state) {
     $record->hid = $hid;
     $result = drupal_write_record($table, $record, 'hid');
     $output = t('The settings for the habitat <em>@name</em> have been updated.', array('@name' => $record->name));
+  }
+  if ($record->hid) {
+    $form_state['values']['hid'] = $record->hid;
+    $form_state['hid'] = $record->hid;
   }
   watchdog('NEFO', $output);
   drupal_set_message($output);

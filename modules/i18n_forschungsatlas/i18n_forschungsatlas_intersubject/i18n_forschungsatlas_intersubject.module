@@ -48,7 +48,8 @@ function i18n_forschungsatlas_intersubject_form_forschungsatlas_admin_intersubje
  * Remove strings for deleted categories.
  */
 function i18n_forschungsatlas_intersubject_form_forschungsatlas_admin_intersubject_delete_confirm_submit(&$form, $form_state) {
-  $isid = $form['isid']['#value']['isid'];
+  //$isid = $form['isid']['#value']['isid'];
+  $isid = $form['isid']['#value'];
   i18n_string_remove("forschungsatlas_intersubject:interdisciplinarysubject:$isid:name");
 }
 

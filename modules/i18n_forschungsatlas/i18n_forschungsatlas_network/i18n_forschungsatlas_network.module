@@ -48,7 +48,8 @@ function i18n_forschungsatlas_network_form_forschungsatlas_admin_network_delete_
  * Remove strings for deleted categories.
  */
 function i18n_forschungsatlas_network_form_forschungsatlas_admin_network_delete_confirm_submit(&$form, $form_state) {
-  $rnid = $form['rnid']['#value']['rnid'];
+  //$rnid = $form['rnid']['#value']['rnid'];
+  $rnid = $form['rnid']['#value'];
   i18n_string_remove("forschungsatlas_network:researchnetwork:$rnid:name");
 }
 

@@ -124,11 +124,9 @@ function forschungsatlas_admin_orgtype_form_submit($form, &$form_state) {
   $table = 'forschungsatlas__organization_type';
   $record = new stdClass();
   $record->name = forschungsatlas_clean_name($form_state['values']['name']);
-  $record->uid = $user->uid;
-  $record->changed = REQUEST_TIME;
   $otid = intval($form_state['values']['otid']);
   if (!$otid) { // Insert
-    $record->created = REQUEST_TIME;
+    $record->otid = '';
     drupal_write_record($table, $record);
     $output = t('The organization type <em>@name</em> has been registered.', array('@name' => $record->name));
   }
@@ -136,6 +134,10 @@ function forschungsatlas_admin_orgtype_form_submit($form, &$form_state) {
     $record->otid = $otid;
     $result = drupal_write_record($table, $record, 'otid');
     $output = t('The settings for the organization type <em>@name</em> have been updated.', array('@name' => $record->name));
+  }
+  if ($record->otid) {
+    $form_state['values']['otid'] = $record->otid;
+    $form_state['otid'] = $record->otid;
   }
   watchdog('NEFO', $output);
   drupal_set_message($output);

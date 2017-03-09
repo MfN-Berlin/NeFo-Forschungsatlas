@@ -132,11 +132,9 @@ function forschungsatlas_admin_intersubject_form_submit($form, &$form_state) {
   $record = new stdClass();
   $record->name = forschungsatlas_clean_name($form_state['values']['name']);
   $record->parent = $form_state['values']['parent'];
-  $record->uid = $user->uid;
-  $record->changed = REQUEST_TIME;
   $isid = intval($form_state['values']['isid']);
   if (!$isid) { // Insert
-    $record->created = REQUEST_TIME;
+    $record->isid = '';
     drupal_write_record($table, $record);
     $output = t('The interdisciplinary subject <em>@name</em> has been registered.', array('@name' => $record->name));
   }
@@ -144,6 +142,10 @@ function forschungsatlas_admin_intersubject_form_submit($form, &$form_state) {
     $record->isid = $isid;
     $result = drupal_write_record($table, $record, 'isid');
     $output = t('The settings for the interdisciplinary subject <em>@name</em> have been updated.', array('@name' => $record->name));
+  }
+  if ($record->isid) {
+    $form_state['values']['isid'] = $record->isid;
+    $form_state['isid'] = $record->isid;
   }
   watchdog('NEFO', $output);
   drupal_set_message($output);

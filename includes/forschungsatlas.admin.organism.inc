@@ -132,11 +132,9 @@ function forschungsatlas_admin_organism_form_submit($form, &$form_state) {
   $record = new stdClass();
   $record->name = forschungsatlas_clean_name($form_state['values']['name']);
   $record->parent = $form_state['values']['parent'];
-  $record->uid = $user->uid;
-  $record->changed = REQUEST_TIME;
   $oid = intval($form_state['values']['oid']);
   if (!$oid) { // Insert
-    $record->created = REQUEST_TIME;
+    $record->oid = '';
     drupal_write_record($table, $record);
     $output = t('The organism <em>@name</em> has been registered.', array('@name' => $record->name));
   }
@@ -144,6 +142,10 @@ function forschungsatlas_admin_organism_form_submit($form, &$form_state) {
     $record->oid = $oid;
     $result = drupal_write_record($table, $record, 'oid');
     $output = t('The settings for the organism <em>@name</em> have been updated.', array('@name' => $record->name));
+  }
+  if ($record->oid) {
+    $form_state['values']['oid'] = $record->oid;
+    $form_state['oid'] = $record->oid;
   }
   watchdog('NEFO', $output);
   drupal_set_message($output);

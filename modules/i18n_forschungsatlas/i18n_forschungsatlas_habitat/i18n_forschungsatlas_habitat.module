@@ -48,7 +48,8 @@ function i18n_forschungsatlas_habitat_form_forschungsatlas_admin_habitat_delete_
  * Remove strings for deleted categories.
  */
 function i18n_forschungsatlas_habitat_form_forschungsatlas_admin_habitat_delete_confirm_submit(&$form, $form_state) {
-  $hid = $form['hid']['#value']['hid'];
+  //$hid = $form['hid']['#value']['hid'];
+  $hid = $form['hid']['#value'];
   i18n_string_remove("forschungsatlas_habitat:habitat:$hid:name");
 }
 

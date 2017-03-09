@@ -132,11 +132,9 @@ function forschungsatlas_admin_network_form_submit($form, &$form_state) {
   $record = new stdClass();
   $record->name = forschungsatlas_clean_name($form_state['values']['name']);
   $record->parent = $form_state['values']['parent'];
-  $record->uid = $user->uid;
-  $record->changed = REQUEST_TIME;
   $rnid = intval($form_state['values']['rnid']);
   if (!$rnid) { // Insert
-    $record->created = REQUEST_TIME;
+    $record->rnid = '';
     drupal_write_record($table, $record);
     $output = t('The research network <em>@name</em> has been registered.', array('@name' => $record->name));
   }
@@ -144,6 +142,10 @@ function forschungsatlas_admin_network_form_submit($form, &$form_state) {
     $record->rnid = $rnid;
     $result = drupal_write_record($table, $record, 'rnid');
     $output = t('The settings for the research network <em>@name</em> have been updated.', array('@name' => $record->name));
+  }
+  if ($record->rnid) {
+    $form_state['values']['rnid'] = $record->rnid;
+    $form_state['rnid'] = $record->rnid;
   }
   watchdog('NEFO', $output);
   drupal_set_message($output);
