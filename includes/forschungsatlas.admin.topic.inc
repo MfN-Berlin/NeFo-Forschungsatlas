@@ -126,8 +126,6 @@ function forschungsatlas_admin_topic_edit($topic = array()){
  * @see forschungsatlas_admin_topic_form_validate()
  */
 function forschungsatlas_admin_topic_form_submit($form, &$form_state) {
-  global $user;
-
   $table = 'forschungsatlas__topics';
   $record = new stdClass();
   $record->name = forschungsatlas_clean_name($form_state['values']['name']);

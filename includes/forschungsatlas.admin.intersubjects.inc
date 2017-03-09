@@ -126,8 +126,6 @@ function forschungsatlas_admin_intersubject_edit($intersubject = array()){
  * @see forschungsatlas_admin_intersubject_form_validate()
  */
 function forschungsatlas_admin_intersubject_form_submit($form, &$form_state) {
-  global $user;
-
   $table = 'forschungsatlas__interdisciplinary_subject';
   $record = new stdClass();
   $record->name = forschungsatlas_clean_name($form_state['values']['name']);

@@ -126,8 +126,6 @@ function forschungsatlas_admin_methodology_edit($methodology = array()){
  * @see forschungsatlas_admin_methodology_form_validate()
  */
 function forschungsatlas_admin_methodology_form_submit($form, &$form_state) {
-  global $user;
-
   $table = 'forschungsatlas__methodology';
   $record = new stdClass();
   $record->name = forschungsatlas_clean_name($form_state['values']['name']);

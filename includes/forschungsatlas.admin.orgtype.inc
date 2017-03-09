@@ -119,8 +119,6 @@ function forschungsatlas_admin_orgtype_edit($orgtype = array()){
  * @see forschungsatlas_admin_orgtype_form_validate()
  */
 function forschungsatlas_admin_orgtype_form_submit($form, &$form_state) {
-  global $user;
-
   $table = 'forschungsatlas__organization_type';
   $record = new stdClass();
   $record->name = forschungsatlas_clean_name($form_state['values']['name']);
