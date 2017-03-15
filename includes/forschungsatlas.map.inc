@@ -153,16 +153,22 @@ function forschungsatlas_map_form_builder($form, &$form_state) {
   try {
     // Table
     $query = db_select('forschungsatlas__aux_institutions', 'ti')->extend('PagerDefault')->extend('TableSort');
-    forschungsatlas_search_institutions_build_filter_query($query, $session);
-    $result = $query->fields('ti', array('iid', 'name', 'city', 'url', 'assembledparentname'))
-      ->limit(FORSCHUNGSATLAS_PAGER)
-      ->orderByHeader($header)
-      ->execute();
-    // Points
-    $query_points = db_select('forschungsatlas__aux_institutions', 'ti');
-    forschungsatlas_search_institutions_build_filter_query($query_points, $session);
-    $result_points = $query_points->fields('ti', array('iid', 'name', 'latitude', 'longitude', 'assembledparentname','fsid', 'federalstate'))
-      ->execute();
+    $execute_query = forschungsatlas_search_institutions_build_filter_query($query, $session);
+    if ($execute_query) {
+      $result = $query->fields('ti', array('iid', 'name', 'city', 'url', 'assembledparentname'))
+        ->limit(FORSCHUNGSATLAS_PAGER)
+        ->orderByHeader($header)
+        ->execute();
+      // Points
+      $query_points = db_select('forschungsatlas__aux_institutions', 'ti');
+      forschungsatlas_search_institutions_build_filter_query($query_points, $session);
+      $result_points = $query_points->fields('ti', array('iid', 'name', 'latitude', 'longitude', 'assembledparentname','fsid', 'federalstate'))
+        ->execute();
+    }
+    else {
+      $result = array();
+      $result_points = array();
+    }
   }
   catch (Exception $e) {
     watchdog_exception('NEFO', $e);
@@ -447,10 +453,6 @@ function _forschungsatlas_map_form_is_ajusted() {
   return FALSE;
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 /**
  * Initialise filter
  *
@@ -561,6 +563,9 @@ function forschungsatlas_search_get_research_topics() {
  *
  * @param $query
  *   A SelectQuery to which the filters should be applied.
+ *
+ * @return boolean
+ *   TRUE: Execute query, FALSE: Skip execution
  */
 function forschungsatlas_search_institutions_build_filter_query(SelectQueryInterface $query, $filter_data=array()) {
   // Federal state
@@ -584,13 +589,18 @@ function forschungsatlas_search_institutions_build_filter_query(SelectQueryInter
     }
     $query->condition($db_or);
   }
+  //
   // Categories: Build subqueries
+  //
   // Research Network
   if (!empty($filter_data['rnids'])) {
     $options = _forschungsatlas_search_get_ids($filter_data['rnids']);
     $iids = _forschungsatlas_search_filter_categories('forschungsatlas__institution_researchnetwork', 'forschungsatlas__research_network', 'rnid', $options);
     if (!empty($iids)) {
       $query->condition('ti.iid', $iids, 'IN');
+    }
+    else {
+      return FALSE;
     }
   }
   // Habitats
@@ -600,6 +610,9 @@ function forschungsatlas_search_institutions_build_filter_query(SelectQueryInter
     if (!empty($iids)) {
       $query->condition('ti.iid', $iids, 'IN');
     }
+    else {
+      return FALSE;
+    }
   }
   // Methodologies
   if (!empty($filter_data['mids'])) {
@@ -607,6 +620,9 @@ function forschungsatlas_search_institutions_build_filter_query(SelectQueryInter
     $iids = _forschungsatlas_search_filter_categories('forschungsatlas__institution_methodology', 'forschungsatlas__methodology', 'mid', $options);
     if (!empty($iids)) {
       $query->condition('ti.iid', $iids, 'IN');
+    }
+    else {
+      return FALSE;
     }
   }
   // Organisms
@@ -616,6 +632,9 @@ function forschungsatlas_search_institutions_build_filter_query(SelectQueryInter
     if (!empty($iids)) {
       $query->condition('ti.iid', $iids, 'IN');
     }
+    else {
+      return FALSE;
+    }
   }
   // Interdisciplinary Subjects
   if (!empty($filter_data['isids'])) {
@@ -623,6 +642,9 @@ function forschungsatlas_search_institutions_build_filter_query(SelectQueryInter
     $iids = _forschungsatlas_search_filter_categories('forschungsatlas__institution_intersubject', 'forschungsatlas__interdisciplinary_subject', 'isid', $options);
     if (!empty($iids)) {
       $query->condition('ti.iid', $iids, 'IN');
+    }
+    else {
+      return FALSE;
     }
   }
   // Research Topics
@@ -632,7 +654,12 @@ function forschungsatlas_search_institutions_build_filter_query(SelectQueryInter
     if (!empty($iids)) {
       $query->condition('ti.iid', $iids, 'IN');
     }
+    else {
+      return FALSE;
+    }
   }
+
+  return TRUE;
 }
 
 /**
