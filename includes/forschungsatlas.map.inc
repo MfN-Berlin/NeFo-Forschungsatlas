@@ -583,11 +583,11 @@ function forschungsatlas_search_institutions_build_filter_query(SelectQueryInter
   // Name
   if (!empty($filter_data['name'])) {
     $words = explode(' ', $filter_data['name']);
-    $db_or = db_or();
+    $db_and = db_and();
     foreach ($words as $word) {
-      $db_or->condition('ti.name', '%' . db_like($word) . '%', 'LIKE');
+      $db_and->condition('ti.name', '%' . db_like($word) . '%', 'LIKE');
     }
-    $query->condition($db_or);
+    $query->condition($db_and);
   }
   //
   // Categories: Build subqueries
