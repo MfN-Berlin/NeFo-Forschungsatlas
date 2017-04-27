@@ -18,13 +18,12 @@
   padding: 0.5em;
 }
 
-#forschungsatlas-institution-address {}
-#forschungsatlas-institution-url {
-  padding: 0.5em 0;
-}
-#forschungsatlas-institution-orgtype {
-  padding: 0.5em 0;}
-#forschungsatlas-institution-belonging {
+#forschungsatlas-institution-abbrev,
+#forschungsatlas-institution-address,
+#forschungsatlas-institution-url,
+#forschungsatlas-institution-orgtype,
+#forschungsatlas-institution-belonging,
+#forschungsatlas-institution-subdivision {
   padding-top: 0.5em;
 }
 #forschungsatlas-institution-network {

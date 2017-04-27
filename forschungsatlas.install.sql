@@ -129,7 +129,8 @@ CREATE OR REPLACE VIEW forschungsatlas__aux_institutions_view AS
         g.geolocation_lon AS longitude,
         g.geolocation_wkt AS wkt,
         FORSCHUNGSATLAS__GETCOMPOSITEDNAME(i.iid, l.linkid) AS compositedname,
-        FORSCHUNGSATLAS__GETASSEMBLEDPARENTNAME(l.linkid) AS assembledparentname
+        FORSCHUNGSATLAS__GETASSEMBLEDPARENTNAME(l.linkid) AS assembledparentname,
+        i.abbrev AS abbrev
    FROM
         forschungsatlas__institutions i
             LEFT JOIN

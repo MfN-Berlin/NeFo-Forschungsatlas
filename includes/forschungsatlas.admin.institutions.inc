@@ -90,7 +90,7 @@ function forschungsatlas_admin_institutions() {
  * @see forschungsatlas_admin_institution_form_submit()
  */
 function forschungsatlas_admin_institution_form($form, &$form_state, $institution = array(
-        'iid' => '', 'name' => '', 'street' => '', 'postalcode' => '', 'cid' => '',
+        'iid' => '', 'name' => '', 'abbrev' => '', 'street' => '', 'postalcode' => '', 'cid' => '',
 		'fsid' => '', 'url' => '', 'otid' => '', 'description' => '', 'status' => 1)) {
 
 	$iid = intval($institution['iid']);
@@ -107,6 +107,14 @@ function forschungsatlas_admin_institution_form($form, &$form_state, $institutio
 	    '#title' => t('Name'),
 	    '#size' => 20,
 	    '#default_value' => $institution['name'],
+	    '#required' => TRUE,
+	);
+	$form['institution']['abbrev'] = array(
+		'#type' => 'textfield',
+	    '#title' => t('Abbreviation'),
+	    '#size' => 10,
+	    '#maxlength' => 10,
+	    '#default_value' => $institution['abbrev'],
 	    '#required' => TRUE,
 	);
 	$form['institution']['belonging'] = array(
@@ -319,6 +327,7 @@ function forschungsatlas_admin_institution_form_submit($form, &$form_state) {
   $institution = new stdClass();
   $institution->iid = $insert ? '' : $values['iid'];
   $institution->name = forschungsatlas_clean_name($values['name']);
+  $institution->abbrev = forschungsatlas_clean_name($values['abbrev']);
   $institution->street = forschungsatlas_clean_name($values['street']);
   $institution->postalcode = forschungsatlas_clean_name($values['postalcode']);
   $institution->cid = $values['cid'];

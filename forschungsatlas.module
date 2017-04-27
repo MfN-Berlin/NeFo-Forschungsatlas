@@ -629,7 +629,7 @@ function forschungsatlas_institution_load($iid) {
         i.iid AS iid, i.name AS name, i.street AS street, i.postalcode AS postalcode, i.cid AS cid,
         c.name AS city, i.fsid AS fsid, fs.name AS federalstate, i.url AS url, i.otid AS otid, ot.name AS orgtype,
         i.description AS description, g.geolocation_geo_type AS geotype, g.geolocation_lat AS latitude, g.geolocation_lon AS longitude,
-        g.geolocation_wkt AS wkt, i.status AS status, i.uid AS uid, i.created AS created, i.changed AS changed
+        g.geolocation_wkt AS wkt, i.status AS status, i.uid AS uid, i.created AS created, i.changed AS changed, i.abbrev AS abbrev
       FROM {forschungsatlas__institutions} i
       LEFT JOIN {forschungsatlas__cities} c ON i.cid = c.cid
       LEFT JOIN {forschungsatlas__federal_states} fs ON i.fsid = fs.fsid

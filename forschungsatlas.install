@@ -291,6 +291,11 @@ function forschungsatlas_schema() {
         'length' => '255',
         'not null' => TRUE,
       ),
+      'abbrev' => array(
+        'type' => 'varchar',
+        'length' => '10',
+        'not null' => FALSE,
+      ),   
       'street' => array(
         'type' => 'varchar',
         'length' => '255',
@@ -532,6 +537,11 @@ function forschungsatlas_schema() {
               'type' => 'varchar',
               'length' => '255',
               'not null' => TRUE,
+          ),
+          'abbrev' => array(
+            'type' => 'varchar',
+            'length' => '10',
+            'not null' => FALSE,
           ),
           'street' => array(
               'type' => 'varchar',
@@ -788,5 +798,17 @@ function forschungsatlas_uninstall() {
 }
 
 
+/**
+ * Add abbrev field to {forschungsatlas__institutions} and {forschungsatlas__aux_institutions} tables.
+ */
+function forschungsatlas_update_7100() {
+  $spec = array(
+    'type' => 'varchar',
+    'length' => 10,
+    'not null' => FALSE,
+  );
+  db_add_field('forschungsatlas__institutions', 'abbrev', $spec);
+  db_add_field('forschungsatlas__aux_institutions', 'abbrev', $spec);
+}
 
 

@@ -19,6 +19,8 @@ function forschungsatlas_institution_show($institution=NULL) {
   $variables = array('forschungsatlas_institution' => new stdClass());
   // Name
   $variables['forschungsatlas_institution']->name = $institution['name'];
+  // Abbreviation
+  $variables['forschungsatlas_institution']->abbrev = $institution['abbrev'];
   // Address
   $variables['forschungsatlas_institution']->address = array(
       'street' => $institution['street'],

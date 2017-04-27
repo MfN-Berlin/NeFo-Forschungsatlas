@@ -9,10 +9,17 @@
   <div id="forschungsatlas-institution">
 
 <?php
+// Abbreviation
+if (!empty($variables['forschungsatlas_institution']->abbrev)) {
+  print '<div id="forschungsatlas-institution-abbrev">
+      <div class="forschungsatlas-institution-h">'. t('Abbreviation') .':</div>
+      <div class="forschungsatlas-institution-c">'. $variables['forschungsatlas_institution']->abbrev .'</div>
+  </div>';  //forschungsatlas-institution-abbrev
+}
 // Address
 if (!empty($variables['forschungsatlas_institution']->address)) {
   print '<div id="forschungsatlas-institution-address">';
-//  print '<div class="forschungsatlas-institution-h">'. t('Address') .'</div>';
+  print '<div class="forschungsatlas-institution-h">'. t('Address') .':</div>';
   print '<div class="forschungsatlas-institution-c">'.
       check_plain($variables['forschungsatlas_institution']->address['street']) .'<br />'.
       check_plain($variables['forschungsatlas_institution']->address['postalcode']) .' '.
@@ -22,13 +29,14 @@ if (!empty($variables['forschungsatlas_institution']->address)) {
   // URL
   if (!empty($variables['forschungsatlas_institution']->url)) {
     print '<div id="forschungsatlas-institution-url">'.
+        '<div class="forschungsatlas-institution-h">'. t('URL') .':</div>'.
         l(
             check_url($variables['forschungsatlas_institution']->url),
             check_url($variables['forschungsatlas_institution']->url),
             array(
                 'attributes' => array(
                     'target'=>'blank',
-                    'class' => 'forschungsatlas-institution-l-ext',
+                    //'class' => 'forschungsatlas-institution-l-ext',
                 )
             )
         ) .
@@ -67,6 +75,7 @@ if (!empty($variables['forschungsatlas_institution']->subdivision)) {
 ?>
 
   </div>
+
   <div id="forschungsatlas-categories">
 
 <?php
