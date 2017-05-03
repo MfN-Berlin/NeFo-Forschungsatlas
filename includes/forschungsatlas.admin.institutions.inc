@@ -115,7 +115,7 @@ function forschungsatlas_admin_institution_form($form, &$form_state, $institutio
 	    '#size' => 10,
 	    '#maxlength' => 10,
 	    '#default_value' => $institution['abbrev'],
-	    '#required' => TRUE,
+	    //'#required' => TRUE,
 	);
 	$form['institution']['belonging'] = array(
 		'#type' => 'select',
