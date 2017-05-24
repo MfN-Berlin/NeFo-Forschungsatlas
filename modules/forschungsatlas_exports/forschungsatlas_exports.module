@@ -1,0 +1,113 @@
+<?php
+/**
+ * @file
+ * Code for the NeFo Forschungsatlas Exports module.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function forschungsatlas_exports_menu() {
+  $items = array();
+
+  /**
+   * Administration - Exports: 1000
+   */
+  $items[FORSCHUNGSATLAS_CONFIG_PATH . '/exports'] = array(
+    'title' => 'Exports',
+    'description' => 'Export tools.',
+    'page callback' => 'forschungsatlas_exports_list',
+    'access arguments' => array('administer nefo configuration'),
+    'file' => 'includes/forschungsatlas_exports.admin.inc',
+    'weight' => 1000,
+  );
+  // Exports
+  $items[FORSCHUNGSATLAS_CONFIG_PATH . '/exports/list'] = array(
+    'title' => 'Exports',
+    'description' => 'Database export tools.',
+    'weight' => 1010,
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+  );
+  $items[FORSCHUNGSATLAS_CONFIG_PATH . '/exports/%forschungsatlas_exports_action/download'] = array(
+    'title' => t('Download'),
+    'description' => t('Download database export.'),
+    'page callback' => 'forschungsatlas_exports_download',
+    'page arguments' => array(4),
+    'access arguments' => array('administer nefo configuration'),
+    'file' => 'includes/forschungsatlas_exports.admin.inc',
+   ); 
+
+  return $items;
+}
+
+
+
+/**
+ * Load callback for %forschungsatlas_exports_action placeholder in menu paths.
+ */
+function forschungsatlas_exports_action_load($action = '') {
+  $actions = forschungsatlas_exports_actions();
+  if (!empty($actions[$action])) {
+      return $action;
+  }
+  
+  return FALSE;
+}
+
+
+
+/**
+ * List of categories
+ */
+function forschungsatlas_exports_actions() {
+  $actions = array(
+        'topics' => array(
+            'label' => 'Forschungsdisziplinen',
+            'table' => 'forschungsatlas__topics',
+            'column' => 'tid',
+            'mapping_table' => 'forschungsatlas__institution_topic',
+        ),
+        'researchnetwork' => array(
+            'label' => 'Forschungsnetzwerk',
+            'table' => 'forschungsatlas__research_network',
+            'column' => 'rnid',
+            'mapping_table' => 'forschungsatlas__institution_researchnetwork',
+        ),
+        'habitats' => array(
+            'label' => 'Lebensräume',
+            'table' => 'forschungsatlas__habitats',
+            'column' => 'hid',
+            'mapping_table' => 'forschungsatlas__institution_habitat',
+        ),
+        'methodology' => array(
+            'label' => 'Methodik',
+            'table' => 'forschungsatlas__methodology',
+            'column' => 'mid',
+            'mapping_table' => 'forschungsatlas__institution_methodology',
+        ),
+        'organisms' => array(
+            'label' => 'Organismen',
+            'table' => 'forschungsatlas__organisms',
+            'column' => 'oid',
+            'mapping_table' => 'forschungsatlas__institution_organism',
+        ),
+        'intersubject' => array(
+            'label' => 'Querschnitts-/IPBES*-Themen',
+            'table' => 'forschungsatlas__interdisciplinary_subject',
+            'column' => 'isid',
+            'mapping_table' => 'forschungsatlas__institution_intersubject',
+        ),
+  );
+  
+  return $actions;
+}
+
+
+
+
+
+
+
+
+
+    
