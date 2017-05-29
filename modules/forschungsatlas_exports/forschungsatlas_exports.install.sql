@@ -4,7 +4,7 @@
  */
 
 --
---  STEP 01: Create function forschungsatlas__exports_getFamilyTreeIds
+--  STEP 01: Create function forschungsatlas__tools_getFamilyTreeIds
 --
 DELIMITER $$
 DROP FUNCTION IF EXISTS `forschungsatlas__tools_getFamilyTreeIds`$$
@@ -63,6 +63,7 @@ BEGIN
     RETURN list_csv_ids;
 END$$
 DELIMITER ;
+
 
 --
 --  STEP 02: forschungsatlas__exports_institutions_view
