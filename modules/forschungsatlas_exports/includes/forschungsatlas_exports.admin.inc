@@ -4,7 +4,6 @@
  * forschungsatlas_exports.admin.inc
  */
 
-
 /**
  * Table builder
  */
@@ -48,12 +47,8 @@ function forschungsatlas_exports_list() {
 
 /**
  * Create the export file
- * @param unknown $action
- * @return multitype:string The multitype:multitype:The   multitype:unknown
  */
 function forschungsatlas_exports_download($action='') {
-  drupal_set_title(t('Download export test'));
-
   // Select action
   $actions = forschungsatlas_exports_actions();
   $request = array(
@@ -62,42 +57,34 @@ function forschungsatlas_exports_download($action='') {
     'mapping_column' => $actions[$action]['column'],
     'mapping_table' => $actions[$action]['mapping_table'],
   );
-
-  // Build export data
+  // File name from label
+  $filename = _forschungsatlas_exports_sanitize_filename($request['label']);
+  $filename .= '.csv';
+  // Send header
+  drupal_add_http_header('Content-Type', 'text/csv');
+  drupal_add_http_header('Content-Disposition', 'attachment;filename='. $filename);
+  drupal_add_http_header('Cache-Control', 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0', FALSE);
+  // Export array
   $export_data = array();
-  $export_data = _forschungsatlas_exports_build_institution_category_export($request);
-
-//
-//  KRUMO !!!
-//
-  krumo($export_data);
-
-  $header = array();
-  $header[] = array('data' => t('Action'));
-
-  $rows = array();
-  $row = array();
-  $row['data']['name'] = $action;
-  $rows[] = $row;
-
-  $build['forschungsatlas_exports_table'] = array(
-      '#theme' => 'table',
-      '#header' => $header,
-      '#rows' => $rows,
-      '#empty' => t('There are no available exports.'),
-  );
-
-  return $build;
-
+  $categories = _forschungsatlas_exports_get_categories($request);
+  $export_data = _forschungsatlas_exports_build_institution_category_export($request, $categories);
+  // Output into a csv file
+  $fp = fopen('php://output', 'w');
+  foreach($export_data as $line){
+    fputcsv($fp, $line);
+  }
+  fclose($fp);
+  drupal_exit();
 }
 
-
-function _forschungsatlas_exports_build_institution_category_export($request=array()) {
+/**
+ * Build export array
+ */
+function _forschungsatlas_exports_build_institution_category_export($request=array(), $categories=array()) {
   $export_rows = array();
   // Header
-  $row_header = _forschungsatlas_exports_build_institution_category_header($request);
+  $row_header = _forschungsatlas_exports_build_institution_category_header($request, $categories);
   $export_rows[] = $row_header;
-
   // Get list of parent institutions
   $result = db_query('SELECT iid, name, abbrev, familytreeids FROM {forschungsatlas__exports_institutions_view}');
   foreach ($result as $record) {
@@ -108,17 +95,19 @@ function _forschungsatlas_exports_build_institution_category_export($request=arr
       'familytreeids' => $record->familytreeids,
     );
     // Build row
-    $export_row = _forschungsatlas_exports_build_institution_category_row($institution, $request);
+    $export_row = _forschungsatlas_exports_build_institution_category_row($institution, $request, $categories);
     $export_rows[] = $export_row;
   }
 
   return $export_rows;
 }
 
-function _forschungsatlas_exports_build_institution_category_header($request=array()) {
-  $categories = _forschungsatlas_exports_get_categories($request);
+/**
+ * Build the header of the csv file
+ */
+function _forschungsatlas_exports_build_institution_category_header($request=array(), $categories=array()) {
   $row = array();
-  $row[] = 'ID';
+  //$row[] = 'ID';
   $row[] = 'Name';
   $row[] = 'Kürzel';
   foreach ($categories as $value) {
@@ -128,10 +117,12 @@ function _forschungsatlas_exports_build_institution_category_header($request=arr
   return $row;
 }
 
-function _forschungsatlas_exports_build_institution_category_row($institution=array(), $request=array()) {
-  $categories = _forschungsatlas_exports_get_categories($request);
+/**
+ * Build a line of the export csv file
+ */
+function _forschungsatlas_exports_build_institution_category_row($institution=array(), $request=array(), $categories=array()) {
   $row = array();
-  $row[] = $institution['iid'];
+  //$row[] = $institution['iid'];
   $row[] = $institution['name'];
   $row[] = $institution['abbrev'];
   foreach ($categories as $value) {
@@ -147,7 +138,9 @@ function _forschungsatlas_exports_build_institution_category_row($institution=ar
   return $row;
 }
 
-
+/**
+ * Check if the parent institution is mapped to the category
+ */
 function _forschungsatlas_exports_find_category_usage($institution=array(), $category=array()) {
   $query = 'SELECT iid, '. $category['mapping_column'] .' FROM {'. $category['mapping_table'] .'}
       WHERE (iid IN ('. $institution['familytreeids'] .')) AND
@@ -161,10 +154,12 @@ function _forschungsatlas_exports_find_category_usage($institution=array(), $cat
   return 0;
 }
 
-
-function _forschungsatlas_exports_get_categories($data=array()) {
+/**
+ * Get list of categories
+ */
+function _forschungsatlas_exports_get_categories($request=array()) {
   $categories = array();
-  $query = 'SELECT '. $data['mapping_column'] .' categid, name categname FROM {'. $data['table'] .'} ORDER BY name ASC';
+  $query = 'SELECT '. $request['mapping_column'] .' categid, name categname FROM {'. $request['table'] .'} ORDER BY name ASC';
   $result = db_query($query);
   foreach ($result as $record) {
     $category = array();
@@ -174,5 +169,12 @@ function _forschungsatlas_exports_get_categories($data=array()) {
   }
 
   return $categories;
+}
+
+/**
+ * Sanitize string
+ */
+function _forschungsatlas_exports_sanitize_filename($string) {
+  return strtolower(trim(preg_replace('~[^0-9a-z]+~i', '-', html_entity_decode(preg_replace('~&([a-z]{1,2})(?:acute|cedil|circ|grave|lig|orn|ring|slash|th|tilde|uml);~i', '$1', htmlentities($string, ENT_QUOTES, 'UTF-8')), ENT_QUOTES, 'UTF-8')), '-'));
 }
 

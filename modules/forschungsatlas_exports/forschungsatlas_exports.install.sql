@@ -71,7 +71,7 @@ CREATE OR REPLACE VIEW forschungsatlas__exports_institutions_view AS
     SELECT 
         i.iid AS iid,
         i.name AS name,
-        i.abbrev AS abbrev,
+        IFNULL(i.abbrev, '') AS abbrev,
         l.linkid AS linkid,
         FORSCHUNGSATLAS__GETFAMILYTREEIDS(i.iid) AS familytreeids
    FROM
