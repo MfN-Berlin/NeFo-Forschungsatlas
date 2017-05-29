@@ -8,7 +8,7 @@
 --
 DELIMITER $$
 DROP FUNCTION IF EXISTS `forschungsatlas__tools_getFamilyTreeIds`$$
-CREATE FUNCTION `forschungsatlas__getFamilyTreeIds`(parentid VARCHAR(16)) RETURNS varchar(1024) CHARSET utf8
+CREATE FUNCTION `forschungsatlas__tools_getFamilyTreeIds`(parentid VARCHAR(16)) RETURNS varchar(1024) CHARSET utf8
     DETERMINISTIC
 BEGIN
     DECLARE list_csv_ids VARCHAR(1024);
@@ -73,7 +73,7 @@ CREATE OR REPLACE VIEW forschungsatlas__exports_institutions_view AS
         i.name AS name,
         IFNULL(i.abbrev, '') AS abbrev,
         l.linkid AS linkid,
-        FORSCHUNGSATLAS__GETFAMILYTREEIDS(i.iid) AS familytreeids
+        FORSCHUNGSATLAS__TOOLS_GETFAMILYTREEIDS(i.iid) AS familytreeids
    FROM
         forschungsatlas__institutions i
             LEFT JOIN
