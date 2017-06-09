@@ -167,7 +167,7 @@ function forschungsatlas_schema() {
         'type' => 'int',
         'not null' => TRUE,
         'default' => 0,
-      ),      
+      ),
     ),
     'indexes' => array(
       'delta_idx' => array('delta'),
@@ -293,9 +293,9 @@ function forschungsatlas_schema() {
       ),
       'abbrev' => array(
         'type' => 'varchar',
-        'length' => '10',
+        'length' => '50',
         'not null' => FALSE,
-      ),   
+      ),
       'street' => array(
         'type' => 'varchar',
         'length' => '255',
@@ -540,7 +540,7 @@ function forschungsatlas_schema() {
           ),
           'abbrev' => array(
             'type' => 'varchar',
-            'length' => '10',
+            'length' => '50',
             'not null' => FALSE,
           ),
           'street' => array(
@@ -701,7 +701,7 @@ function forschungsatlas_install() {
       )->execute();
     }
   }
-  
+
   if (db_table_exists('forschungsatlas__interdisciplinary_subject')) {
     $rows = _forschungsatlas__interdisciplinary_subject_rows();
     foreach ($rows as $row) {
@@ -715,7 +715,7 @@ function forschungsatlas_install() {
       )->execute();
     }
   }
-  
+
   if (db_table_exists('forschungsatlas__methodology')) {
     $rows = _forschungsatlas__methodology_rows();
     foreach ($rows as $row) {
@@ -742,8 +742,8 @@ function forschungsatlas_install() {
       )
       )->execute();
     }
-  }  
-  
+  }
+
   if (db_table_exists('forschungsatlas__organization_type')) {
     $rows = _forschungsatlas__organization_type_rows();
     foreach ($rows as $row) {
@@ -756,7 +756,7 @@ function forschungsatlas_install() {
       )->execute();
     }
   }
-  
+
   if (db_table_exists('forschungsatlas__research_network')) {
     $rows = _forschungsatlas__research_network_rows();
     foreach ($rows as $row) {
@@ -769,7 +769,7 @@ function forschungsatlas_install() {
       )
       )->execute();
     }
-  }      
+  }
 
   if (db_table_exists('forschungsatlas__topics')) {
     $rows = _forschungsatlas__topics_rows();
@@ -804,7 +804,7 @@ function forschungsatlas_uninstall() {
 function forschungsatlas_update_7100() {
   $spec = array(
     'type' => 'varchar',
-    'length' => 10,
+    'length' => 50,
     'not null' => FALSE,
   );
   db_add_field('forschungsatlas__institutions', 'abbrev', $spec);

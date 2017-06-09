@@ -105,15 +105,15 @@ function forschungsatlas_admin_institution_form($form, &$form_state, $institutio
 	$form['institution']['name'] = array(
 		'#type' => 'textfield',
 	    '#title' => t('Name'),
-	    '#size' => 20,
+	    '#size' => 60,
 	    '#default_value' => $institution['name'],
 	    '#required' => TRUE,
 	);
 	$form['institution']['abbrev'] = array(
 		'#type' => 'textfield',
 	    '#title' => t('Abbreviation'),
-	    '#size' => 10,
-	    '#maxlength' => 10,
+	    '#size' => 40,
+	    '#maxlength' => 50,
 	    '#default_value' => $institution['abbrev'],
 	    //'#required' => TRUE,
 	);
