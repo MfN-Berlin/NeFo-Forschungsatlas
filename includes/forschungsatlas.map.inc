@@ -72,6 +72,11 @@ function forschungsatlas_map_form_builder($form, &$form_state) {
       '#size' => 20,
       '#default_value' => $session['name'],
   );
+  $form['simple']['showsub'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Show Departments'),
+      '#default_value' => $session['showsub'],
+  );
   // Extended
   $form['extended'] = array(
     '#type' => 'fieldset',
@@ -397,6 +402,11 @@ function forschungsatlas_map_form_builder_submit($form, &$form_state) {
           $_SESSION['forschungsatlas_map_filter']['name'] = $name;
         }
       }
+      // Show Departments
+      $_SESSION['forschungsatlas_map_filter']['showsub'] = $form_state['values']['showsub'];
+      //
+      // Categories
+      //
       // Research Network
       if (!empty($form_state['values']['rnids'])) {
         $rnids = array_intersect_key($form_state['values']['rnids'], forschungsatlas_search_get_research_network());
@@ -444,6 +454,7 @@ function forschungsatlas_map_form_builder_submit($form, &$form_state) {
 function _forschungsatlas_map_form_is_ajusted() {
   if (!empty($_SESSION['forschungsatlas_map_filter']['fsids']) || !empty($_SESSION['forschungsatlas_map_filter']['cids'])
       || !empty($_SESSION['forschungsatlas_map_filter']['otids']) || !empty($_SESSION['forschungsatlas_map_filter']['name'])
+      || empty($_SESSION['forschungsatlas_map_filter']['showsub'])
       || !empty($_SESSION['forschungsatlas_map_filter']['rnids']) || !empty($_SESSION['forschungsatlas_map_filter']['hids'])
       || !empty($_SESSION['forschungsatlas_map_filter']['mids']) || !empty($_SESSION['forschungsatlas_map_filter']['oids'])
       || !empty($_SESSION['forschungsatlas_map_filter']['isids']) || !empty($_SESSION['forschungsatlas_map_filter']['tids'])) {
@@ -465,6 +476,7 @@ function forschungsatlas_search_init_filters() {
       'cids' => array(),
       'otids' => array(),
       'name' => '',
+      'showsub' => TRUE,
       'rnids' => array(),
       'crids' => array(),
       'hids' => array(),
@@ -588,6 +600,10 @@ function forschungsatlas_search_institutions_build_filter_query(SelectQueryInter
       $db_and->condition('ti.name', '%' . db_like($word) . '%', 'LIKE');
     }
     $query->condition($db_and);
+  }
+  // Show Departments
+  if (empty($filter_data['showsub'])) {
+    $query->isNull('ti.assembledparentname');
   }
   //
   // Categories: Build subqueries

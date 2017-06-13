@@ -21,7 +21,7 @@ define('FORSCHUNGSATLAS_PUBLIC_PATH', 'forschung/forschungsakteure/forschungsatl
 define('FORSCHUNGSATLAS_PUBLIC_PATH_OFFSET', 2);
 define('FORSCHUNGSATLAS_SEPARATOR', '&raquo;');
 define('FORSCHUNGSATLAS_DEFAULT_SITE_EMAIL', "info@biodiversity.de");
-define('FORSCHUNGSATLAS_MAP_HEIGHT', '600px');
+define('FORSCHUNGSATLAS_MAP_HEIGHT', '640px');
 define('FORSCHUNGSATLAS_MAP_ZOOM', 6);
 
 /**
