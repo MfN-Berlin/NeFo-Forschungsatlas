@@ -1,5 +1,5 @@
 /**
- * Create NeFo stored functions and views. 
+ * Create NeFo stored functions and views.
  * CREATE FUNCTION and CREATE VIEW privileges are required.
  */
 
@@ -8,7 +8,7 @@
 --
 DELIMITER $$
 DROP FUNCTION IF EXISTS forschungsatlas__getAssembledParentName $$
-CREATE FUNCTION forschungsatlas__getAssembledParentName (parentid VARCHAR(16)) 
+CREATE FUNCTION forschungsatlas__getAssembledParentName (parentid VARCHAR(16))
 RETURNS VARCHAR(2048) CHARSET utf8
 DETERMINISTIC
 BEGIN
@@ -19,7 +19,7 @@ BEGIN
     SET rname = NULL;
     SET comp_name = NULL;
     IF parentid IS NOT NULL THEN
-        SELECT CONCAT(ti.name, 0x1F4e45464f49441F, ti.iid) AS rname INTO rname 
+        SELECT CONCAT(ti.name, 0x1F4e45464f49441F, ti.iid) AS rname INTO rname
             FROM forschungsatlas__institutions AS ti WHERE ti.iid = parentid;
         IF rname IS NOT NULL THEN
             SET comp_name = rname;
@@ -29,7 +29,7 @@ BEGIN
         WHILE searchparent > 0 DO
             SET rname = NULL;
             SELECT IFNULL(rc, '') INTO rchild
-                FROM (SELECT tii.linkid AS rc 
+                FROM (SELECT tii.linkid AS rc
                           FROM forschungsatlas__institution_institution AS tii
                           WHERE tii.iid = rparent AND tii.delta = 0 LIMIT 1) AS A;
             SET num_rows = found_rows();
@@ -38,7 +38,7 @@ BEGIN
                     SET searchparent = 0;
                 ELSE
                     SET rparent = rchild;
-                    SELECT CONCAT(ti.name, 0x1F4e45464f49441F, ti.iid) AS rname INTO rname 
+                    SELECT CONCAT(ti.name, 0x1F4e45464f49441F, ti.iid) AS rname INTO rname
                         FROM forschungsatlas__institutions AS ti WHERE ti.iid = rparent;
                     IF rname IS NOT NULL THEN
                         SET comp_name = CONCAT(rname, 0x1F4E45464F4E4C1F, comp_name);
@@ -55,10 +55,10 @@ DELIMITER ;
 
 --
 --  STEP 02: Create function forschungsatlas__getCompositedName
---	
+--
 DELIMITER $$
 DROP FUNCTION IF EXISTS forschungsatlas__getCompositedName $$
-CREATE FUNCTION forschungsatlas__getCompositedName (childid VARCHAR(16), parentid VARCHAR(16)) 
+CREATE FUNCTION forschungsatlas__getCompositedName (childid VARCHAR(16), parentid VARCHAR(16))
 RETURNS VARCHAR(2048) CHARSET utf8
 DETERMINISTIC
 BEGIN
@@ -73,7 +73,7 @@ BEGIN
         SET rname = NULL;
     END IF;
     IF parentid IS NOT NULL THEN
-        SELECT ti.name INTO rname 
+        SELECT ti.name INTO rname
             FROM forschungsatlas__institutions AS ti WHERE ti.iid = parentid;
         IF rname IS NOT NULL THEN
             SET comp_name = CONCAT(rname, ' > ', comp_name);
@@ -83,7 +83,7 @@ BEGIN
         WHILE searchparent > 0 DO
             SET rname = NULL;
             SELECT IFNULL(rc, '') INTO rchild
-                FROM (SELECT tii.linkid AS rc 
+                FROM (SELECT tii.linkid AS rc
                           FROM forschungsatlas__institution_institution AS tii
                           WHERE tii.iid = rparent AND tii.delta = 0 LIMIT 1) AS A;
             SET num_rows = found_rows();
@@ -92,7 +92,7 @@ BEGIN
                     SET searchparent = 0;
                 ELSE
                     SET rparent = rchild;
-                    SELECT ti.name INTO rname 
+                    SELECT ti.name INTO rname
                         FROM forschungsatlas__institutions AS ti WHERE ti.iid = rparent;
                     IF rname IS NOT NULL THEN
                         SET comp_name = CONCAT(rname, ' > ', comp_name);
@@ -107,12 +107,72 @@ BEGIN
 END $$
 DELIMITER ;
 
+--
+--  STEP 03: Create function forschungsatlas__getFamilyTreeIds
+--
+DELIMITER $$
+DROP FUNCTION IF EXISTS `forschungsatlas__getFamilyTreeIds`$$
+CREATE FUNCTION `forschungsatlas__getFamilyTreeIds`(parentid VARCHAR(16)) RETURNS varchar(1024) CHARSET utf8
+    DETERMINISTIC
+BEGIN
+    DECLARE list_csv_ids VARCHAR(1024);
+    DECLARE rparent VARCHAR(1024);
+    DECLARE queue, subqueue, childrenqueue VARCHAR(1024);
+    DECLARE qlength, pos INT;
+
+    SET list_csv_ids = NULL;
+
+    IF parentid IS NOT NULL THEN
+        SET list_csv_ids = '';
+        SET queue = parentid;
+        SET qlength = 1;
+
+        WHILE qlength > 0 DO
+            SET rparent = queue;
+            IF qlength = 1 THEN
+                SET queue = '';
+            ELSE
+                SET pos = LOCATE(',', queue) + 1;
+                SET subqueue = SUBSTR(queue, pos);
+                SET queue = subqueue;
+            END IF;
+            SET qlength = qlength - 1;
+
+            SELECT IFNULL(qc, '') INTO childrenqueue FROM (SELECT GROUP_CONCAT(iid) qc  FROM forschungsatlas__institution_institution WHERE linkid = rparent) A;
+                IF LENGTH(childrenqueue) = 0 THEN
+                        IF LENGTH(queue) = 0 THEN
+                            SET qlength = 0;
+                        END IF;
+                ELSE
+                        IF LENGTH(list_csv_ids) = 0 THEN
+                            SET list_csv_ids = childrenqueue;
+                        ELSE
+                            SET list_csv_ids = CONCAT(list_csv_ids, ',', childrenqueue);
+                        END IF;
+                        IF LENGTH(queue) = 0 THEN
+                            SET queue = childrenqueue;
+                        ELSE
+                            SET queue = CONCAT(queue, ',', childrenqueue);
+                        END IF;
+                        SET qlength = LENGTH(queue) - LENGTH(REPLACE(queue, ',', '')) + 1;
+                END IF;
+        END WHILE;
+        IF LENGTH(list_csv_ids) = 0 THEN
+            SET list_csv_ids = parentid;
+        ELSE
+            SET list_csv_ids = CONCAT(parentid, ',', list_csv_ids);
+        END IF;
+    END IF;
+
+    RETURN list_csv_ids;
+END$$
+DELIMITER ;
 
 --
---  STEP 03: forschungsatlas__aux_institutions_view
+--  STEP 04: forschungsatlas__aux_institutions_view
 --
 CREATE OR REPLACE VIEW forschungsatlas__aux_institutions_view AS
-    SELECT 
+    SELECT
         i.iid AS iid,
         i.name AS name,
         i.street AS street,
@@ -130,7 +190,9 @@ CREATE OR REPLACE VIEW forschungsatlas__aux_institutions_view AS
         g.geolocation_wkt AS wkt,
         FORSCHUNGSATLAS__GETCOMPOSITEDNAME(i.iid, l.linkid) AS compositedname,
         FORSCHUNGSATLAS__GETASSEMBLEDPARENTNAME(l.linkid) AS assembledparentname,
-        i.abbrev AS abbrev
+        i.abbrev AS abbrev,
+        FORSCHUNGSATLAS__GETFAMILYTREEIDS(i.iid) AS familytreeids,
+        CONCAT_WS(' ', i.name, i.abbrev) AS fullname
    FROM
         forschungsatlas__institutions i
             LEFT JOIN

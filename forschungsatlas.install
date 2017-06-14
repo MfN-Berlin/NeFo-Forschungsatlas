@@ -291,11 +291,6 @@ function forschungsatlas_schema() {
         'length' => '255',
         'not null' => TRUE,
       ),
-      'abbrev' => array(
-        'type' => 'varchar',
-        'length' => '50',
-        'not null' => FALSE,
-      ),
       'street' => array(
         'type' => 'varchar',
         'length' => '255',
@@ -351,6 +346,11 @@ function forschungsatlas_schema() {
       'changed' => array(
         'type' => 'int',
         'not null' => TRUE,
+      ),
+      'abbrev' => array(
+        'type' => 'varchar',
+        'length' => '50',
+        'not null' => FALSE,
       ),
     ),
     'primary key' => array('iid'),
@@ -538,11 +538,6 @@ function forschungsatlas_schema() {
               'length' => '255',
               'not null' => TRUE,
           ),
-          'abbrev' => array(
-            'type' => 'varchar',
-            'length' => '50',
-            'not null' => FALSE,
-          ),
           'street' => array(
               'type' => 'varchar',
               'length' => '255',
@@ -618,6 +613,21 @@ function forschungsatlas_schema() {
           'assembledparentname' => array(
               'type' => 'varchar',
               'length' => '2048',
+              'not null' => FALSE,
+          ),
+          'abbrev' => array(
+              'type' => 'varchar',
+              'length' => '50',
+              'not null' => FALSE,
+          ),
+          'familytreeids' => array(
+              'type' => 'varchar',
+              'length' => '1024',
+              'not null' => FALSE,
+          ),
+          'fullname' => array(
+              'type' => 'varchar',
+              'length' => '320',  // Name + Abbreviation
               'not null' => FALSE,
           ),
     ),
@@ -810,5 +820,24 @@ function forschungsatlas_update_7100() {
   db_add_field('forschungsatlas__institutions', 'abbrev', $spec);
   db_add_field('forschungsatlas__aux_institutions', 'abbrev', $spec);
 }
+
+/**
+ * Add familytreeids and fullname fields to {forschungsatlas__aux_institutions} table.
+ */
+function forschungsatlas_update_7101() {
+  $spec = array(
+      'type' => 'varchar',
+      'length' => 1024,
+      'not null' => FALSE,
+  );
+  db_add_field('forschungsatlas__aux_institutions', 'familytreeids', $spec);
+  $spec = array(
+      'type' => 'varchar',
+      'length' => 320,
+      'not null' => FALSE,
+  );
+  db_add_field('forschungsatlas__aux_institutions', 'fullname', $spec);
+}
+
 
 

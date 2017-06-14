@@ -597,11 +597,11 @@ function forschungsatlas_search_institutions_build_filter_query(SelectQueryInter
     $words = explode(' ', $filter_data['name']);
     $db_and = db_and();
     foreach ($words as $word) {
-      $db_and->condition('ti.name', '%' . db_like($word) . '%', 'LIKE');
+      $db_and->condition('ti.fullname', '%' . db_like($word) . '%', 'LIKE');
     }
     $query->condition($db_and);
   }
-  // Show Departments
+  // Don't show Departments
   if (empty($filter_data['showsub'])) {
     $query->isNull('ti.assembledparentname');
   }
