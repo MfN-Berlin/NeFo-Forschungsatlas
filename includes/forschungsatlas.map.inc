@@ -378,7 +378,7 @@ function forschungsatlas_map_info() {
 function forschungsatlas_map_form_builder_submit($form, &$form_state) {
   //  $form_state['rebuild'] = TRUE;
   switch ($form_state['values']['op']) {
-    case t('Search'):
+    case t('Refresh'):
       $_SESSION['forschungsatlas_map_filter'] = forschungsatlas_search_init_filters();
       // Federal state
       if (!empty($form_state['values']['fsids'])) {
