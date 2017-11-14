@@ -23,7 +23,8 @@
 #forschungsatlas-institution-url,
 #forschungsatlas-institution-orgtype,
 #forschungsatlas-institution-belonging,
-#forschungsatlas-institution-subdivision {
+#forschungsatlas-institution-subdivision,
+#forschungsatlas-institution-changed {
   padding-top: 0.5em;
 }
 #forschungsatlas-institution-network {

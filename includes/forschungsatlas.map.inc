@@ -143,7 +143,7 @@ function forschungsatlas_map_form_builder($form, &$form_state) {
   );
   $form['actions']['submit'] = array(
     '#type' => 'submit',
-    '#value' => t('Search'),
+    '#value' => t('Refresh'),
   );
 
   if ($session['adjusted']) {

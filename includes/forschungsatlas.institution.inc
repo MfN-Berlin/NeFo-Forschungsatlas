@@ -51,9 +51,10 @@ function forschungsatlas_institution_show($institution=NULL) {
   $variables['forschungsatlas_institution']->description = $institution['description'];
   // Subordinate institutions
   $variables['forschungsatlas_institution']->subdivision = _forschungsatlas_get_subordinate_list($iid);
+  // Last changed
+  $variables['forschungsatlas_institution']->changed = format_date($institution['changed'], 'custom', FORSCHUNGSATLAS_DATE_FORMAT);
 
   return theme('forschungsatlas_display_institution', $variables);
-
 }
 
 

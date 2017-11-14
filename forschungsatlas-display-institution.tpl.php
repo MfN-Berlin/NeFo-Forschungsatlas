@@ -70,11 +70,16 @@ if (!empty($variables['forschungsatlas_institution']->subdivision)) {
   print _forschungsatlas_build_subordinate_list($variables['forschungsatlas_institution']->subdivision);
   print '</div>';  //forschungsatlas-institution-belonging
 }
+// Last changed
+if (!empty($variables['forschungsatlas_institution']->changed)) {
+  print '<div id="forschungsatlas-institution-changed">
+      <div class="forschungsatlas-institution-h">'. t('Date of last update') .':</div>
+      <div class="forschungsatlas-institution-c">'. $variables['forschungsatlas_institution']->changed .'</div>
+  </div>';  //forschungsatlas-institution-changed
+}
 
-
+  print '</div>'; //forschungsatlas-institution
 ?>
-
-  </div>
 
   <div id="forschungsatlas-categories">
 

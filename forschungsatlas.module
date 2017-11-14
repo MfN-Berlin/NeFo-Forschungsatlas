@@ -23,6 +23,7 @@ define('FORSCHUNGSATLAS_SEPARATOR', '&raquo;');
 define('FORSCHUNGSATLAS_DEFAULT_SITE_EMAIL', "info@biodiversity.de");
 define('FORSCHUNGSATLAS_MAP_HEIGHT', '640px');
 define('FORSCHUNGSATLAS_MAP_ZOOM', 6);
+define('FORSCHUNGSATLAS_DATE_FORMAT', 'Y-m-d'); // https://en.wikipedia.org/wiki/ISO_8601
 
 /**
  * Implements hook_permission().
