@@ -170,7 +170,6 @@ function forschungsatlas_admin_network_form_validate($form, &$form_state) {
   }
 }
 
-
 /**
  * Form constructor for the research network deletion confirmation form.
  *
@@ -241,7 +240,6 @@ function _forschungsatlas_delete_network($rnid, $parent) {
     ->condition('rnid', $ids, 'IN')
     ->execute();
 }
-
 
 /**
  * Validations

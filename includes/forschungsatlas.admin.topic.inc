@@ -170,7 +170,6 @@ function forschungsatlas_admin_topic_form_validate($form, &$form_state) {
   }
 }
 
-
 /**
  * Form constructor for the topic deletion confirmation form.
  *
@@ -241,7 +240,6 @@ function _forschungsatlas_delete_topic($tid, $parent) {
     ->condition('tid', $ids, 'IN')
     ->execute();
 }
-
 
 /**
  * Validations

@@ -170,7 +170,6 @@ function forschungsatlas_admin_organism_form_validate($form, &$form_state) {
   }
 }
 
-
 /**
  * Form constructor for the organism deletion confirmation form.
  *
@@ -241,7 +240,6 @@ function _forschungsatlas_delete_organism($oid, $parent) {
     ->condition('oid', $ids, 'IN')
     ->execute();
 }
-
 
 /**
  * Validations
