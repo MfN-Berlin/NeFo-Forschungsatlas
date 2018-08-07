@@ -8,7 +8,7 @@ NeFo-Forschungsatlas module
 
 ## Leaflet Library
 * Download [Leaflet v0.7.7](http://leafletjs.com/download.html) and put it in your `sites/all/libraries` folder.
-* Download [Leaflet Markercluster v0.1](https://github.com/leaflet/Leaflet.markercluster/downloads) and put it in your `sites/all/libraries` folder.
+* Download [Leaflet Markercluster v0.7](https://github.com/Leaflet/Leaflet.markercluster/tree/leaflet-0.7) and put it in your `sites/all/libraries` folder.
 
 # Installation
 1. Install and enable the NeFo-Forschungsatlas module and its required modules Chosen and Geocoder in the usual way.
