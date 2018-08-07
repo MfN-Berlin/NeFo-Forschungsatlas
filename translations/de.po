@@ -876,3 +876,6 @@ msgstr "Forschungsnetzwerk"
 msgid "Research Disciplines"
 msgstr "Forschungsdisziplinen"
 
+#: forschungsatlas.module:95
+msgid "Research Map"
+msgstr "Forschungsatlas"
