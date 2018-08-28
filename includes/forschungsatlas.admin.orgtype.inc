@@ -175,7 +175,6 @@ function forschungsatlas_admin_orgtype_delete_confirm($form, &$form_state, $orgt
   );
 }
 
-
 /**
  * Execute organization type deletion.
  *
@@ -216,7 +215,6 @@ function _forschungsatlas_find_orgtype_usage($otid) {
 
   return $num_rows;
 }
-
 
 /**
  * Validations

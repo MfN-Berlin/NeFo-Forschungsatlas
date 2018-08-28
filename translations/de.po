@@ -864,3 +864,18 @@ msgstr "Link"
 msgid "No content available."
 msgstr "Kein Inhalt verfügbar."
 
+#: forschungsatlas.module:157
+msgid "Institutions"
+msgstr "Institutionen"
+
+#: includes/forschungsatlas.map.inc:92
+msgid "Research network"
+msgstr "Forschungsnetzwerk"
+
+#: includes/forschungsatlas.map.inc:132
+msgid "Research Disciplines"
+msgstr "Forschungsdisziplinen"
+
+#: forschungsatlas.module:95
+msgid "Research Map"
+msgstr "Forschungsatlas"

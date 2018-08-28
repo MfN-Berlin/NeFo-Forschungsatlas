@@ -242,7 +242,6 @@ function _forschungsatlas_delete_habitat($hid, $parent) {
     ->execute();
 }
 
-
 /**
  * Validations
  */

@@ -242,8 +242,6 @@ function _forschungsatlas_delete_methodology($mid, $parent) {
     ->execute();
 }
 
-
-
 /**
  * Validations
  */

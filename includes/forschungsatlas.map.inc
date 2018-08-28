@@ -788,13 +788,3 @@ function _forschungsatlas_search_build_composited_options($table, $key, $object)
 }
 
 
-
-
-
-
-
-
-
-
-
-

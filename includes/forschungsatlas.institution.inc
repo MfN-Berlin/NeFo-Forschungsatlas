@@ -57,7 +57,6 @@ function forschungsatlas_institution_show($institution=NULL) {
   return theme('forschungsatlas_display_institution', $variables);
 }
 
-
 /**
  * Build a list of institutions to which the given institution is belonging.
  *
@@ -162,10 +161,6 @@ function _forschungsatlas_get_child_institutions($iid) {
   return $result;
 }
 
-
-
-
-
 /**
  * Build the assembled name of institutions to which the given institution is belonging.
  *
@@ -195,8 +190,6 @@ function _forschungsatlas_get_belonging_assembled_name($parentname) {
   return $assembled_name;
 }
 
-
-
 /**
  * Build a list of names associated with an institution.
  *
@@ -223,7 +216,6 @@ function _forschungsatlas_get_list($iid, $mapping_table, $table, $col_name) {
 
   return $list;
 }
-
 
 /**
  * Build a list of research networks associated with the given institution.
@@ -308,7 +300,6 @@ function _forschungsatlas_get_methodologies_list($iid) {
   $list = _forschungsatlas_get_list($iid, 'forschungsatlas__institution_methodology', 'forschungsatlas__methodology', 'mid');
   return _forschungsatlas_build_list_translation($list, 'forschungsatlas_methodology:methodology');
 }
-
 
 /**
  * Translate a list of names associated with an institution.

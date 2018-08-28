@@ -242,7 +242,6 @@ function _forschungsatlas_delete_intersubject($isid, $parent) {
     ->execute();
 }
 
-
 /**
  * Validations
  */

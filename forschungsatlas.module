@@ -1,11 +1,11 @@
 <?php
 /**
  * @file
- * Code for the NeFo Forschungsatlas core module.
+ * Code for the NeFo Forschungsatlas module.
  */
 
 /**
- * NeFo default settings.
+ * Forschungsatlas default settings.
  */
 define('FORSCHUNGSATLAS_CRON_EXECUTION_TIME', 0);
 define('FORSCHUNGSATLAS_HTTP_STATUS_CODE_OK', 200);
@@ -95,7 +95,6 @@ function forschungsatlas_menu() {
     'title' => t('Research Map'),
     'description' => t('Research Map'),
     'page callback' => 'forschungsatlas_map_site_builder',
-    //'page callback' => 'forschungsatlas_map_form_builder',
     'access callback' => TRUE,
     'type' => MENU_NORMAL_ITEM,
     'file' => 'includes/forschungsatlas.map.inc',
@@ -488,7 +487,6 @@ function forschungsatlas_menu() {
     'access arguments' => array('administer nefo configuration'),
     'file' => 'includes/forschungsatlas.admin.tools.inc',
     'weight' => 920,
-    //'type' => MENU_LOCAL_ACTION,
     'type' => MENU_SUGGESTED_ITEM,
   );
   $items[FORSCHUNGSATLAS_CONFIG_PATH . '/tools/wkt/update'] = array(
@@ -498,10 +496,8 @@ function forschungsatlas_menu() {
     'page arguments' => array('forschungsatlas_admin_wkt_rebuild'),
     'access arguments' => array('administer nefo configuration'),
     'file' => 'includes/forschungsatlas.admin.tools.inc',
-    //'type' => MENU_LOCAL_ACTION,
     'type' => MENU_SUGGESTED_ITEM,
   );
-
 
   return $items;
 }
@@ -907,11 +903,6 @@ function _forschungsatlas_load_name($table, $colname, $id) {
   return !empty($result['name']) ? $result['name'] : '';
 }
 
-
-
-
-
-
 /**
  * Remove multiple spaces
  *
@@ -1007,7 +998,6 @@ function forschungsatlas_generate_wkt($street, $postalcode, $city, $federalstate
 
   return $geolocation;
 }
-
 
 /**
  * Insert row into mapping table forschungsatlas__institution_geolocation.
@@ -1203,8 +1193,6 @@ function forschungsatlas_find_broken_links() {
   return $num_rows;
 }
 
-
-
 /**
  * Request a remote site and evaluate the HTTP response code
  *
@@ -1271,7 +1259,6 @@ function forschungsatlas_get_parent_name_list($iid, $name, $parentname=NULL) {
 
   return $assembled_name;
 }
-
 
 /**
  * Build the assembled parent name of an institution
