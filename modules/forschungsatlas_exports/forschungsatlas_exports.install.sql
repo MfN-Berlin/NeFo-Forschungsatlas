@@ -34,7 +34,7 @@ BEGIN
             END IF;
             SET qlength = qlength - 1;
 
-            SELECT IFNULL(qc, '') INTO childrenqueue FROM (SELECT GROUP_CONCAT(iid) qc  FROM forschungsatlas__institution_institution WHERE linkid = rparent) A;
+            SELECT IFNULL(qc, '') INTO childrenqueue FROM (SELECT GROUP_CONCAT(iid) qc  FROM forschungsatlas__institution_institution WHERE parent = rparent) A;
                 IF LENGTH(childrenqueue) = 0 THEN
                         IF LENGTH(queue) = 0 THEN
                             SET qlength = 0;
@@ -73,14 +73,14 @@ CREATE OR REPLACE VIEW forschungsatlas__exports_institutions_view AS
         i.iid AS iid,
         i.name AS name,
         IFNULL(i.abbrev, '') AS abbrev,
-        l.linkid AS linkid,
+        l.parent AS parent,
         FORSCHUNGSATLAS__TOOLS_GETFAMILYTREEIDS(i.iid) AS familytreeids
    FROM
         forschungsatlas__institutions i
             LEFT JOIN
         forschungsatlas__institution_institution AS l ON i.iid = l.iid
     WHERE
-        (i.status = 1) AND (linkid IS NULL)
+        (i.status = 1) AND (parent IS NULL)
     ORDER BY name;
 
 

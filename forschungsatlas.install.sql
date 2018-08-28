@@ -29,9 +29,9 @@ BEGIN
         WHILE searchparent > 0 DO
             SET rname = NULL;
             SELECT IFNULL(rc, '') INTO rchild
-                FROM (SELECT tii.linkid AS rc
+                FROM (SELECT tii.parent AS rc
                           FROM forschungsatlas__institution_institution AS tii
-                          WHERE tii.iid = rparent AND tii.delta = 0 LIMIT 1) AS A;
+                          WHERE tii.iid = rparent LIMIT 1) AS A;
             SET num_rows = found_rows();
             IF num_rows > 0 THEN
                 IF LENGTH(rchild) = 0 THEN
@@ -83,9 +83,9 @@ BEGIN
         WHILE searchparent > 0 DO
             SET rname = NULL;
             SELECT IFNULL(rc, '') INTO rchild
-                FROM (SELECT tii.linkid AS rc
+                FROM (SELECT tii.parent AS rc
                           FROM forschungsatlas__institution_institution AS tii
-                          WHERE tii.iid = rparent AND tii.delta = 0 LIMIT 1) AS A;
+                          WHERE tii.iid = rparent LIMIT 1) AS A;
             SET num_rows = found_rows();
             IF num_rows > 0 THEN
                 IF LENGTH(rchild) = 0 THEN
@@ -138,7 +138,7 @@ BEGIN
             END IF;
             SET qlength = qlength - 1;
 
-            SELECT IFNULL(qc, '') INTO childrenqueue FROM (SELECT GROUP_CONCAT(iid) qc  FROM forschungsatlas__institution_institution WHERE linkid = rparent) A;
+            SELECT IFNULL(qc, '') INTO childrenqueue FROM (SELECT GROUP_CONCAT(iid) qc  FROM forschungsatlas__institution_institution WHERE parent = rparent) A;
                 IF LENGTH(childrenqueue) = 0 THEN
                         IF LENGTH(queue) = 0 THEN
                             SET qlength = 0;
@@ -188,8 +188,8 @@ CREATE OR REPLACE VIEW forschungsatlas__aux_institutions_view AS
         g.geolocation_lat AS latitude,
         g.geolocation_lon AS longitude,
         g.geolocation_wkt AS wkt,
-        FORSCHUNGSATLAS__GETCOMPOSITEDNAME(i.iid, l.linkid) AS compositedname,
-        FORSCHUNGSATLAS__GETASSEMBLEDPARENTNAME(l.linkid) AS assembledparentname,
+        FORSCHUNGSATLAS__GETCOMPOSITEDNAME(i.iid, l.parent) AS compositedname,
+        FORSCHUNGSATLAS__GETASSEMBLEDPARENTNAME(l.parent) AS assembledparentname,
         i.abbrev AS abbrev,
         FORSCHUNGSATLAS__GETFAMILYTREEIDS(i.iid) AS familytreeids,
         CONCAT_WS(' ', i.name, i.abbrev) AS fullname

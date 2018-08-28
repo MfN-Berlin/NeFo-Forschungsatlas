@@ -1047,7 +1047,7 @@ function forschungsatlas_delete_institution($iid=0) {
       // Delete the institution from mapping tables
       // See forschungsatlas_admin_institution_form_submit()
       // Special case: forschungsatlas__institution_institution
-      $or = db_or()->condition('iid', $iid)->condition('linkid', $iid);
+      $or = db_or()->condition('iid', $iid)->condition('parent', $iid);
       db_delete('forschungsatlas__institution_institution')
         ->condition($or)->execute();
       // Othe mapping tables
@@ -1116,8 +1116,8 @@ function forschungsatlas_save_institution($institution, $mapping) {
       $wkt['iid'] = $iid;
       forschungsatlas_write_wkt($wkt);
       // Update forschungsatlas__institution_institution
-      _forschungsatlas_update_institution_mapping_tables($iid, 'forschungsatlas__institution_institution',
-      'linkid', $mapping->belonging);
+      _forschungsatlas_update_mapping_tables($iid, 'forschungsatlas__institution_institution',
+      'parent', $mapping->belonging);
       // Update forschungsatlas__institution_researchnetwork
       _forschungsatlas_update_mapping_tables($iid, 'forschungsatlas__institution_researchnetwork',
       'rnid', $mapping->network);
@@ -1177,38 +1177,6 @@ function _forschungsatlas_update_mapping_tables($iid, $mappingTable, $mappingId,
     ->execute();
   }
 }
-
-/**
- * Update mapping tables.
- *
- * @param integer $iid
- *  The institution ID
- * @param string $mappingTable
- *  The name of the mapping table
- * @param string $mappingId
- *  The name of the mapping column
- * @param array $values
- *  The mapped IDs.
- */
-function _forschungsatlas_update_institution_mapping_tables($iid, $mappingTable, $mappingId, $values) {
-  db_delete($mappingTable)
-  ->condition('iid', $iid)
-  ->execute();
-
-  $delta = 0;
-  foreach ($values as $id) {
-    db_insert($mappingTable)
-    ->fields(array(
-    'iid' => $iid,
-    $mappingId => $id,
-    'delta' => $delta,
-    ))
-    ->execute();
-    $delta++;
-  }
-}
-
-
 
 /**
  * Build the list of institutions with broken links

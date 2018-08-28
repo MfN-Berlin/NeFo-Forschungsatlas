@@ -9,4 +9,4 @@ DROP FUNCTION IF EXISTS forschungsatlas__getCompositedName;
 
 DROP FUNCTION IF EXISTS forschungsatlas__getAssembledParentName;
 
-
+DROP FUNCTION IF EXISTS forschungsatlas__getFamilyTreeIds;

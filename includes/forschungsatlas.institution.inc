@@ -69,8 +69,8 @@ function forschungsatlas_institution_show($institution=NULL) {
  */
 function _forschungsatlas_get_belonging_list($iid) {
   $list = array();
-  $result = db_query('SELECT FORSCHUNGSATLAS__GETCOMPOSITEDNAME(i.iid, l.linkid) AS compositedname,
-        FORSCHUNGSATLAS__GETASSEMBLEDPARENTNAME(l.linkid) AS assembledparentname
+  $result = db_query('SELECT FORSCHUNGSATLAS__GETCOMPOSITEDNAME(i.iid, l.parent) AS compositedname,
+        FORSCHUNGSATLAS__GETASSEMBLEDPARENTNAME(l.parent) AS assembledparentname
       FROM {forschungsatlas__institutions} AS i
       LEFT JOIN {forschungsatlas__institution_institution} AS l ON i.iid = l.iid
       WHERE i.iid = :iid ORDER BY compositedname', array(':iid' => $iid));
@@ -156,7 +156,7 @@ function _forschungsatlas_get_child_institutions($iid) {
       FROM {forschungsatlas__institution_institution} AS l
               JOIN
            {forschungsatlas__institutions} AS i ON l.iid = i.iid
-      WHERE l.linkid = :iid ORDER BY i.name', array(':iid' => $iid)
+      WHERE l.parent = :iid ORDER BY i.name', array(':iid' => $iid)
   )->fetchAll();
 
   return $result;

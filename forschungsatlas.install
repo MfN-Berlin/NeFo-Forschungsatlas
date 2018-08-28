@@ -158,23 +158,16 @@ function forschungsatlas_schema() {
         'unsigned' => TRUE,
         'not null' => TRUE,
       ),
-      'linkid' => array(
+      'parent' => array(
         'type' => 'int',
         'unsigned' => TRUE,
         'not null' => TRUE,
       ),
-      'delta' => array(
-        'type' => 'int',
-        'not null' => TRUE,
-        'default' => 0,
-      ),
     ),
     'indexes' => array(
-      'delta_idx' => array('delta'),
-      'iid_delta_idx' => array('iid', 'delta'),
       'iid_idx' => array('iid'),
-      'iid_linkid_delta_idx' => array('iid', 'linkid', 'delta'),
-      'link_idx' => array('linkid'),
+      'iid_parent_idx' => array('iid', 'parent'),
+      'parent_idx' => array('parent'),
     ),
   );
 
@@ -840,4 +833,30 @@ function forschungsatlas_update_7101() {
 }
 
 
+
+/**
+ * Rename field "linkid" to "parent" and remove field "delta" in {forschungsatlas__institution_institution} table.
+ */
+function forschungsatlas_update_7102() {
+  // Rename column "linkid"
+  db_drop_index('forschungsatlas__institution_institution', 'iid_linkid_delta_idx');
+  db_drop_index('forschungsatlas__institution_institution', 'link_idx');
+  db_change_field('forschungsatlas__institution_institution', 'linkid', 'parent', 
+    array(
+      'type' => 'int',
+      'unsigned' => TRUE,
+      'not null' => TRUE,
+    ),
+    array(
+      'indexes' => array(
+        'iid_parent_idx' => array('iid', 'parent'),
+        'parent_idx' => array('parent'),
+      ),
+    )
+  );
+  // Remove column "delta"  
+  db_drop_index('forschungsatlas__institution_institution', 'delta_idx');
+  db_drop_index('forschungsatlas__institution_institution', 'iid_delta_idx');
+  db_drop_field('forschungsatlas__institution_institution', 'delta');
+}
 

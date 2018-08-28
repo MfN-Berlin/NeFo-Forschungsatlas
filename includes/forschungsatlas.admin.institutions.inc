@@ -421,7 +421,7 @@ function forschungsatlas_admin_institution_delete_confirm_submit($form, &$form_s
  */
 function forschungsatlas_admin_get_belonging_names($iid) {
   $names = array();
-  $result = db_query('SELECT i.iid AS iid, FORSCHUNGSATLAS__GETCOMPOSITEDNAME(i.iid, l.linkid) AS assembled_name
+  $result = db_query('SELECT i.iid AS iid, FORSCHUNGSATLAS__GETCOMPOSITEDNAME(i.iid, l.parent) AS assembled_name
       FROM {forschungsatlas__institutions} AS i
       LEFT JOIN {forschungsatlas__institution_institution} AS l ON i.iid = l.iid
       WHERE i.iid!=:iid
@@ -444,7 +444,7 @@ function forschungsatlas_admin_get_belonging_names($iid) {
  *  An array containing the associated IIDs.
  */
 function forschungsatlas_admin_get_belonging_ids($iid) {
-	return forschungsatlas_get_mapped_ids($iid, 'forschungsatlas__institution_institution', 'linkid');
+	return forschungsatlas_get_mapped_ids($iid, 'forschungsatlas__institution_institution', 'parent');
 }
 
 // Categories
