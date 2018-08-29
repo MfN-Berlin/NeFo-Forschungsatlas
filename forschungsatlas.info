@@ -8,7 +8,5 @@ dependencies[] = libraries
 files[] = files/bundeslaender_simplify200.geojson
 stylesheets[all][] = forschungsatlas.css
 
-; Information added by NeFo
-version = "7.x-1.1"
+version = "7.x-1.2"
 core = "7.x"
-
