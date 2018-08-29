@@ -1,14 +1,13 @@
 # $Id$
 #
 # German translation of Drupal (general)
-# Copyright 2015 Antonio Ponte <antonio.ponte@mfn-berlin.de>
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2015-07-10 13:55+0200\n"
-"PO-Revision-Date: 2015-07-10 13:55+0200\n"
+"POT-Creation-Date: 2018-08-29 11:30+0200\n"
+"PO-Revision-Date: 2018-08-29 11:30+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: German <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -16,866 +15,1023 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
-#: nefo-display-institution.tpl.php:42 includes/nefo.admin.institutions.inc:15;157 includes/nefo.search.inc:52
-msgid "Organization Type"
-msgstr "Art der Einrichtung"
-
-#: nefo-display-institution.tpl.php:49 includes/nefo.admin.institutions.inc:110
-msgid "Belongs to"
-msgstr "Gehört zu"
-
-#: nefo-display-institution.tpl.php:60
-msgid "Subordinate institutions of"
-msgstr "Untergeordnete Abteilung(en) mit Biodiversitätskontext von"
-
-#: nefo-display-institution.tpl.php:76 includes/nefo.admin.institutions.inc:181 includes/nefo.admin.network.inc:77 includes/nefo.search.inc:72
-msgid "Research Network"
-msgstr "Forschungsnetzwerk"
-
-#: nefo-display-institution.tpl.php:89 includes/nefo.admin.institutions.inc:189 includes/nefo.search.inc:96
-msgid "Organisms"
-msgstr "Organismen"
-
-#: nefo-display-institution.tpl.php:102 includes/nefo.admin.institutions.inc:197 includes/nefo.search.inc:80
-msgid "Habitats"
-msgstr "Lebensräume"
-
-#: nefo-display-institution.tpl.php:115 includes/nefo.admin.institutions.inc:205 includes/nefo.search.inc:112
-msgid "Research Topics"
-msgstr "Fachgebiete"
-
-#: nefo-display-institution.tpl.php:128 includes/nefo.admin.institutions.inc:213 includes/nefo.search.inc:104
-msgid "Interdisciplinary Subjects"
-msgstr "Querschnitts-/IPBES*-Themen"
-
-#: nefo-display-institution.tpl.php:141 includes/nefo.admin.institutions.inc:221 includes/nefo.search.inc:88
-msgid "Methodologies"
-msgstr "Methodik"
-
-#: nefo-display-institution.tpl.php:159 includes/nefo.admin.institutions.inc:167
-msgid "Comment"
-msgstr "Kommentar"
-
-#: nefo-display-institution.tpl.php:190
-msgid "Link to website"
-msgstr "Link zur Website"
-
-#: nefo.module:28
-msgid "View published institutions."
-msgstr ""
-
-#: nefo.module:31
-msgid "Administer institutions"
-msgstr ""
-
-#: nefo.module:32
-msgid "Allow users to create, update and delete institutions."
-msgstr ""
-
-#: nefo.module:35
-msgid "Administer NeFo configuration"
-msgstr ""
-
-#: nefo.module:36
-msgid "Allow users to change NeFo module configuration."
-msgstr ""
-
-#: nefo.module:89
-msgid "Institution search"
-msgstr "Erweiterte Suche"
-
-#: nefo.module:90
-msgid "Advanced search."
-msgstr "Suche nach Akteuren der Biodiversitätsforschung"
-
-#: nefo.module:99;160 includes/nefo.admin.institutions.inc:98 includes/nefo.admin.tools.inc:20;116 includes/nefo.search.inc:23
-msgid "Institution"
-msgstr "Institution"
-
-#: nefo.module:100
-msgid "Show the institution."
-msgstr ""
-
-#: nefo.module:109
-msgid "View"
-msgstr "Ansicht"
-
-#: nefo.module:114
-msgid "Edit"
-msgstr "Bearbeiten"
-
-#: nefo.module:115
-msgid "Edit institution."
-msgstr ""
-
-#: nefo.module:125;183;246;290;326;362;398;434;470 includes/nefo.admin.habitats.inc:196 includes/nefo.admin.institutions.inc:374 includes/nefo.admin.intersubjects.inc:196 includes/nefo.admin.methodology.inc:196 includes/nefo.admin.network.inc:196 includes/nefo.admin.organism.inc:196 includes/nefo.admin.orgtype.inc:173 includes/nefo.admin.topic.inc:196
-msgid "Delete"
-msgstr "Löschen"
-
-#: nefo.module:126
-msgid "Delete institution."
-msgstr ""
-
-#: nefo.module:141
-msgid "Settings for the NeFo module."
-msgstr ""
-
-#: nefo.module:152
-msgid "NeFo Institutions"
-msgstr ""
-
-#: nefo.module:153
-msgid "Configure intitutions."
-msgstr ""
-
-#: nefo.module:166
-msgid "Add an institution"
-msgstr ""
-
-#: nefo.module:167
-msgid "Add an institution."
-msgstr ""
-
-#: nefo.module:175
-msgid "Edit Institution"
-msgstr ""
-
-#: nefo.module:176
-msgid "Edit an institution."
-msgstr ""
-
-#: nefo.module:184
-msgid "Delete an institution."
-msgstr ""
-
-#: nefo.module:192 includes/nefo.admin.cities.inc:85 includes/nefo.admin.institutions.inc:13;131 includes/nefo.admin.tools.inc:23;117 includes/nefo.search.inc:42;128
-msgid "City"
-msgstr "Stadt"
-
-#: nefo.module:193
-msgid "Configure cities."
-msgstr ""
-
-#: nefo.module:201
-msgid "Add a city"
-msgstr ""
-
-#: nefo.module:202
-msgid "Add a city."
-msgstr ""
-
-#: nefo.module:210
-msgid "Edit city"
-msgstr ""
-
-#: nefo.module:211
-msgid "Edit city."
-msgstr ""
-
-#: nefo.module:219
-msgid "Org. Type"
-msgstr ""
-
-#: nefo.module:220
-msgid "Configure organization type."
-msgstr ""
-
-#: nefo.module:228
-msgid "Add an organization type"
-msgstr ""
-
-#: nefo.module:229
-msgid "Add an organization type."
-msgstr ""
-
-#: nefo.module:237
-msgid "Edit an organization type"
-msgstr ""
-
-#: nefo.module:238
-msgid "Edit an organization type."
-msgstr ""
-
-#: nefo.module:247
-msgid "Delete an organization type."
-msgstr ""
-
-#: nefo.module:257
-msgid "NeFo Categories"
-msgstr ""
-
-#: nefo.module:258
-msgid "Configure habitat, interdisciplinary subject, methodology, organism, research network and topic."
-msgstr ""
-
-#: nefo.module:266 includes/nefo.admin.habitats.inc:94
-msgid "Habitat"
-msgstr ""
-
-#: nefo.module:267
-msgid "Configure habitats."
-msgstr ""
-
-#: nefo.module:272
-msgid "Edit a habitat"
-msgstr ""
-
-#: nefo.module:273
-msgid "Edit a habitat."
-msgstr ""
-
-#: nefo.module:281
-msgid "Add a habitat"
-msgstr ""
-
-#: nefo.module:282
-msgid "Add a habitat."
-msgstr ""
-
-#: nefo.module:291
-msgid "Delete a habitat."
-msgstr ""
-
-#: nefo.module:299
-msgid "Int. Subject"
-msgstr ""
-
-#: nefo.module:300
-msgid "Configure interdisciplinary subject."
-msgstr ""
-
-#: nefo.module:308
-msgid "Add an interdisciplinary subject"
-msgstr ""
-
-#: nefo.module:309
-msgid "Add an interdisciplinary subject."
-msgstr ""
-
-#: nefo.module:317
-msgid "Edit an interdisciplinary subject"
-msgstr ""
-
-#: nefo.module:318
-msgid "Edit an interdisciplinary subject."
-msgstr ""
-
-#: nefo.module:327
-msgid "Delete an interdisciplinary subject."
-msgstr ""
-
-#: nefo.module:335 includes/nefo.admin.methodology.inc:77
-msgid "Methodology"
-msgstr "Methodik"
-
-#: nefo.module:336
-msgid "Configure a methodology."
-msgstr ""
-
-#: nefo.module:344
-msgid "Add a methodology"
-msgstr ""
-
-#: nefo.module:345
-msgid "Add a methodology."
-msgstr ""
-
-#: nefo.module:353
-msgid "Edit a methodology"
-msgstr ""
-
-#: nefo.module:354
-msgid "Edit a methodology."
-msgstr ""
-
-#: nefo.module:363
-msgid "Delete a methodology."
-msgstr ""
-
-#: nefo.module:371 includes/nefo.admin.organism.inc:77
-msgid "Organism"
-msgstr ""
-
-#: nefo.module:372
-msgid "Configure organisms."
-msgstr ""
-
-#: nefo.module:380
-msgid "Add an organism"
-msgstr ""
-
-#: nefo.module:381
-msgid "Add an organism."
-msgstr ""
-
-#: nefo.module:389
-msgid "Edit an organism"
-msgstr ""
-
-#: nefo.module:390
-msgid "Edit an organism."
-msgstr ""
-
-#: nefo.module:399
-msgid "Delete an organism."
-msgstr ""
-
-#: nefo.module:407
-msgid "Res. Network"
-msgstr ""
-
-#: nefo.module:408
-msgid "Configure research network."
-msgstr ""
-
-#: nefo.module:416
-msgid "Add a research network"
-msgstr ""
-
-#: nefo.module:417
-msgid "Add a research network."
-msgstr ""
-
-#: nefo.module:425
-msgid "Edit a research network"
-msgstr ""
-
-#: nefo.module:426
-msgid "Edit a research network."
-msgstr ""
-
-#: nefo.module:435
-msgid "Delete a research network."
-msgstr ""
-
-#: nefo.module:443 includes/nefo.admin.topic.inc:77
-msgid "Topic"
-msgstr "Thema"
-
-#: nefo.module:444
-msgid "Configure topics."
-msgstr ""
-
-#: nefo.module:452
-msgid "Add a topic"
-msgstr ""
-
-#: nefo.module:453
-msgid "Add a topic."
-msgstr ""
-
-#: nefo.module:461
-msgid "Edit a topic"
-msgstr ""
-
-#: nefo.module:462
-msgid "Edit a topic."
-msgstr ""
-
-#: nefo.module:471
-msgid "Delete a topic."
-msgstr ""
-
-#: nefo.module:496
-msgid "Update list (execution will take a long time)"
-msgstr ""
-
-#: nefo.module:497
-msgid "Update list of institution with broken links."
-msgstr ""
-
-#: nefo.module:516
-msgid "Update list"
-msgstr ""
-
-#: nefo.module:517
-msgid "Update list of institution with empty WKT."
-msgstr ""
-
-#: nefo.module:550
-msgid "NeFo cron job has been executed. Found @num_rows broken links."
-msgstr ""
-
-#: nefo.module:140 nefo.info:0
-msgid "NeFo"
-msgstr ""
-
-#: nefo.module:161
-msgid "Configure institutions."
-msgstr ""
-
-#: nefo.module:481
-msgid "NeFo Tools"
-msgstr ""
-
-#: nefo.module:482
-msgid "Administrative tools."
-msgstr ""
-
-#: nefo.module:490 includes/nefo.admin.institutions.inc:151 includes/nefo.admin.tools.inc:119 includes/nefo.search.inc:129
+#: forschungsatlas-display-institution.tpl.php:15 includes/forschungsatlas.admin.institutions.inc:114
+msgid "Abbreviation"
+msgstr "Abkürzung"
+
+#: forschungsatlas-display-institution.tpl.php:22
+msgid "Address"
+msgstr "Adresse"
+
+#: forschungsatlas-display-institution.tpl.php:32 forschungsatlas.module:468 includes/forschungsatlas.admin.institutions.inc:164 includes/forschungsatlas.admin.tools.inc:130 includes/forschungsatlas.map.inc:157
 msgid "URL"
 msgstr "URL"
 
-#: nefo.module:491
+#: forschungsatlas-display-institution.tpl.php:50 forschungsatlas.module:197 includes/forschungsatlas.admin.institutions.inc:15;171 includes/forschungsatlas.map.inc:66
+msgid "Organization Type"
+msgstr "Art der Einrichtung"
+
+#: forschungsatlas-display-institution.tpl.php:57 includes/forschungsatlas.admin.institutions.inc:123
+msgid "Belongs to"
+msgstr "Gehört zu"
+
+#: forschungsatlas-display-institution.tpl.php:68
+msgid "Subordinate institutions of"
+msgstr "Untergeordnete Abteilung(en) mit Biodiversitätskontext von"
+
+#: forschungsatlas-display-institution.tpl.php:76
+msgid "Date of last update"
+msgstr "Datum der letzten Aktualisierung"
+
+#: forschungsatlas-display-institution.tpl.php:90 includes/forschungsatlas.admin.institutions.inc:195 includes/forschungsatlas.admin.network.inc:77
+msgid "Research Network"
+msgstr "Forschungsnetzwerk"
+
+#: forschungsatlas-display-institution.tpl.php:103 includes/forschungsatlas.admin.institutions.inc:203 includes/forschungsatlas.map.inc:116
+msgid "Organisms"
+msgstr "Organismen"
+
+#: forschungsatlas-display-institution.tpl.php:116 includes/forschungsatlas.admin.institutions.inc:211 includes/forschungsatlas.map.inc:100
+msgid "Habitats"
+msgstr "Lebensräume"
+
+#: forschungsatlas-display-institution.tpl.php:129 includes/forschungsatlas.admin.institutions.inc:219 includes/forschungsatlas.map.inc:132
+msgid "Research Disciplines"
+msgstr "Forschungsdisziplinen"
+
+#: forschungsatlas-display-institution.tpl.php:142 includes/forschungsatlas.admin.institutions.inc:227 includes/forschungsatlas.map.inc:124
+msgid "Interdisciplinary Subjects"
+msgstr "Querschnitts-/IPBES*-Themen"
+
+#: forschungsatlas-display-institution.tpl.php:155 includes/forschungsatlas.admin.institutions.inc:235
+msgid "Methodologies"
+msgstr "Methodik"
+
+#: forschungsatlas-display-institution.tpl.php:173 includes/forschungsatlas.admin.institutions.inc:181
+msgid "Comment"
+msgstr "Kommentar"
+
+#: forschungsatlas-display-institution.tpl.php:213
+msgid "Link to website"
+msgstr "Link zur Website"
+
+#: forschungsatlas.module:34
+msgid "View published institutions."
+msgstr ""
+
+#: forschungsatlas.module:37
+msgid "Administer institutions"
+msgstr ""
+
+#: forschungsatlas.module:38
+msgid "Allow users to create, update and delete institutions."
+msgstr ""
+
+#: forschungsatlas.module:41
+msgid "Administer NeFo configuration"
+msgstr ""
+
+#: forschungsatlas.module:42
+msgid "Allow users to change NeFo module configuration."
+msgstr ""
+
+#: forschungsatlas.module:95;96
+msgid "Research Map"
+msgstr "Forschungsatlas"
+
+#: forschungsatlas.module:104;165 includes/forschungsatlas.admin.institutions.inc:103 includes/forschungsatlas.admin.tools.inc:20;127 includes/forschungsatlas.map.inc:32
+msgid "Institution"
+msgstr "Institution"
+
+#: forschungsatlas.module:105
+msgid "Show the institution."
+msgstr ""
+
+#: forschungsatlas.module:114
+msgid "View"
+msgstr "Ansicht"
+
+#: forschungsatlas.module:119
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: forschungsatlas.module:120
+msgid "Edit institution."
+msgstr ""
+
+#: forschungsatlas.module:130;188;224;268;304;340;376;412;448 includes/forschungsatlas.admin.habitats.inc:194 includes/forschungsatlas.admin.institutions.inc:390 includes/forschungsatlas.admin.intersubjects.inc:194 includes/forschungsatlas.admin.methodology.inc:194 includes/forschungsatlas.admin.network.inc:193 includes/forschungsatlas.admin.organism.inc:193 includes/forschungsatlas.admin.orgtype.inc:173 includes/forschungsatlas.admin.topic.inc:193
+msgid "Delete"
+msgstr "Löschen"
+
+#: forschungsatlas.module:131
+msgid "Delete institution."
+msgstr ""
+
+#: forschungsatlas.module:146
+msgid "Settings for the NeFo Forschungsatlas."
+msgstr ""
+
+#: forschungsatlas.module:157
+msgid "Institutions"
+msgstr ""
+
+#: forschungsatlas.module:158
+msgid "Configure intitutions and organization types."
+msgstr ""
+
+#: forschungsatlas.module:171
+msgid "Add an institution"
+msgstr ""
+
+#: forschungsatlas.module:172
+msgid "Add an institution."
+msgstr ""
+
+#: forschungsatlas.module:180
+msgid "Edit Institution"
+msgstr ""
+
+#: forschungsatlas.module:181
+msgid "Edit an institution."
+msgstr ""
+
+#: forschungsatlas.module:189
+msgid "Delete an institution."
+msgstr ""
+
+#: forschungsatlas.module:198
+msgid "Configure organization type."
+msgstr ""
+
+#: forschungsatlas.module:206
+msgid "Add an organization type"
+msgstr ""
+
+#: forschungsatlas.module:207
+msgid "Add an organization type."
+msgstr ""
+
+#: forschungsatlas.module:215
+msgid "Edit an organization type"
+msgstr ""
+
+#: forschungsatlas.module:216
+msgid "Edit an organization type."
+msgstr ""
+
+#: forschungsatlas.module:225
+msgid "Delete an organization type."
+msgstr ""
+
+#: forschungsatlas.module:235 includes/forschungsatlas.admin.institutions.inc:190 includes/forschungsatlas.map.inc:83
+msgid "Categories"
+msgstr "Kategorien"
+
+#: forschungsatlas.module:236
+msgid "Configure habitat, interdisciplinary subject, methodology, organism, research network and topic."
+msgstr ""
+
+#: forschungsatlas.module:244 includes/forschungsatlas.admin.habitats.inc:94
+msgid "Habitat"
+msgstr ""
+
+#: forschungsatlas.module:245
+msgid "Configure habitats."
+msgstr ""
+
+#: forschungsatlas.module:250
+msgid "Edit a habitat"
+msgstr ""
+
+#: forschungsatlas.module:251
+msgid "Edit a habitat."
+msgstr ""
+
+#: forschungsatlas.module:259
+msgid "Add a habitat"
+msgstr ""
+
+#: forschungsatlas.module:260
+msgid "Add a habitat."
+msgstr ""
+
+#: forschungsatlas.module:269
+msgid "Delete a habitat."
+msgstr ""
+
+#: forschungsatlas.module:277
+msgid "Int. Subject"
+msgstr ""
+
+#: forschungsatlas.module:278
+msgid "Configure interdisciplinary subject."
+msgstr ""
+
+#: forschungsatlas.module:286
+msgid "Add an interdisciplinary subject"
+msgstr ""
+
+#: forschungsatlas.module:287
+msgid "Add an interdisciplinary subject."
+msgstr ""
+
+#: forschungsatlas.module:295
+msgid "Edit an interdisciplinary subject"
+msgstr ""
+
+#: forschungsatlas.module:296
+msgid "Edit an interdisciplinary subject."
+msgstr ""
+
+#: forschungsatlas.module:305
+msgid "Delete an interdisciplinary subject."
+msgstr ""
+
+#: forschungsatlas.module:313 includes/forschungsatlas.admin.methodology.inc:77 includes/forschungsatlas.map.inc:108
+msgid "Methodology"
+msgstr "Methodik"
+
+#: forschungsatlas.module:314
+msgid "Configure a methodology."
+msgstr ""
+
+#: forschungsatlas.module:322
+msgid "Add a methodology"
+msgstr ""
+
+#: forschungsatlas.module:323
+msgid "Add a methodology."
+msgstr ""
+
+#: forschungsatlas.module:331
+msgid "Edit a methodology"
+msgstr ""
+
+#: forschungsatlas.module:332
+msgid "Edit a methodology."
+msgstr ""
+
+#: forschungsatlas.module:341
+msgid "Delete a methodology."
+msgstr ""
+
+#: forschungsatlas.module:349 includes/forschungsatlas.admin.organism.inc:77
+msgid "Organism"
+msgstr ""
+
+#: forschungsatlas.module:350
+msgid "Configure organisms."
+msgstr ""
+
+#: forschungsatlas.module:358
+msgid "Add an organism"
+msgstr ""
+
+#: forschungsatlas.module:359
+msgid "Add an organism."
+msgstr ""
+
+#: forschungsatlas.module:367
+msgid "Edit an organism"
+msgstr ""
+
+#: forschungsatlas.module:368
+msgid "Edit an organism."
+msgstr ""
+
+#: forschungsatlas.module:377
+msgid "Delete an organism."
+msgstr ""
+
+#: forschungsatlas.module:385
+msgid "Res. Network"
+msgstr ""
+
+#: forschungsatlas.module:386
+msgid "Configure research network."
+msgstr ""
+
+#: forschungsatlas.module:394
+msgid "Add a research network"
+msgstr ""
+
+#: forschungsatlas.module:395
+msgid "Add a research network."
+msgstr ""
+
+#: forschungsatlas.module:403
+msgid "Edit a research network"
+msgstr ""
+
+#: forschungsatlas.module:404
+msgid "Edit a research network."
+msgstr ""
+
+#: forschungsatlas.module:413
+msgid "Delete a research network."
+msgstr ""
+
+#: forschungsatlas.module:421 includes/forschungsatlas.admin.topic.inc:77
+msgid "Topic"
+msgstr "Thema"
+
+#: forschungsatlas.module:422
+msgid "Configure topics."
+msgstr ""
+
+#: forschungsatlas.module:430
+msgid "Add a topic"
+msgstr ""
+
+#: forschungsatlas.module:431
+msgid "Add a topic."
+msgstr ""
+
+#: forschungsatlas.module:439
+msgid "Edit a topic"
+msgstr ""
+
+#: forschungsatlas.module:440
+msgid "Edit a topic."
+msgstr ""
+
+#: forschungsatlas.module:449
+msgid "Delete a topic."
+msgstr ""
+
+#: forschungsatlas.module:474
+msgid "Update list (execution will take a long time)"
+msgstr ""
+
+#: forschungsatlas.module:475
+msgid "Update list of institution with broken links."
+msgstr ""
+
+#: forschungsatlas.module:493
+msgid "Update list"
+msgstr ""
+
+#: forschungsatlas.module:494
+msgid "Update list of institution with empty WKT."
+msgstr ""
+
+#: forschungsatlas.module:525
+msgid "NeFo Forschungsatlas cron job has been executed. Found @num_rows broken links."
+msgstr ""
+
+#: forschungsatlas.module:145 forschungsatlas.info:0
+msgid "NeFo Forschungsatlas"
+msgstr ""
+
+#: forschungsatlas.module:166
+msgid "Configure institutions."
+msgstr ""
+
+#: forschungsatlas.module:459
+msgid "Tools"
+msgstr ""
+
+#: forschungsatlas.module:460
+msgid "Administrative tools."
+msgstr ""
+
+#: forschungsatlas.module:469
 msgid "Find broken links."
 msgstr ""
 
-#: nefo.module:506
+#: forschungsatlas.module:484
 msgid "WKT"
 msgstr ""
 
-#: nefo.module:507
+#: forschungsatlas.module:485
 msgid "Find empty WKT."
 msgstr ""
 
-#: nefo.install:1121
-msgid "You can now <a href=\"!nefo_admin\">configure the NeFo module</a> for your site."
+#: forschungsatlas.install:792
+msgid "You can now <a href=\"!forschungsatlas_admin\">configure the Forschungsatlas module</a> for your site."
 msgstr ""
 
-#: nefo.info:0
-msgid "Provide core components for the NeFo modules"
+#: forschungsatlas.info:0
+msgid "Forschungsatlas"
 msgstr ""
 
-#: nefo.info:0
-msgid "NEFO"
-msgstr "NEFO"
+#: forschungsatlas.info:0 modules/forschungsatlas_exports/forschungsatlas_exports.info:0 modules/i18n_forschungsatlas/i18n_forschungsatlas.info:0 modules/i18n_forschungsatlas/i18n_forschungsatlas_habitat/i18n_forschungsatlas_habitat.info:0 modules/i18n_forschungsatlas/i18n_forschungsatlas_intersubject/i18n_forschungsatlas_intersubject.info:0 modules/i18n_forschungsatlas/i18n_forschungsatlas_methodology/i18n_forschungsatlas_methodology.info:0 modules/i18n_forschungsatlas/i18n_forschungsatlas_network/i18n_forschungsatlas_network.info:0 modules/i18n_forschungsatlas/i18n_forschungsatlas_organism/i18n_forschungsatlas_organism.info:0 modules/i18n_forschungsatlas/i18n_forschungsatlas_orgtype/i18n_forschungsatlas_orgtype.info:0 modules/i18n_forschungsatlas/i18n_forschungsatlas_topic/i18n_forschungsatlas_topic.info:0
+msgid "NEFO FORSCHUNGSATLAS"
+msgstr ""
 
-#: includes/nefo.admin.cities.inc:12;89 includes/nefo.admin.habitats.inc:12;98 includes/nefo.admin.institutions.inc:12;102 includes/nefo.admin.intersubjects.inc:12;81 includes/nefo.admin.methodology.inc:12;81 includes/nefo.admin.network.inc:12;81 includes/nefo.admin.organism.inc:12;81 includes/nefo.admin.orgtype.inc:12;81 includes/nefo.admin.topic.inc:12;81 includes/nefo.search.inc:58;127
+#: includes/forschungsatlas.admin.habitats.inc:12;98 includes/forschungsatlas.admin.institutions.inc:12;107 includes/forschungsatlas.admin.intersubjects.inc:12;81 includes/forschungsatlas.admin.methodology.inc:12;81 includes/forschungsatlas.admin.network.inc:12;81 includes/forschungsatlas.admin.organism.inc:12;81 includes/forschungsatlas.admin.orgtype.inc:12;81 includes/forschungsatlas.admin.topic.inc:12;81 includes/forschungsatlas.map.inc:71;155 modules/i18n_forschungsatlas/i18n_forschungsatlas_habitat/i18n_forschungsatlas_habitat.i18n.inc:39 modules/i18n_forschungsatlas/i18n_forschungsatlas_intersubject/i18n_forschungsatlas_intersubject.i18n.inc:39 modules/i18n_forschungsatlas/i18n_forschungsatlas_methodology/i18n_forschungsatlas_methodology.i18n.inc:39 modules/i18n_forschungsatlas/i18n_forschungsatlas_network/i18n_forschungsatlas_network.i18n.inc:39 modules/i18n_forschungsatlas/i18n_forschungsatlas_organism/i18n_forschungsatlas_organism.i18n.inc:39 modules/i18n_forschungsatlas/i18n_forschungsatlas_orgtype/i18n_forschungsatlas_orgtype.i18n.inc:39 modules/i18n_forschungsatlas/i18n_forschungsatlas_topic/i18n_forschungsatlas_topic.i18n.inc:39
 msgid "Name"
 msgstr "Name"
 
-#: includes/nefo.admin.cities.inc:13 includes/nefo.admin.institutions.inc:14;141 includes/nefo.admin.tools.inc:24;118 includes/nefo.search.inc:30
-msgid "Federal State"
-msgstr "Bundesland"
+#: includes/forschungsatlas.admin.habitats.inc:13 includes/forschungsatlas.admin.intersubjects.inc:13 includes/forschungsatlas.admin.methodology.inc:13 includes/forschungsatlas.admin.network.inc:13 includes/forschungsatlas.admin.organism.inc:13 includes/forschungsatlas.admin.topic.inc:13
+msgid "Parent"
+msgstr "Übergeordnet"
 
-#: includes/nefo.admin.cities.inc:14 includes/nefo.admin.habitats.inc:14 includes/nefo.admin.intersubjects.inc:14 includes/nefo.admin.methodology.inc:14 includes/nefo.admin.network.inc:14 includes/nefo.admin.organism.inc:14 includes/nefo.admin.orgtype.inc:13 includes/nefo.admin.tools.inc:25;121 includes/nefo.admin.topic.inc:14
+#: includes/forschungsatlas.admin.habitats.inc:14 includes/forschungsatlas.admin.intersubjects.inc:14 includes/forschungsatlas.admin.methodology.inc:14 includes/forschungsatlas.admin.network.inc:14 includes/forschungsatlas.admin.organism.inc:14 includes/forschungsatlas.admin.orgtype.inc:13 includes/forschungsatlas.admin.tools.inc:25;132 includes/forschungsatlas.admin.topic.inc:14 modules/forschungsatlas_exports/includes/forschungsatlas_exports.admin.inc:16
 msgid "Operation"
 msgstr "Aktion"
 
-#: includes/nefo.admin.cities.inc:31 includes/nefo.admin.habitats.inc:30 includes/nefo.admin.institutions.inc:47 includes/nefo.admin.intersubjects.inc:30 includes/nefo.admin.methodology.inc:30 includes/nefo.admin.network.inc:30 includes/nefo.admin.organism.inc:30 includes/nefo.admin.orgtype.inc:28 includes/nefo.admin.tools.inc:45;148 includes/nefo.admin.topic.inc:30
+#: includes/forschungsatlas.admin.habitats.inc:30 includes/forschungsatlas.admin.institutions.inc:52 includes/forschungsatlas.admin.intersubjects.inc:30 includes/forschungsatlas.admin.methodology.inc:30 includes/forschungsatlas.admin.network.inc:30 includes/forschungsatlas.admin.organism.inc:30 includes/forschungsatlas.admin.orgtype.inc:28 includes/forschungsatlas.admin.tools.inc:49;162 includes/forschungsatlas.admin.topic.inc:30
 msgid "edit"
 msgstr "Bearbeiten"
 
-#: includes/nefo.admin.cities.inc:47 includes/nefo.admin.habitats.inc:51 includes/nefo.admin.institutions.inc:71 includes/nefo.admin.intersubjects.inc:51 includes/nefo.admin.methodology.inc:51 includes/nefo.admin.network.inc:51 includes/nefo.admin.organism.inc:51 includes/nefo.admin.orgtype.inc:55 includes/nefo.admin.topic.inc:51
+#: includes/forschungsatlas.admin.habitats.inc:34 includes/forschungsatlas.admin.institutions.inc:57 includes/forschungsatlas.admin.intersubjects.inc:34 includes/forschungsatlas.admin.methodology.inc:34 includes/forschungsatlas.admin.network.inc:34 includes/forschungsatlas.admin.organism.inc:34 includes/forschungsatlas.admin.orgtype.inc:33;37 includes/forschungsatlas.admin.topic.inc:34
+msgid "delete"
+msgstr "Löschen"
+
+#: includes/forschungsatlas.admin.habitats.inc:51 includes/forschungsatlas.admin.institutions.inc:76 includes/forschungsatlas.admin.intersubjects.inc:51 includes/forschungsatlas.admin.methodology.inc:51 includes/forschungsatlas.admin.network.inc:51 includes/forschungsatlas.admin.organism.inc:51 includes/forschungsatlas.admin.orgtype.inc:55 includes/forschungsatlas.admin.topic.inc:51
 msgid "No items available."
 msgstr "Keine Voschläge vorhanden."
 
-#: includes/nefo.admin.cities.inc:92
-msgid "Name of the city."
+#: includes/forschungsatlas.admin.habitats.inc:91 includes/forschungsatlas.admin.intersubjects.inc:74 includes/forschungsatlas.admin.methodology.inc:74 includes/forschungsatlas.admin.network.inc:74 includes/forschungsatlas.admin.organism.inc:74 includes/forschungsatlas.admin.topic.inc:74
+msgid "- None -"
+msgstr "- Keiner -"
+
+#: includes/forschungsatlas.admin.habitats.inc:105
+msgid "Parent habitat"
 msgstr ""
 
-#: includes/nefo.admin.cities.inc:97
-msgid "Federal state"
-msgstr ""
-
-#: includes/nefo.admin.cities.inc:100
-msgid "Name of the federal state."
-msgstr ""
-
-#: includes/nefo.admin.cities.inc:110 includes/nefo.admin.habitats.inc:116 includes/nefo.admin.intersubjects.inc:99 includes/nefo.admin.methodology.inc:99 includes/nefo.admin.network.inc:99 includes/nefo.admin.organism.inc:99 includes/nefo.admin.orgtype.inc:92 includes/nefo.admin.topic.inc:99
+#: includes/forschungsatlas.admin.habitats.inc:116 includes/forschungsatlas.admin.intersubjects.inc:99 includes/forschungsatlas.admin.methodology.inc:99 includes/forschungsatlas.admin.network.inc:99 includes/forschungsatlas.admin.organism.inc:99 includes/forschungsatlas.admin.orgtype.inc:92 includes/forschungsatlas.admin.topic.inc:99
 msgid "Save"
 msgstr "Speichern"
 
-#: includes/nefo.admin.cities.inc:126 includes/nefo.admin.habitats.inc:133 includes/nefo.admin.institutions.inc:277;284;298 includes/nefo.admin.intersubjects.inc:166 includes/nefo.admin.methodology.inc:166 includes/nefo.admin.network.inc:166 includes/nefo.admin.organism.inc:166 includes/nefo.admin.topic.inc:166
+#: includes/forschungsatlas.admin.habitats.inc:133 includes/forschungsatlas.admin.institutions.inc:291;298;312 includes/forschungsatlas.admin.intersubjects.inc:164 includes/forschungsatlas.admin.methodology.inc:164 includes/forschungsatlas.admin.network.inc:164 includes/forschungsatlas.admin.organism.inc:164 includes/forschungsatlas.admin.topic.inc:164
 msgid "The server was unable to process the request due to an internal error."
 msgstr ""
 "Der Server konnte die Anforderung nicht verarbeiten aufgrund eines "
 "internen Fehlers."
 
-#: includes/nefo.admin.cities.inc:131
-msgid "A city with this name already exists."
-msgstr ""
-
-#: includes/nefo.admin.cities.inc:154
-msgid "The city <em>@name</em> has been registered."
-msgstr ""
-
-#: includes/nefo.admin.cities.inc:158
-msgid "The settings for the city <em>@name</em> have been updated."
-msgstr ""
-
-#: includes/nefo.admin.cities.inc:125 includes/nefo.admin.habitats.inc:132 includes/nefo.admin.institutions.inc:276;283;297 includes/nefo.admin.intersubjects.inc:165 includes/nefo.admin.methodology.inc:165 includes/nefo.admin.network.inc:165 includes/nefo.admin.organism.inc:165 includes/nefo.admin.topic.inc:165
-msgid "security"
-msgstr "Sicherheit"
-
-#: includes/nefo.admin.cities.inc:125 includes/nefo.admin.institutions.inc:283
-msgid "Possible SQL injection attempt! An illegal choice has been detected: FSID."
-msgstr ""
-
-#: includes/nefo.admin.habitats.inc:13 includes/nefo.admin.intersubjects.inc:13 includes/nefo.admin.methodology.inc:13 includes/nefo.admin.network.inc:13 includes/nefo.admin.organism.inc:13 includes/nefo.admin.topic.inc:13
-msgid "Parent"
-msgstr "Übergeordnet"
-
-#: includes/nefo.admin.habitats.inc:34 includes/nefo.admin.institutions.inc:52 includes/nefo.admin.intersubjects.inc:34 includes/nefo.admin.methodology.inc:34 includes/nefo.admin.network.inc:34 includes/nefo.admin.organism.inc:34 includes/nefo.admin.orgtype.inc:33;37 includes/nefo.admin.topic.inc:34
-msgid "delete"
-msgstr "Löschen"
-
-#: includes/nefo.admin.habitats.inc:91 includes/nefo.admin.intersubjects.inc:74 includes/nefo.admin.methodology.inc:74 includes/nefo.admin.network.inc:74 includes/nefo.admin.organism.inc:74 includes/nefo.admin.topic.inc:74
-msgid "- None -"
-msgstr "- Keine -"
-
-#: includes/nefo.admin.habitats.inc:105
-msgid "Parent habitat"
-msgstr ""
-
-#: includes/nefo.admin.habitats.inc:138
+#: includes/forschungsatlas.admin.habitats.inc:138
 msgid "A habitat with this name already exists."
 msgstr ""
 
-#: includes/nefo.admin.habitats.inc:161
+#: includes/forschungsatlas.admin.habitats.inc:157
 msgid "The habitat <em>@name</em> has been registered."
 msgstr ""
 
-#: includes/nefo.admin.habitats.inc:166
+#: includes/forschungsatlas.admin.habitats.inc:162
 msgid "The settings for the habitat <em>@name</em> have been updated."
 msgstr ""
 
-#: includes/nefo.admin.habitats.inc:187
+#: includes/forschungsatlas.admin.habitats.inc:185
 msgid "Are you sure you want to delete this habitat: <em>@name</em>?"
 msgstr ""
 
-#: includes/nefo.admin.habitats.inc:190
+#: includes/forschungsatlas.admin.habitats.inc:188
 msgid "Delete this parent habitat with all its children: <em>@name</em>?"
 msgstr ""
 
-#: includes/nefo.admin.habitats.inc:195 includes/nefo.admin.institutions.inc:373 includes/nefo.admin.intersubjects.inc:195 includes/nefo.admin.methodology.inc:195 includes/nefo.admin.network.inc:195 includes/nefo.admin.organism.inc:195 includes/nefo.admin.orgtype.inc:172 includes/nefo.admin.topic.inc:195
+#: includes/forschungsatlas.admin.habitats.inc:193 includes/forschungsatlas.admin.institutions.inc:389 includes/forschungsatlas.admin.intersubjects.inc:193 includes/forschungsatlas.admin.methodology.inc:193 includes/forschungsatlas.admin.network.inc:192 includes/forschungsatlas.admin.organism.inc:192 includes/forschungsatlas.admin.orgtype.inc:172 includes/forschungsatlas.admin.topic.inc:192
 msgid "This action cannot be undone."
 msgstr "Diese Aktion kann nicht rückgängig gemacht werden."
 
-#: includes/nefo.admin.habitats.inc:197 includes/nefo.admin.institutions.inc:375 includes/nefo.admin.intersubjects.inc:197 includes/nefo.admin.methodology.inc:197 includes/nefo.admin.network.inc:197 includes/nefo.admin.organism.inc:197 includes/nefo.admin.orgtype.inc:174 includes/nefo.admin.topic.inc:197
+#: includes/forschungsatlas.admin.habitats.inc:195 includes/forschungsatlas.admin.institutions.inc:391 includes/forschungsatlas.admin.intersubjects.inc:195 includes/forschungsatlas.admin.methodology.inc:195 includes/forschungsatlas.admin.network.inc:194 includes/forschungsatlas.admin.organism.inc:194 includes/forschungsatlas.admin.orgtype.inc:174 includes/forschungsatlas.admin.topic.inc:194
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: includes/nefo.admin.habitats.inc:213
+#: includes/forschungsatlas.admin.habitats.inc:209
 msgid "The habitat <em>@name</em> has been deleted."
 msgstr ""
 
-#: includes/nefo.admin.habitats.inc:132 includes/nefo.admin.intersubjects.inc:165 includes/nefo.admin.methodology.inc:165 includes/nefo.admin.network.inc:165 includes/nefo.admin.organism.inc:165 includes/nefo.admin.topic.inc:165
+#: includes/forschungsatlas.admin.habitats.inc:132 includes/forschungsatlas.admin.institutions.inc:290;297;311 includes/forschungsatlas.admin.intersubjects.inc:163 includes/forschungsatlas.admin.methodology.inc:163 includes/forschungsatlas.admin.network.inc:163 includes/forschungsatlas.admin.organism.inc:163 includes/forschungsatlas.admin.topic.inc:163
+msgid "security"
+msgstr "Sicherheit"
+
+#: includes/forschungsatlas.admin.habitats.inc:132 includes/forschungsatlas.admin.intersubjects.inc:163 includes/forschungsatlas.admin.methodology.inc:163 includes/forschungsatlas.admin.network.inc:163 includes/forschungsatlas.admin.organism.inc:163 includes/forschungsatlas.admin.topic.inc:163
 msgid "Possible SQL injection attempt! An illegal choice has been detected: PARENT."
 msgstr ""
 
-#: includes/nefo.admin.institutions.inc:16
+#: includes/forschungsatlas.admin.institutions.inc:13;144 includes/forschungsatlas.admin.tools.inc:23;128 includes/forschungsatlas.map.inc:55;156
+msgid "City"
+msgstr "Stadt"
+
+#: includes/forschungsatlas.admin.institutions.inc:14;154 includes/forschungsatlas.admin.tools.inc:24;129 includes/forschungsatlas.map.inc:43
+msgid "Federal State"
+msgstr "Bundesland"
+
+#: includes/forschungsatlas.admin.institutions.inc:16
 msgid "Author"
 msgstr "Autor"
 
-#: includes/nefo.admin.institutions.inc:17
+#: includes/forschungsatlas.admin.institutions.inc:17
 msgid "Status"
 msgstr "Status"
 
-#: includes/nefo.admin.institutions.inc:18 includes/nefo.admin.tools.inc:120
+#: includes/forschungsatlas.admin.institutions.inc:18 includes/forschungsatlas.admin.tools.inc:131
 msgid "Updated"
 msgstr "Aktualisiert"
 
-#: includes/nefo.admin.institutions.inc:19
+#: includes/forschungsatlas.admin.institutions.inc:19
 msgid "Operations"
-msgstr "Operationen"
+msgstr "Aktionen"
 
-#: includes/nefo.admin.institutions.inc:43
+#: includes/forschungsatlas.admin.institutions.inc:48
 msgid "published"
 msgstr "Veröffentlicht"
 
-#: includes/nefo.admin.institutions.inc:43
+#: includes/forschungsatlas.admin.institutions.inc:48
 msgid "not published"
 msgstr "Nicht veröffentlicht"
 
-#: includes/nefo.admin.institutions.inc:117 includes/nefo.admin.tools.inc:21
+#: includes/forschungsatlas.admin.institutions.inc:130 includes/forschungsatlas.admin.tools.inc:21
 msgid "Street"
 msgstr "Straße"
 
-#: includes/nefo.admin.institutions.inc:124 includes/nefo.admin.tools.inc:22
+#: includes/forschungsatlas.admin.institutions.inc:137 includes/forschungsatlas.admin.tools.inc:22
 msgid "Postal Code"
 msgstr "Postleitzahl"
 
-#: includes/nefo.admin.institutions.inc:133;144;159
+#: includes/forschungsatlas.admin.institutions.inc:146;157;173
 msgid "- Please select -"
 msgstr "Bitte wählen"
 
-#: includes/nefo.admin.institutions.inc:176 includes/nefo.search.inc:65
-msgid "Categories"
-msgstr "Kategorien"
-
-#: includes/nefo.admin.institutions.inc:229
+#: includes/forschungsatlas.admin.institutions.inc:243
 msgid "Publishing options"
 msgstr "Veröffentlichungseinstellungen"
 
-#: includes/nefo.admin.institutions.inc:233
+#: includes/forschungsatlas.admin.institutions.inc:247
 msgid "Published"
 msgstr "Veröffentlicht"
 
-#: includes/nefo.admin.institutions.inc:243
+#: includes/forschungsatlas.admin.institutions.inc:257
 msgid "Submit"
-msgstr "Speichern"
+msgstr "Absenden"
 
-#: includes/nefo.admin.institutions.inc:289
+#: includes/forschungsatlas.admin.institutions.inc:303
 msgid "The postal code must be a 5-digit German zip code."
 msgstr "Postleitzahl muss 5-stellig sein."
 
-#: includes/nefo.admin.institutions.inc:293
+#: includes/forschungsatlas.admin.institutions.inc:307
 msgid "The URL is not valid."
 msgstr "Die Website URL ist nicht gültig."
 
-#: includes/nefo.admin.institutions.inc:340
+#: includes/forschungsatlas.admin.institutions.inc:356
 msgid "The institution <em>@name</em> has been created."
 msgstr ""
 
-#: includes/nefo.admin.institutions.inc:345
+#: includes/forschungsatlas.admin.institutions.inc:361
 msgid "The institution <em>@name</em> has been updated."
 msgstr ""
 
-#: includes/nefo.admin.institutions.inc:355
+#: includes/forschungsatlas.admin.institutions.inc:371
 msgid "The institution could not be saved."
 msgstr ""
 
-#: includes/nefo.admin.institutions.inc:371
+#: includes/forschungsatlas.admin.institutions.inc:387
 msgid "Are you sure you want to delete this institution: <em>@name</em>?"
 msgstr ""
 
-#: includes/nefo.admin.institutions.inc:389
+#: includes/forschungsatlas.admin.institutions.inc:405
 msgid "The institution <em>@name</em> has been deleted."
 msgstr ""
 
-#: includes/nefo.admin.institutions.inc:276
+#: includes/forschungsatlas.admin.institutions.inc:290
 msgid "Possible SQL injection attempt! An illegal choice has been detected: CID."
 msgstr ""
 
-#: includes/nefo.admin.institutions.inc:297
+#: includes/forschungsatlas.admin.institutions.inc:297
+msgid "Possible SQL injection attempt! An illegal choice has been detected: FSID."
+msgstr ""
+
+#: includes/forschungsatlas.admin.institutions.inc:311
 msgid "Possible SQL injection attempt! An illegal choice has been detected: OTID."
 msgstr ""
 
-#: includes/nefo.admin.intersubjects.inc:77
+#: includes/forschungsatlas.admin.intersubjects.inc:77
 msgid "Interdisciplinary subject"
 msgstr ""
 
-#: includes/nefo.admin.intersubjects.inc:88
+#: includes/forschungsatlas.admin.intersubjects.inc:88
 msgid "Parent interdisciplinary subject"
 msgstr ""
 
-#: includes/nefo.admin.intersubjects.inc:141
+#: includes/forschungsatlas.admin.intersubjects.inc:137
 msgid "The interdisciplinary subject <em>@name</em> has been registered."
 msgstr ""
 
-#: includes/nefo.admin.intersubjects.inc:146
+#: includes/forschungsatlas.admin.intersubjects.inc:142
 msgid "The settings for the interdisciplinary subject <em>@name</em> have been updated."
 msgstr ""
 
-#: includes/nefo.admin.intersubjects.inc:171
+#: includes/forschungsatlas.admin.intersubjects.inc:169
 msgid "An interdisciplinary subject with this name already exists."
 msgstr ""
 
-#: includes/nefo.admin.intersubjects.inc:187
+#: includes/forschungsatlas.admin.intersubjects.inc:185
 msgid "Are you sure you want to delete this interdisciplinary subject: <em>@name</em>?"
 msgstr ""
 
-#: includes/nefo.admin.intersubjects.inc:190
+#: includes/forschungsatlas.admin.intersubjects.inc:188
 msgid "Delete this parent interdisciplinary subject with all its children: <em>@name</em>?"
 msgstr ""
 
-#: includes/nefo.admin.intersubjects.inc:213
+#: includes/forschungsatlas.admin.intersubjects.inc:209
 msgid "The interdisciplinary subject <em>@name</em> has been deleted."
 msgstr ""
 
-#: includes/nefo.admin.methodology.inc:88
+#: includes/forschungsatlas.admin.methodology.inc:88
 msgid "Parent Methodology"
 msgstr ""
 
-#: includes/nefo.admin.methodology.inc:141
+#: includes/forschungsatlas.admin.methodology.inc:137
 msgid "The methodology <em>@name</em> has been registered."
 msgstr ""
 
-#: includes/nefo.admin.methodology.inc:146
+#: includes/forschungsatlas.admin.methodology.inc:142
 msgid "The settings for the methodology <em>@name</em> have been updated."
 msgstr ""
 
-#: includes/nefo.admin.methodology.inc:171
+#: includes/forschungsatlas.admin.methodology.inc:169
 msgid "A methodology with this name already exists."
 msgstr ""
 
-#: includes/nefo.admin.methodology.inc:187
+#: includes/forschungsatlas.admin.methodology.inc:185
 msgid "Are you sure you want to delete this methodology: <em>@name</em>?"
 msgstr ""
 
-#: includes/nefo.admin.methodology.inc:190
+#: includes/forschungsatlas.admin.methodology.inc:188
 msgid "Delete this parent methodology with all its children: <em>@name</em>?"
 msgstr ""
 
-#: includes/nefo.admin.methodology.inc:213
+#: includes/forschungsatlas.admin.methodology.inc:209
 msgid "The methodology <em>@name</em> has been deleted."
 msgstr ""
 
-#: includes/nefo.admin.network.inc:88
+#: includes/forschungsatlas.admin.network.inc:88
 msgid "Parent research network"
 msgstr ""
 
-#: includes/nefo.admin.network.inc:141
+#: includes/forschungsatlas.admin.network.inc:137
 msgid "The research network <em>@name</em> has been registered."
 msgstr ""
 
-#: includes/nefo.admin.network.inc:146
+#: includes/forschungsatlas.admin.network.inc:142
 msgid "The settings for the research network <em>@name</em> have been updated."
 msgstr ""
 
-#: includes/nefo.admin.network.inc:171
+#: includes/forschungsatlas.admin.network.inc:169
 msgid "An research network with this name already exists."
 msgstr ""
 
-#: includes/nefo.admin.network.inc:187
+#: includes/forschungsatlas.admin.network.inc:184
 msgid "Are you sure you want to delete this research network: <em>@name</em>?"
 msgstr ""
 
-#: includes/nefo.admin.network.inc:190
+#: includes/forschungsatlas.admin.network.inc:187
 msgid "Delete this parent research network with all its children: <em>@name</em>?"
 msgstr ""
 
-#: includes/nefo.admin.network.inc:213
+#: includes/forschungsatlas.admin.network.inc:208
 msgid "The research network <em>@name</em> has been deleted."
 msgstr ""
 
-#: includes/nefo.admin.organism.inc:88
+#: includes/forschungsatlas.admin.organism.inc:88
 msgid "Parent Organism"
 msgstr ""
 
-#: includes/nefo.admin.organism.inc:141
+#: includes/forschungsatlas.admin.organism.inc:137
 msgid "The organism <em>@name</em> has been registered."
 msgstr ""
 
-#: includes/nefo.admin.organism.inc:146
+#: includes/forschungsatlas.admin.organism.inc:142
 msgid "The settings for the organism <em>@name</em> have been updated."
 msgstr ""
 
-#: includes/nefo.admin.organism.inc:171
+#: includes/forschungsatlas.admin.organism.inc:169
 msgid "An organism with this name already exists."
 msgstr ""
 
-#: includes/nefo.admin.organism.inc:187
+#: includes/forschungsatlas.admin.organism.inc:184
 msgid "Are you sure you want to delete this organism: <em>@name</em>?"
 msgstr ""
 
-#: includes/nefo.admin.organism.inc:190
+#: includes/forschungsatlas.admin.organism.inc:187
 msgid "Delete this parent organism with all its children: <em>@name</em>?"
 msgstr ""
 
-#: includes/nefo.admin.organism.inc:213
+#: includes/forschungsatlas.admin.organism.inc:208
 msgid "The organism <em>@name</em> has been deleted."
 msgstr ""
 
-#: includes/nefo.admin.orgtype.inc:77
+#: includes/forschungsatlas.admin.orgtype.inc:77
 msgid "Organization type"
 msgstr ""
 
-#: includes/nefo.admin.orgtype.inc:133
+#: includes/forschungsatlas.admin.orgtype.inc:129
 msgid "The organization type <em>@name</em> has been registered."
 msgstr ""
 
-#: includes/nefo.admin.orgtype.inc:138
+#: includes/forschungsatlas.admin.orgtype.inc:134
 msgid "The settings for the organization type <em>@name</em> have been updated."
 msgstr ""
 
-#: includes/nefo.admin.orgtype.inc:155
+#: includes/forschungsatlas.admin.orgtype.inc:155
 msgid "An organization type with this name already exists."
 msgstr ""
 
-#: includes/nefo.admin.orgtype.inc:168
+#: includes/forschungsatlas.admin.orgtype.inc:168
 msgid "Are you sure you want to delete this organization type: <em>@name</em>?"
 msgstr ""
 
-#: includes/nefo.admin.orgtype.inc:188
+#: includes/forschungsatlas.admin.orgtype.inc:187
 msgid "The organization type <em>@name</em> has been deleted."
 msgstr ""
 
-#: includes/nefo.admin.tools.inc:17
+#: includes/forschungsatlas.admin.tools.inc:17
 msgid "Institutions with missing WKT value"
 msgstr ""
 
-#: includes/nefo.admin.tools.inc:62
+#: includes/forschungsatlas.admin.tools.inc:66
 msgid "There are no institutions with empty WKT."
 msgstr ""
 
-#: includes/nefo.admin.tools.inc:90
+#: includes/forschungsatlas.admin.tools.inc:100
 msgid "The WKT of <em>@name</em> could not be generated. Please verify the address."
 msgstr ""
 
-#: includes/nefo.admin.tools.inc:94;185
+#: includes/forschungsatlas.admin.tools.inc:104;199
 msgid "The list has been updated."
 msgstr ""
 
-#: includes/nefo.admin.tools.inc:97;188
+#: includes/forschungsatlas.admin.tools.inc:107;202
 msgid "There is nothing to be updated."
 msgstr ""
 
-#: includes/nefo.admin.tools.inc:113
+#: includes/forschungsatlas.admin.tools.inc:124
 msgid "Institutions with broken links"
 msgstr ""
 
-#: includes/nefo.admin.tools.inc:165
+#: includes/forschungsatlas.admin.tools.inc:179
 msgid "There are no institutions with broken links."
 msgstr ""
 
-#: includes/nefo.admin.tools.inc:167 includes/nefo.search.inc:171
+#: includes/forschungsatlas.admin.tools.inc:181
 msgid "1 result"
 msgid_plural "@count results"
 msgstr[0] "1 Ergebnis"
 msgstr[1] "@count Ergebnisse"
 
-#: includes/nefo.admin.topic.inc:88
+#: includes/forschungsatlas.admin.topic.inc:88
 msgid "Parent topic"
 msgstr ""
 
-#: includes/nefo.admin.topic.inc:141
+#: includes/forschungsatlas.admin.topic.inc:137
 msgid "The topic <em>@name</em> has been registered."
 msgstr ""
 
-#: includes/nefo.admin.topic.inc:146
+#: includes/forschungsatlas.admin.topic.inc:142
 msgid "The settings for the topic <em>@name</em> have been updated."
 msgstr ""
 
-#: includes/nefo.admin.topic.inc:171
+#: includes/forschungsatlas.admin.topic.inc:169
 msgid "An topic with this name already exists."
 msgstr ""
 
-#: includes/nefo.admin.topic.inc:187
+#: includes/forschungsatlas.admin.topic.inc:184
 msgid "Are you sure you want to delete this topic: <em>@name</em>?"
 msgstr ""
 
-#: includes/nefo.admin.topic.inc:190
+#: includes/forschungsatlas.admin.topic.inc:187
 msgid "Delete this parent topic with all its children: <em>@name</em>?"
 msgstr ""
 
-#: includes/nefo.admin.topic.inc:213
+#: includes/forschungsatlas.admin.topic.inc:208
 msgid "The topic <em>@name</em> has been deleted."
 msgstr ""
 
-#: includes/nefo.search.inc:58
+#: includes/forschungsatlas.map.inc:71
 msgid "text search"
 msgstr "Textsuche"
 
-#: includes/nefo.search.inc:119;198
-msgid "Search"
-msgstr "Suche"
-
-#: includes/nefo.search.inc:122;261
-msgid "Reset"
-msgstr "Zurücksetzen"
-
-#: includes/nefo.search.inc:151
-msgid "Link"
-msgstr "Link"
-
-#: includes/nefo.search.inc:169
-msgid "No content available."
-msgstr "Kein Inhalt verfügbar."
-
-#: forschungsatlas.module:157
-msgid "Institutions"
-msgstr "Institutionen"
+#: includes/forschungsatlas.map.inc:77
+msgid "Show Departments"
+msgstr "Abteilungen anzeigen"
 
 #: includes/forschungsatlas.map.inc:92
 msgid "Research network"
 msgstr "Forschungsnetzwerk"
 
-#: includes/forschungsatlas.map.inc:132
-msgid "Research Disciplines"
-msgstr "Forschungsdisziplinen"
+#: includes/forschungsatlas.map.inc:146;381
+msgid "Refresh"
+msgstr "Aktualisieren"
 
-#: forschungsatlas.module:95
-msgid "Research Map"
-msgstr "Forschungsatlas"
+#: includes/forschungsatlas.map.inc:150;445
+msgid "Reset"
+msgstr "Zurücksetzen"
+
+#: includes/forschungsatlas.map.inc:194
+msgid "Link"
+msgstr "Link"
+
+#: includes/forschungsatlas.map.inc:248
+msgid "No content available."
+msgstr "Kein Inhalt verfügbar."
+
+#: includes/forschungsatlas.map.inc:250
+msgid "of"
+msgstr "von"
+
+#: includes/forschungsatlas.map.inc:339
+msgid "NeFo Acetate map."
+msgstr ""
+
+#: modules/forschungsatlas_exports/forschungsatlas_exports.module:32
+msgid "Download"
+msgstr "Herunterladen"
+
+#: modules/forschungsatlas_exports/forschungsatlas_exports.module:33
+msgid "Download database export."
+msgstr ""
+
+#: modules/forschungsatlas_exports/forschungsatlas_exports.module:17;26
+msgid "Exports"
+msgstr ""
+
+#: modules/forschungsatlas_exports/forschungsatlas_exports.module:18
+msgid "Export tools."
+msgstr ""
+
+#: modules/forschungsatlas_exports/forschungsatlas_exports.module:27
+msgid "Database export tools."
+msgstr ""
+
+#: modules/forschungsatlas_exports/forschungsatlas_exports.info:0
+msgid "Forschungsatlas Exports"
+msgstr ""
+
+#: modules/forschungsatlas_exports/forschungsatlas_exports.info:0
+msgid "Export the NeFo-Forschungsatlas database."
+msgstr ""
+
+#: modules/forschungsatlas_exports/includes/forschungsatlas_exports.admin.inc:13
+msgid "Database exports"
+msgstr ""
+
+#: modules/forschungsatlas_exports/includes/forschungsatlas_exports.admin.inc:15
+msgid "Category"
+msgstr "Kategorie"
+
+#: modules/forschungsatlas_exports/includes/forschungsatlas_exports.admin.inc:25
+msgid "export"
+msgstr "Exportieren"
+
+#: modules/forschungsatlas_exports/includes/forschungsatlas_exports.admin.inc:42
+msgid "There are no available exports."
+msgstr ""
+
+#: modules/i18n_forschungsatlas/i18n_forschungsatlas.info:0
+msgid "Forschungsatlas Category Translation"
+msgstr ""
+
+#: modules/i18n_forschungsatlas/i18n_forschungsatlas.info:0
+msgid "Makes NeFo-Forschungsatlas categories available for translation."
+msgstr ""
+
+#: modules/i18n_forschungsatlas/i18n_forschungsatlas_habitat/i18n_forschungsatlas_habitat.i18n.inc:12
+msgid "Forschungsatlas Habitat"
+msgstr ""
+
+#: modules/i18n_forschungsatlas/i18n_forschungsatlas_habitat/i18n_forschungsatlas_habitat.i18n.inc:13
+msgid "Configurable Forschungsatlas Habitat."
+msgstr ""
+
+#: modules/i18n_forschungsatlas/i18n_forschungsatlas_habitat/i18n_forschungsatlas_habitat.i18n.inc:26
+msgid "Habitat Category"
+msgstr ""
+
+#: modules/i18n_forschungsatlas/i18n_forschungsatlas_habitat/i18n_forschungsatlas_habitat.module:63 modules/i18n_forschungsatlas/i18n_forschungsatlas_intersubject/i18n_forschungsatlas_intersubject.module:63 modules/i18n_forschungsatlas/i18n_forschungsatlas_methodology/i18n_forschungsatlas_methodology.module:63 modules/i18n_forschungsatlas/i18n_forschungsatlas_network/i18n_forschungsatlas_network.module:63 modules/i18n_forschungsatlas/i18n_forschungsatlas_organism/i18n_forschungsatlas_organism.module:63 modules/i18n_forschungsatlas/i18n_forschungsatlas_orgtype/i18n_forschungsatlas_orgtype.module:63 modules/i18n_forschungsatlas/i18n_forschungsatlas_topic/i18n_forschungsatlas_topic.module:63
+msgid "Save and translate"
+msgstr "Speichern und übersetzen."
+
+#: modules/i18n_forschungsatlas/i18n_forschungsatlas_habitat/i18n_forschungsatlas_habitat.module:15;23 modules/i18n_forschungsatlas/i18n_forschungsatlas_intersubject/i18n_forschungsatlas_intersubject.module:15;23 modules/i18n_forschungsatlas/i18n_forschungsatlas_methodology/i18n_forschungsatlas_methodology.module:15;23 modules/i18n_forschungsatlas/i18n_forschungsatlas_network/i18n_forschungsatlas_network.module:15;23 modules/i18n_forschungsatlas/i18n_forschungsatlas_organism/i18n_forschungsatlas_organism.module:15;23 modules/i18n_forschungsatlas/i18n_forschungsatlas_orgtype/i18n_forschungsatlas_orgtype.module:15;23 modules/i18n_forschungsatlas/i18n_forschungsatlas_topic/i18n_forschungsatlas_topic.module:15;23
+msgid "Translate"
+msgstr "Übersetzen"
+
+#: modules/i18n_forschungsatlas/i18n_forschungsatlas_habitat/i18n_forschungsatlas_habitat.info:0
+msgid "Forschungsatlas Translation Habitat"
+msgstr ""
+
+#: modules/i18n_forschungsatlas/i18n_forschungsatlas_habitat/i18n_forschungsatlas_habitat.info:0
+msgid "Makes Forschungsatlas Habitat available for translation."
+msgstr ""
+
+#: modules/i18n_forschungsatlas/i18n_forschungsatlas_intersubject/i18n_forschungsatlas_intersubject.i18n.inc:12
+msgid "Forschungsatlas Interdisciplinary Subject"
+msgstr ""
+
+#: modules/i18n_forschungsatlas/i18n_forschungsatlas_intersubject/i18n_forschungsatlas_intersubject.i18n.inc:13
+msgid "Configurable Forschungsatlas Interdisciplinary Subject."
+msgstr ""
+
+#: modules/i18n_forschungsatlas/i18n_forschungsatlas_intersubject/i18n_forschungsatlas_intersubject.i18n.inc:26
+msgid "Interdisciplinary Subject Category"
+msgstr ""
+
+#: modules/i18n_forschungsatlas/i18n_forschungsatlas_intersubject/i18n_forschungsatlas_intersubject.info:0
+msgid "Forschungsatlas Translation Interdisciplinary Subject"
+msgstr ""
+
+#: modules/i18n_forschungsatlas/i18n_forschungsatlas_intersubject/i18n_forschungsatlas_intersubject.info:0
+msgid "Makes Forschungsatlas Interdisciplinary Subject available for translation."
+msgstr ""
+
+#: modules/i18n_forschungsatlas/i18n_forschungsatlas_methodology/i18n_forschungsatlas_methodology.i18n.inc:12
+msgid "Forschungsatlas Methodology"
+msgstr ""
+
+#: modules/i18n_forschungsatlas/i18n_forschungsatlas_methodology/i18n_forschungsatlas_methodology.i18n.inc:13
+msgid "Configurable Forschungsatlas Methodology."
+msgstr ""
+
+#: modules/i18n_forschungsatlas/i18n_forschungsatlas_methodology/i18n_forschungsatlas_methodology.i18n.inc:26
+msgid "Methodology Category"
+msgstr ""
+
+#: modules/i18n_forschungsatlas/i18n_forschungsatlas_methodology/i18n_forschungsatlas_methodology.info:0
+msgid "Forschungsatlas Translation Methodology"
+msgstr ""
+
+#: modules/i18n_forschungsatlas/i18n_forschungsatlas_methodology/i18n_forschungsatlas_methodology.info:0
+msgid "Makes Forschungsatlas Methodology available for translation."
+msgstr ""
+
+#: modules/i18n_forschungsatlas/i18n_forschungsatlas_network/i18n_forschungsatlas_network.i18n.inc:12
+msgid "Forschungsatlas Research Network"
+msgstr ""
+
+#: modules/i18n_forschungsatlas/i18n_forschungsatlas_network/i18n_forschungsatlas_network.i18n.inc:13
+msgid "Configurable Forschungsatlas Research Network."
+msgstr ""
+
+#: modules/i18n_forschungsatlas/i18n_forschungsatlas_network/i18n_forschungsatlas_network.i18n.inc:26
+msgid "Research Network Category"
+msgstr ""
+
+#: modules/i18n_forschungsatlas/i18n_forschungsatlas_network/i18n_forschungsatlas_network.info:0
+msgid "Forschungsatlas Translation Research Network"
+msgstr ""
+
+#: modules/i18n_forschungsatlas/i18n_forschungsatlas_network/i18n_forschungsatlas_network.info:0
+msgid "Makes Forschungsatlas Research Network available for translation."
+msgstr ""
+
+#: modules/i18n_forschungsatlas/i18n_forschungsatlas_organism/i18n_forschungsatlas_organism.i18n.inc:12
+msgid "Forschungsatlas Organism"
+msgstr ""
+
+#: modules/i18n_forschungsatlas/i18n_forschungsatlas_organism/i18n_forschungsatlas_organism.i18n.inc:13
+msgid "Configurable Forschungsatlas Organism."
+msgstr ""
+
+#: modules/i18n_forschungsatlas/i18n_forschungsatlas_organism/i18n_forschungsatlas_organism.i18n.inc:26
+msgid "Organism Category"
+msgstr ""
+
+#: modules/i18n_forschungsatlas/i18n_forschungsatlas_organism/i18n_forschungsatlas_organism.info:0
+msgid "Forschungsatlas Translation Organism"
+msgstr ""
+
+#: modules/i18n_forschungsatlas/i18n_forschungsatlas_organism/i18n_forschungsatlas_organism.info:0
+msgid "Makes Forschungsatlas Organism available for translation."
+msgstr ""
+
+#: modules/i18n_forschungsatlas/i18n_forschungsatlas_orgtype/i18n_forschungsatlas_orgtype.i18n.inc:12
+msgid "Forschungsatlas Organization Type"
+msgstr ""
+
+#: modules/i18n_forschungsatlas/i18n_forschungsatlas_orgtype/i18n_forschungsatlas_orgtype.i18n.inc:13
+msgid "Configurable Forschungsatlas Organization Type."
+msgstr ""
+
+#: modules/i18n_forschungsatlas/i18n_forschungsatlas_orgtype/i18n_forschungsatlas_orgtype.i18n.inc:26
+msgid "Organization Type Category"
+msgstr ""
+
+#: modules/i18n_forschungsatlas/i18n_forschungsatlas_orgtype/i18n_forschungsatlas_orgtype.info:0
+msgid "Forschungsatlas Translation Organization Type"
+msgstr ""
+
+#: modules/i18n_forschungsatlas/i18n_forschungsatlas_orgtype/i18n_forschungsatlas_orgtype.info:0
+msgid "Makes Forschungsatlas Organization Type available for translation."
+msgstr ""
+
+#: modules/i18n_forschungsatlas/i18n_forschungsatlas_topic/i18n_forschungsatlas_topic.i18n.inc:12
+msgid "Forschungsatlas Topic"
+msgstr ""
+
+#: modules/i18n_forschungsatlas/i18n_forschungsatlas_topic/i18n_forschungsatlas_topic.i18n.inc:13
+msgid "Configurable Forschungsatlas Topic."
+msgstr ""
+
+#: modules/i18n_forschungsatlas/i18n_forschungsatlas_topic/i18n_forschungsatlas_topic.i18n.inc:26
+msgid "Topic Category"
+msgstr ""
+
+#: modules/i18n_forschungsatlas/i18n_forschungsatlas_topic/i18n_forschungsatlas_topic.info:0
+msgid "Forschungsatlas Translation Topic"
+msgstr ""
+
+#: modules/i18n_forschungsatlas/i18n_forschungsatlas_topic/i18n_forschungsatlas_topic.info:0
+msgid "Makes Forschungsatlas Topic available for translation."
+msgstr ""
+
