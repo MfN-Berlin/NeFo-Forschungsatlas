@@ -18,7 +18,7 @@ function _forschungsatlas__federal_states_rows() {
       array(20, 'RP', 'Rheinland-Pfalz'),
       array(21, 'TH', 'Thüringen'),
       array(22, 'ST', 'Sachsen-Anhalt'),
-      array(23, 'HB', 'Freie Hansestadt Bremen'),
+      array(23, 'HB', 'Bremen'),
       array(24, 'HE', 'Hessen'),
       array(27, 'SL', 'Saarland'),
       array(201, 'BE', 'Berlin'),

@@ -11,13 +11,15 @@
         // instantiate our new map
         var lMap = new L.Map(this.mapId, settings);
         lMap.setView([51,11], 5);
-        lMap.setZoom(6);
+        var zoom = this.map.settings.zoom ? this.map.settings.zoom : this.map.settings.zoomDefault;
+        lMap.setZoom(zoom);
         //lMap.bounds = [];
-        // FIXME aus Settings laden
-        var cloudmade = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          maxZoom: 18,
-          attribution: 'Map data &copy; 2011 OpenStreetMap contributors',
-        });
+
+        var layerKey = 'earth';
+        var layer = this.map.layers[layerKey];
+        var cloudmade = L.tileLayer(
+			layer.urlTemplate, { attribution: layer['options'].attribution }
+		);
         lMap.addLayer(cloudmade);
 
         var createClusterMarker = function (clusterCount, pos) {
@@ -32,13 +34,10 @@
           return L.marker(pos, {icon: myIcon});;
         };
 
-
         var model = {
           states: {},
           statenames: {}
         };
-
-        //console.log(this.features);
 
         for (var i in this.features) {
           var feature = this.features[i];
@@ -47,10 +46,6 @@
             model.states[stateId] = {
               features: []
             };
-          }
-          // FIXME. Data Mismatch between geojson file and features supplied by Drupal
-          if (feature.fsname == "Freie Hansestadt Bremen") {
-            feature.fsname = "Bremen";
           }
           if (!model.statenames.hasOwnProperty(feature.fsname)) {
             model.statenames[feature.fsname] = stateId;

@@ -34,7 +34,7 @@ function forschungsatlas_map_form_builder($form, &$form_state) {
     '#attributes' => array(
         'class' => array('nefo-map-simple-fieldset'),
     ),
-    '#prefix' => '<div class="nefo-map-search-form-wrapper">',  // nefo-map-search-form-wrapper
+    '#prefix' => '<div class="nefo-map-search-form-wrapper">',       //nefo-map-search-form-wrapper
   );
   $form['simple']['fsids'] = array(
     '#type' => 'select',
@@ -139,7 +139,7 @@ function forschungsatlas_map_form_builder($form, &$form_state) {
     '#attributes' => array(
       'id' =>'nefo-map-form-action',
     ),
-    '#suffix' => '</div>', // nefo-map-search-form-wrapper
+    '#suffix' => '</div>',                                           //nefo-map-search-form-wrapper
   );
   $form['actions']['submit'] = array(
     '#type' => 'submit',
@@ -185,7 +185,6 @@ function forschungsatlas_map_form_builder($form, &$form_state) {
   $rows = array();
   $num_rows = 0;
   foreach ($result as $data) {
-    // Table
     $row = array();
     $row['data']['name'] = forschungsatlas_get_assembled_parent_name($data->iid, $data->name, $data->assembledparentname);
     $row['data']['city'] = check_plain($data->city);
@@ -193,21 +192,20 @@ function forschungsatlas_map_form_builder($form, &$form_state) {
       $url = check_url($data->url);
       $row['data']['url'] = l(t('Link'), $url, array(
           'attributes' => array(
-              'target'=>'blank',
-              'class' => 'nefo-institution-l-ext',
+                  'target'=>'blank',
+                  'class' => 'nefo-institution-l-ext',
           )
-      )
+        )
       );
-    }
-    else {
+    } else {
       $row['data']['url'] = '';
     }
     $rows[] = $row;
     $num_rows++;
-  } // foreach()
+  }
 
   // Points
-  $points = array();
+  $features = array();
   $num_points = 0;
   foreach ($result_points as $data) {
     $point = array(
@@ -215,17 +213,17 @@ function forschungsatlas_map_form_builder($form, &$form_state) {
       'lat' => $data->latitude,
       'lon' => $data->longitude,
       'icon' => array(
-        'iconUrl' => drupal_get_path('module', 'forschungsatlas') . '/icons/marker-icon-green.png',
-        'iconAnchor'    => array('x' => '13', 'y' => '40'),
-        'popupAnchor'    => array('x' => '0', 'y' => '-20'),
+        'iconUrl'     => drupal_get_path('module', 'forschungsatlas') . '/icons/marker-icon-green.png',
+        'iconAnchor'  => array('x' => '13', 'y' => '40'),
+        'popupAnchor' => array('x' => '0', 'y' => '-20'),
       ),
       'popup' => forschungsatlas_get_assembled_parent_name($data->iid, $data->name, $data->assembledparentname),
       'fsid' => $data->fsid,
       'fsname' => $data->federalstate,
     );
-    $points[] = $point;
+    $features[] = $point;
     $num_points++;
-  } // foreach()
+  }
 
   //
   // Map
@@ -235,7 +233,7 @@ function forschungsatlas_map_form_builder($form, &$form_state) {
       '#attributes' => array(
           'id' => 'nefo-map-wrapper',
       ),
-      'map' => forschungsatlas_map_builder($points),
+      'map' => forschungsatlas_map_builder($features),
   );
 
   //
@@ -259,7 +257,6 @@ function forschungsatlas_map_form_builder($form, &$form_state) {
 
   return $form;
 }
-
 
 
 /**
@@ -287,7 +284,6 @@ function forschungsatlas_map_builder($features = array()) {
   if (count($features) == 0) {
     # Center of Germany
     $map['settings']['center'] = array(51.163, 10.45);
-    $map['settings']['zoom'] = FORSCHUNGSATLAS_MAP_ZOOM;
   }
   $nefomap = _forschungsatlas_map_build_map($map, $features, $height);
 
@@ -331,13 +327,13 @@ function _forschungsatlas_map_build_map($map, $features, $height) {
   return $build;
 }
 
-function forschungsatlas_map_info() {
 
-  return array(
-      'Nefo Acetate map' => array(
-          'label' => 'Acetate Map',
-          'description' => t('NeFo Acetate map.'),
+function forschungsatlas_map_info() {
+  $map = array(
+      'NefoMap' => array(
           'settings' => array(
+              'zoom' => FORSCHUNGSATLAS_MAP_ZOOM,
+              'zoomDefault' => FORSCHUNGSATLAS_MAP_ZOOM,
               'minZoom' => 0,
               'maxZoom' => 18,
               'dragging' => TRUE,
@@ -350,33 +346,26 @@ function forschungsatlas_map_info() {
               'fadeAnimation' => TRUE,
               'zoomAnimation' => TRUE,
               'closePopupOnClick' => TRUE,
-              'id' => 'foobar',
-            # Markercluster
-              'showCoverageOnHover' => TRUE,
-          ),
-          'attribution' => array(
-              'prefix' => '',
           ),
           'layers' => array(
               'earth' => array(
-                  'type' => 'NeFo Acetate map',
-                  'urlTemplate' => 'http://a0.acetate.geoiq.com/tiles/acetate/{z}/{x}/{y}.png',
-                  'subdomains' => '0123',
+                  'urlTemplate' => 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                   'options' => array(
-                      'attribution' => NULL,
-                      'noWrap' => TRUE,
+                      'attribution' => 'Map data &copy; 2011 OpenStreetMap contributors',
                   ),
               ),
           ),
       )
   );
+
+  return $map['NefoMap'];
 }
 
 /**
  * Form submission handler for forschungsatlas_map_form_builder().
  */
 function forschungsatlas_map_form_builder_submit($form, &$form_state) {
-  //  $form_state['rebuild'] = TRUE;
+
   switch ($form_state['values']['op']) {
     case t('Refresh'):
       $_SESSION['forschungsatlas_map_filter'] = forschungsatlas_search_init_filters();
@@ -445,7 +434,7 @@ function forschungsatlas_map_form_builder_submit($form, &$form_state) {
     case t('Reset'):
       $_SESSION['forschungsatlas_map_filter'] = forschungsatlas_search_init_filters();
       break;
-  } // swtich()
+  }
 }
 
 /**
