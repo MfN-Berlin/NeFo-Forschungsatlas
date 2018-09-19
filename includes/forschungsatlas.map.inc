@@ -338,7 +338,7 @@ function forschungsatlas_map_info() {
               'maxZoom' => 18,
               'dragging' => TRUE,
               'touchZoom' => TRUE,
-              'scrollWheelZoom' => TRUE,
+              'scrollWheelZoom' => FALSE,
               'doubleClickZoom' => TRUE,
               'zoomControl' => TRUE,
               'attributionControl' => TRUE,
