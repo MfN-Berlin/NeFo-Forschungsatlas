@@ -208,20 +208,22 @@ function forschungsatlas_map_form_builder($form, &$form_state) {
   $features = array();
   $num_points = 0;
   foreach ($result_points as $data) {
-    $point = array(
-      'type' => 'point',
-      'lat' => $data->latitude,
-      'lon' => $data->longitude,
-      'icon' => array(
-        'iconUrl'     => drupal_get_path('module', 'forschungsatlas') . '/icons/marker-icon-green.png',
-        'iconAnchor'  => array('x' => '13', 'y' => '40'),
-        'popupAnchor' => array('x' => '0', 'y' => '-20'),
-      ),
-      'popup' => forschungsatlas_get_assembled_parent_name($data->iid, $data->name, $data->assembledparentname),
-      'fsid' => $data->fsid,
-      'fsname' => $data->federalstate,
-    );
-    $features[] = $point;
+    if (!empty($data->latitude) && !empty($data->longitude)) {
+      $point = array(
+        'type' => 'point',
+        'lat' => $data->latitude,
+        'lon' => $data->longitude,
+        'icon' => array(
+          'iconUrl'     => drupal_get_path('module', 'forschungsatlas') . '/icons/marker-icon-green.png',
+          'iconAnchor'  => array('x' => '13', 'y' => '40'),
+          'popupAnchor' => array('x' => '0', 'y' => '-20'),
+        ),
+        'popup' => forschungsatlas_get_assembled_parent_name($data->iid, $data->name, $data->assembledparentname),
+        'fsid' => $data->fsid,
+        'fsname' => $data->federalstate,
+      );
+      $features[] = $point;
+    }
     $num_points++;
   }
 
