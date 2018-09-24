@@ -986,10 +986,16 @@ function forschungsatlas_find_duplicate_name($tableName, $colIDName, $name, $col
  */
 function forschungsatlas_generate_wkt($street, $postalcode, $city, $federalstate) {
   $geolocation = array();
-  // Example: $address = 'Invalidenstr. 43, 10115 Berlin, Berlin, DE';
-  $address = $street .', '. $postalcode .' '. $city .', '. $federalstate .', DE';
-  $geocoder_engine = 'google';
-  if ($geocoded_data = geocoder($geocoder_engine, $address)) {
+  // OpenStreetMap Nominatim
+  $geocoder_engine = 'openstreetmap_nominatim';
+  $address = $street .', '. $federalstate .', DE';
+  $geocoded_data = geocoder($geocoder_engine, $address);
+  // Funny addresses like "Campus II - Gebäude H" cannot be found
+  if (!$geocoded_data) {
+      $address = $city.', DE';
+      $geocoded_data = geocoder($geocoder_engine, $address);
+  }
+  if ($geocoded_data) {
     $geolocation['geotype'] = 'point';
     $geolocation['latitude'] = $geocoded_data->getY();
     $geolocation['longitude'] = $geocoded_data->getX();
