@@ -8,5 +8,5 @@ dependencies[] = libraries
 files[] = files/bundeslaender_simplify200.geojson
 stylesheets[all][] = forschungsatlas.css
 
-version = "7.x-1.2"
+version = "7.x-1.3"
 core = "7.x"

@@ -192,7 +192,8 @@ CREATE OR REPLACE VIEW forschungsatlas__aux_institutions_view AS
         FORSCHUNGSATLAS__GETASSEMBLEDPARENTNAME(l.parent) AS assembledparentname,
         i.abbrev AS abbrev,
         FORSCHUNGSATLAS__GETFAMILYTREEIDS(i.iid) AS familytreeids,
-        CONCAT_WS(' ', i.name, i.abbrev) AS fullname
+        CONCAT_WS(' ', i.name, i.abbrev) AS fullname,
+        i.street2 AS street2
    FROM
         forschungsatlas__institutions i
             LEFT JOIN

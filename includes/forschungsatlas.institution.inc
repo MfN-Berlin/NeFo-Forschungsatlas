@@ -24,6 +24,7 @@ function forschungsatlas_institution_show($institution=NULL) {
   // Address
   $variables['forschungsatlas_institution']->address = array(
       'street' => $institution['street'],
+      'street2' => $institution['street2'],
       'postalcode' => $institution['postalcode'],
       'city' => $institution['city'],
       'federalstate' => $institution['federalstate'],

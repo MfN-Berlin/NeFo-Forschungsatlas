@@ -487,16 +487,7 @@ function forschungsatlas_menu() {
     'access arguments' => array('administer nefo configuration'),
     'file' => 'includes/forschungsatlas.admin.tools.inc',
     'weight' => 920,
-    'type' => MENU_SUGGESTED_ITEM,
-  );
-  $items[FORSCHUNGSATLAS_CONFIG_PATH . '/tools/wkt/update'] = array(
-    'title' => t('Update list'),
-    'description' => t('Update list of institution with empty WKT.'),
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('forschungsatlas_admin_wkt_rebuild'),
-    'access arguments' => array('administer nefo configuration'),
-    'file' => 'includes/forschungsatlas.admin.tools.inc',
-    'type' => MENU_SUGGESTED_ITEM,
+    'type' => MENU_LOCAL_TASK,
   );
 
   return $items;
@@ -626,7 +617,7 @@ function forschungsatlas_institution_load($iid) {
         i.iid AS iid, i.name AS name, i.street AS street, i.postalcode AS postalcode, i.cid AS cid,
         c.name AS city, i.fsid AS fsid, fs.name AS federalstate, i.url AS url, i.otid AS otid, ot.name AS orgtype,
         i.description AS description, g.geolocation_geo_type AS geotype, g.geolocation_lat AS latitude, g.geolocation_lon AS longitude,
-        g.geolocation_wkt AS wkt, i.status AS status, i.uid AS uid, i.created AS created, i.changed AS changed, i.abbrev AS abbrev
+        g.geolocation_wkt AS wkt, i.status AS status, i.uid AS uid, i.created AS created, i.changed AS changed, i.abbrev AS abbrev, i.street2 AS street2
       FROM {forschungsatlas__institutions} i
       LEFT JOIN {forschungsatlas__cities} c ON i.cid = c.cid
       LEFT JOIN {forschungsatlas__federal_states} fs ON i.fsid = fs.fsid
@@ -977,6 +968,7 @@ function forschungsatlas_find_duplicate_name($tableName, $colIDName, $name, $col
  * WKT Generator
  *
  * @param string $street
+ * @param string $street2
  * @param string $postalcode
  * @param string $city
  * @param string $federalstate
@@ -984,15 +976,15 @@ function forschungsatlas_find_duplicate_name($tableName, $colIDName, $name, $col
  * @return $geolocation
  *   An associative array array containing the geolocation values.
  */
-function forschungsatlas_generate_wkt($street, $postalcode, $city, $federalstate) {
+function forschungsatlas_generate_wkt($street, $street2, $postalcode, $city, $federalstate) {
   $geolocation = array();
   // OpenStreetMap Nominatim
   $geocoder_engine = 'openstreetmap_nominatim';
   $address = $street .', '. $federalstate .', DE';
   $geocoded_data = geocoder($geocoder_engine, $address);
-  // Funny addresses like "Campus II - Gebäude H" cannot be found
+  // Try with stree2 field
   if (!$geocoded_data) {
-      $address = $city.', DE';
+      $address = $street2 .', '. $federalstate .', DE';
       $geocoded_data = geocoder($geocoder_engine, $address);
   }
   if ($geocoded_data) {
@@ -1108,7 +1100,7 @@ function forschungsatlas_save_institution($institution, $mapping) {
     if ($institution->iid) {
       $iid = $institution->iid;
       // Update forschungsatlas__institution_geolocation
-      $wkt = forschungsatlas_generate_wkt($institution->street, $institution->postalcode, $mapping->cityname, $mapping->fsname);
+      $wkt = forschungsatlas_generate_wkt($institution->street, $institution->street2, $institution->postalcode, $mapping->cityname, $mapping->fsname);
       $wkt['iid'] = $iid;
       forschungsatlas_write_wkt($wkt);
       // Update forschungsatlas__institution_institution

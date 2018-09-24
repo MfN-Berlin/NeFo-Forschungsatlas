@@ -21,8 +21,11 @@ if (!empty($variables['forschungsatlas_institution']->address)) {
   print '<div id="forschungsatlas-institution-address">';
   print '<div class="forschungsatlas-institution-h">'. t('Address') .':</div>';
   print '<div class="forschungsatlas-institution-c">'.
-      check_plain($variables['forschungsatlas_institution']->address['street']) .'<br />'.
-      check_plain($variables['forschungsatlas_institution']->address['postalcode']) .' '.
+      check_plain($variables['forschungsatlas_institution']->address['street']) .'<br />';
+  if (!empty($variables['forschungsatlas_institution']->address['street2'])) {
+    print check_plain($variables['forschungsatlas_institution']->address['street2']) .'<br />';
+  }
+  print check_plain($variables['forschungsatlas_institution']->address['postalcode']) .' '.
       check_plain($variables['forschungsatlas_institution']->address['city']) .'<br />'.
       check_plain($variables['forschungsatlas_institution']->address['federalstate']) .
     '</div>'; //forschungsatlas-institution-c

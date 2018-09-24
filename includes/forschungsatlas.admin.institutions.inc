@@ -90,7 +90,7 @@ function forschungsatlas_admin_institutions() {
  * @see forschungsatlas_admin_institution_form_submit()
  */
 function forschungsatlas_admin_institution_form($form, &$form_state, $institution = array(
-        'iid' => '', 'name' => '', 'abbrev' => '', 'street' => '', 'postalcode' => '', 'cid' => '',
+        'iid' => '', 'name' => '', 'abbrev' => '', 'street' => '', 'street2' => '', 'postalcode' => '', 'cid' => '',
 		'fsid' => '', 'url' => '', 'otid' => '', 'description' => '', 'status' => 1)) {
 
 	$iid = intval($institution['iid']);
@@ -125,21 +125,33 @@ function forschungsatlas_admin_institution_form($form, &$form_state, $institutio
 	    '#default_value' => forschungsatlas_admin_get_belonging_ids($iid),
 	    '#chosen' => TRUE,
 	);
-	$form['institution']['street'] = array(
+	$form['institution']['address'] = array(
+	    '#type' => 'fieldset',
+	    '#title' => t('Address'),
+	);
+	$form['institution']['address']['street'] = array(
 		'#type' => 'textfield',
 	    '#title' => t('Street'),
-	    '#size' => 20,
+	    '#size' => 60,
 	    '#default_value' => $institution['street'],
+	    '#description' => t('Required field for geolocation. Street address only, e.g. "Invalidenstr. 43".'),
 	    '#required' => TRUE,
 	);
-	$form['institution']['postalcode'] = array(
+	$form['institution']['address']['street2'] = array(
+		'#type' => 'textfield',
+	    '#size' => 60,
+	    '#default_value' => $institution['street2'],
+	    '#description' => t('Optional field. E.g. "Campus II - Gebäude H", "c/o T.rex", etc.'),
+	    '#required' => FALSE,
+	);
+	$form['institution']['address']['postalcode'] = array(
 		'#type' => 'textfield',
 	    '#title' => t('Postal Code'),
 	    '#size' => 20,
 	    '#default_value' => $institution['postalcode'],
 	    '#required' => TRUE,
 	);
-	$form['institution']['cid'] = array(
+	$form['institution']['address']['cid'] = array(
 		'#type' => 'select',
 	    '#title' => t('City'),
 	    '#options' => forschungsatlas_get_cities(),
@@ -149,7 +161,7 @@ function forschungsatlas_admin_institution_form($form, &$form_state, $institutio
 	    '#chosen' => TRUE,
 	    '#element_validate' => array('element_validate_integer'),
 	);
-	$form['institution']['fsid'] = array(
+	$form['institution']['address']['fsid'] = array(
 		'#type' => 'select',
 	    '#title' => t('Federal State'),
 	    '#options' => forschungsatlas_get_federal_states(),
@@ -159,6 +171,7 @@ function forschungsatlas_admin_institution_form($form, &$form_state, $institutio
 	    '#chosen' => TRUE,
 	    '#element_validate' => array('element_validate_integer'),
 	);
+
 	$form['institution']['url'] = array(
 		'#type' => 'textfield',
 	    '#title' => t('URL'),
@@ -329,6 +342,7 @@ function forschungsatlas_admin_institution_form_submit($form, &$form_state) {
   $institution->name = forschungsatlas_clean_name($values['name']);
   $institution->abbrev = forschungsatlas_clean_name($values['abbrev']);
   $institution->street = forschungsatlas_clean_name($values['street']);
+  $institution->street2 = forschungsatlas_clean_name($values['street2']);
   $institution->postalcode = forschungsatlas_clean_name($values['postalcode']);
   $institution->cid = $values['cid'];
   $institution->fsid = $values['fsid'];

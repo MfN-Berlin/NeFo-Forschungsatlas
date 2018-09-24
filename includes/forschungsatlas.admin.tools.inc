@@ -74,43 +74,6 @@ function forschungsatlas_admin_wkt() {
 }
 
 /**
- * Build the geolocation values of institutions with empty WKT
- *
- * @param $form
- * @param $form_state
- */
-function forschungsatlas_admin_wkt_rebuild($form, &$form_state) {
-  $result = db_query('SELECT i.iid AS iid, i.name AS name, i.street AS street, i.postalcode AS postalcode,
-      c.name AS city, fs.name AS federalstate, g.geolocation_wkt AS wkt
-      FROM {forschungsatlas__institutions} i
-      LEFT JOIN {forschungsatlas__cities} c ON i.cid = c.cid
-      LEFT JOIN {forschungsatlas__federal_states} fs ON i.fsid = fs.fsid
-      LEFT JOIN {forschungsatlas__institution_geolocation} g ON i.iid = g.iid
-      WHERE g.geolocation_wkt IS NULL ORDER BY iid');
-  $num_rows = 0;
-  foreach ($result as $row) {
-    $num_rows++;
-    // Use geocoder in live system
-    $geolocation = forschungsatlas_generate_wkt($row->street, $row->postalcode, $row->city, $row->federalstate);
-    if (!empty($geolocation)) {
-        $geolocation['iid'] = $row->iid;
-        forschungsatlas_write_wkt($geolocation);
-    }
-    else {
-        drupal_set_message(t('The WKT of <em>@name</em> could not be generated. Please verify the address.', array('@name' => $row->name)), 'error');
-    }
-  } // foreach()
-  if ($num_rows > 0) {
-    drupal_set_message(t('The list has been updated.'));
-  }
-  else {
-    drupal_set_message(t('There is nothing to be updated.'));
-  }
-  drupal_goto(FORSCHUNGSATLAS_CONFIG_PATH. '/tools/wkt');
-}
-
-
-/**
  * URL: Broken links to Institutions
  */
 

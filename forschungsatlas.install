@@ -345,6 +345,11 @@ function forschungsatlas_schema() {
         'length' => '50',
         'not null' => FALSE,
       ),
+      'street2' => array(
+        'type' => 'varchar',
+        'length' => '255',
+        'not null' => FALSE,
+      ),
     ),
     'primary key' => array('iid'),
     'indexes' => array(
@@ -623,6 +628,11 @@ function forschungsatlas_schema() {
               'length' => '320',  // Name + Abbreviation
               'not null' => FALSE,
           ),
+          'street2' => array(
+              'type' => 'varchar',
+              'length' => '255',
+              'not null' => FALSE,
+          ),
     ),
   'indexes' => array(
           'iid_idx' => array('iid'),
@@ -860,3 +870,15 @@ function forschungsatlas_update_7102() {
   db_drop_field('forschungsatlas__institution_institution', 'delta');
 }
 
+/**
+ * Add street2 field to {forschungsatlas__institutions} and {forschungsatlas__aux_institutions} tables.
+ */
+function forschungsatlas_update_7103() {
+  $spec = array(
+      'type' => 'varchar',
+      'length' => '255',
+      'not null' => FALSE,
+  );
+  db_add_field('forschungsatlas__institutions', 'street2', $spec);
+  db_add_field('forschungsatlas__aux_institutions', 'street2', $spec);
+}
